@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import static spark.Spark.*;
+
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,16 +36,15 @@ import java.util.Map;
 
 import spark.Route;
 
-public class Pay_activity extends AppCompatActivity {
+public  class Pay_activity extends AppCompatActivity {
 
     private final int REQUEST_CODE = 1;
     private final String send_payment_details = "YOUR-API-FOR-PAYMENTS";
     private String  amount;
     public static String token;
     private HashMap<String, String> paramHash;
-    private Button btnPay;
+    public Button btnPay;
     private EditText etAmount;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -86,9 +87,17 @@ public class Pay_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_activity);
+        btnPay = findViewById(R.id.btnPay);
         init_server();
 
-        onBraintreeSubmit();
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBraintreeSubmit();
+            }
+        });
+
         new HttpRequest().execute();
     }
 
@@ -187,8 +196,8 @@ public class Pay_activity extends AppCompatActivity {
 
 }
 
-class HttpRequest extends AsyncTask {
-
+ class HttpRequest extends AsyncTask  {
+    private Pay_activity pay_activity = new Pay_activity();
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -202,25 +211,24 @@ class HttpRequest extends AsyncTask {
             @Override
             public void success(String responseBody) {
                 Log.d("mylog", responseBody);
-                runOnUiThread(new Runnable() {
+
+                pay_activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Toast.makeText(Pay_activity., "Successfully got token", Toast.LENGTH_SHORT).show();
-                       // llHolder.setVisibility(View.VISIBLE);
+
+                        pay_activity.btnPay.setVisibility(View.VISIBLE);
+
                     }
                 });
+
                 Pay_activity.token = responseBody;
+
             }
 
             @Override
             public void failure(Exception exception) {
                 final Exception ex = exception;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                       // Toast.makeText(MainActivity.this, "Failed to get token: " + ex.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                System.out.println("EROOR ".concat(ex.toString()));
             }
         });
         return null;
