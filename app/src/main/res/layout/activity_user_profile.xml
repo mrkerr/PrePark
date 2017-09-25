@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jawad44.prepark.userProfile">
+
+    <Button
+        android:id="@+id/button_setuplots"
+        android:layout_width="149dp"
+        android:layout_height="57dp"
+        android:text="Setup Lots"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="156dp" />
+
+    <Button
+        android:id="@+id/button_mylots"
+        android:layout_width="152dp"
+        android:layout_height="55dp"
+        android:text="My Lots"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="231dp" />
+
+    <Button
+        android:id="@+id/button_transactions"
+        android:layout_width="152dp"
+        android:layout_height="53dp"
+        android:text="Transactions"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="306dp" />
+</android.support.constraint.ConstraintLayout>

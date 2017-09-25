@@ -9,17 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".userProfile">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".actualuserprofile"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MyLots" />
-        <activity android:name=".setupLots"></activity>
+        <activity android:name=".userProfile" />
+        <activity android:name=".setupLots" />
+        <activity android:name=".myLots"></activity>
     </application>
 
 </manifest>

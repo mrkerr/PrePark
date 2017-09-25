@@ -4,69 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jawad44.prepark.MyLots">
-
-    <EditText
-        android:id="@+id/etSpotNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="65dp" />
+    tools:context="com.example.jawad44.prepark.myLots">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="128dp"
-        android:layout_height="42dp"
-        android:text="Available Spots:"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="65dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="146dp"
-        android:layout_height="23dp"
-        android:text="Next Availability"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="153dp" />
-
-    <EditText
-        android:id="@+id/etNextAvailability"
-        android:layout_width="164dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="time"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="145dp" />
-
-    <Button
-        android:id="@+id/etSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="249dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="116dp"
-        android:layout_height="33dp"
+        android:id="@+id/etLot"
+        android:layout_width="113dp"
+        android:layout_height="36dp"
         android:text="Lot"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="35dp" />
 
     <EditText
         android:id="@+id/etAddress"
-        android:layout_width="225dp"
-        android:layout_height="39dp"
+        android:layout_width="247dp"
+        android:layout_height="41dp"
         android:ems="10"
         android:hint="Select Address"
         android:inputType="textPostalAddress"
-        tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="30dp" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="140dp"
+        android:layout_height="41dp"
+        android:text="Available Spots"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <EditText
+        android:id="@+id/etspotAvailable"
+        android:layout_width="166dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="142dp"
+        android:layout_height="39dp"
+        android:text="Next Availability"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="191dp" />
+
+    <EditText
+        android:id="@+id/availabletime"
+        android:layout_width="181dp"
+        android:layout_height="31dp"
+        android:ems="10"
+        android:inputType="time"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="191dp" />
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="133dp"
+        android:layout_height="58dp"
+        android:text="submit"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="297dp" />
 </android.support.constraint.ConstraintLayout>
