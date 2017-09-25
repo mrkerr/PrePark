@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Parkapp</string>
+    <string name="action_settings">Settings</string>
+    <string name="confirm_payement">Purchase</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="lot_image">Lot_Image</string>
+</resources>
