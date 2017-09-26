@@ -46,43 +46,43 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = etPassword.getText().toString();
 
                 //to be removed when server connection works
-                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-                LoginActivity.this.startActivity(intent);
+//                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
+//                LoginActivity.this.startActivity(intent);
 
                 // Response received from the server
-//                Response.Listener<String> responseListener = new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonResponse = new JSONObject(response);
-//                            boolean success = jsonResponse.getBoolean("success");
-//
-//                            if (success) {
-//                                String name = jsonResponse.getString("name");
-//                                String email = jsonResponse.getString("email");
-//
-//                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
-//                                intent.putExtra("name", name);
-//                                intent.putExtra("email", email);
-//                                intent.putExtra("username", username);
-//                                LoginActivity.this.startActivity(intent);
-//                            } else {
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                                builder.setMessage("Login Failed")
-//                                        .setNegativeButton("Retry", null)
-//                                        .create()
-//                                        .show();
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                };
-//
-//                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-//                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-//                queue.add(loginRequest);
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+
+                            if (success) {
+                                String name = jsonResponse.getString("name");
+                                String email = jsonResponse.getString("email");
+
+                                Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
+                                intent.putExtra("name", name);
+                                intent.putExtra("email", email);
+                                intent.putExtra("username", username);
+                                LoginActivity.this.startActivity(intent);
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                builder.setMessage("Login Failed")
+                                        .setNegativeButton("Retry", null)
+                                        .create()
+                                        .show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+                queue.add(loginRequest);
             }
         });
     }
