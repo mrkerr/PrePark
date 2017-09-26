@@ -15,6 +15,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /**
  * Created by mattlawlor on 9/21/17.
  */
@@ -26,10 +29,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         final EditText etName = (EditText) findViewById(R.id.etName);
         final EditText etUsername = (EditText) findViewById(R.id.etUsername);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         final Button bRegister = (Button) findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
@@ -37,12 +40,16 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String name = etName.getText().toString();
                 final String username = etUsername.getText().toString();
-                final String email = etEmail.getText().toString();
                 final String password = etPassword.getText().toString();
+                final String email = etEmail.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        URL url = new URL("proj-309-sb-b-2.cs.iastate.edu");
+//                        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//                        System.out.println(conn.getResponseCode());
+//                        conn.disconnect();
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
@@ -62,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterRequest registerRequest = new RegisterRequest(name, username, email, password, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(name, username, password, email, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }
