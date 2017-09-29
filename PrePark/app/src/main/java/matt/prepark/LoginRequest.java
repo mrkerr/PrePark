@@ -11,7 +11,7 @@ import java.util.Map;
  */
 
 public class LoginRequest extends StringRequest {
-    private static final String LOGIN_REQUEST_URL = "https://proj-309-sb-b-2.cs.iastate.edu/home/mlawlor/register.php";
+    private static final String LOGIN_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/login.php";
     private Map<String, String> params;
 
     public LoginRequest(String username, String password, Response.Listener<String> listener) {

@@ -13,9 +13,7 @@ import java.util.Map;
  */
 
 public class RegisterRequest extends StringRequest {
-    private static final String REGISTER_REQUEST_URL = "https://proj-309-sb-b-2.cs.iastate.edu/home/mlawlor/register.php";
-    //https://10.25.68.190/home/mlawlor/register.php
-    //https://129.186.252.159/home/mlawlor
+    private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/register.php";
     private Map<String, String> params;
 
     public RegisterRequest(String name, String username, String password, String email, Response.Listener<String> listener) {
