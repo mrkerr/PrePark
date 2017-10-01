@@ -2,6 +2,7 @@ package com.example.jawad44.prepark;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,7 +16,14 @@ public class myLots extends AppCompatActivity {
         final EditText spotsAvailable = (EditText) findViewById(R.id.etspotAvailable);
         final EditText nextAvail = (EditText) findViewById(R.id.availabletime);
 
-        final Button submitML = (Button) findViewById(R.id.button_submit);
+        final Button b_submitML = (Button) findViewById(R.id.button_submit);
+
+        b_submitML.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 }
