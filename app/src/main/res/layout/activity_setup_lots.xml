@@ -1,120 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jawad44.prepark.setupLots">
+    android:orientation="horizontal"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
 
     <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="363dp"
-        android:layout_height="42dp"
-        android:ems="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/address"
         android:hint="Address"
         android:inputType="textPostalAddress"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="37dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="12dp" />
 
     <EditText
-        android:id="@+id/etCity"
-        android:layout_width="120dp"
-        android:layout_height="38dp"
-        android:ems="10"
+        android:id="@+id/address_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:hint="Address"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/city_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
         android:hint="City"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="107dp" />
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/etZip"
-        android:layout_width="132dp"
-        android:layout_height="38dp"
-        android:ems="10"
-        android:hint="Zip"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="247dp"
-        tools:layout_editor_absoluteY="107dp" />
-
-    <EditText
-        android:id="@+id/etSpotNum"
-        android:layout_width="179dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Spots"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="178dp" />
-
-    <EditText
-        android:id="@+id/etPhoneNum"
-        android:layout_width="159dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="178dp" />
-
-    <Switch
-        android:id="@+id/switch_contact"
-        android:layout_width="248dp"
-        android:layout_height="42dp"
-        android:text="Contact Me"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="234dp" />
-
-    <Switch
-        android:id="@+id/switch_overnight"
-        android:layout_width="248dp"
-        android:layout_height="33dp"
-        android:text="Overnight Parking"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="294dp" />
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="146dp"
-        android:layout_height="47dp"
-        android:text="Save"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="437dp" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="161dp"
-        android:layout_height="46dp"
-        android:text="submit"
-        tools:layout_editor_absoluteX="200dp"
-        tools:layout_editor_absoluteY="437dp" />
-
-    <EditText
-        android:id="@+id/etRate"
-        android:layout_width="191dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:hint="Rate"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="183dp"
-        tools:layout_editor_absoluteY="352dp" />
-
-    <EditText
-        android:id="@+id/etState"
-        android:layout_width="92dp"
-        android:layout_height="38dp"
-        android:ems="10"
+        android:id="@+id/statesetuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
         android:hint="State"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="107dp" />
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/etMaxTime"
-        android:layout_width="151dp"
-        android:layout_height="41dp"
-        android:ems="10"
+        android:id="@+id/zip_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:hint="Zip"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/num_spots_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:hint="Spots"
+        android:inputType="number" />
+
+    <Switch
+        android:id="@+id/contactme_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:hint="Contact Me" />
+
+    <Switch
+        android:id="@+id/overnight_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="310dp"
+        android:hint="Overnight" />
+
+    <EditText
+        android:id="@+id/time_maxtime_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
         android:hint="Max Time"
-        android:inputType="time"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="352dp" />
-</android.support.constraint.ConstraintLayout>
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/rate_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="390dp"
+        android:hint="Rate"
+        android:inputType="number" />
+
+
+
+
+    <Button
+        android:id="@+id/button_save_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="440dp"
+        android:text="Save" />
+    <Button
+        android:id="@+id/button_submit_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="490dp"
+        android:text="submit" />
+</RelativeLayout>

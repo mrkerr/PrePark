@@ -1,72 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jawad44.prepark.myLots">
-
-    <TextView
-        android:id="@+id/etLot"
-        android:layout_width="113dp"
-        android:layout_height="36dp"
-        android:text="Lot"
-        android:textAlignment="viewStart"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="35dp" />
+    android:orientation="horizontal"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
 
     <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="247dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:hint="Select Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/address"
+        android:hint="Lot"
         android:inputType="textPostalAddress"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="30dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="140dp"
-        android:layout_height="41dp"
-        android:text="Available Spots"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="114dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="12dp" />
 
     <EditText
-        android:id="@+id/etspotAvailable"
-        android:layout_width="166dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="114dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="142dp"
-        android:layout_height="39dp"
-        android:text="Next Availability"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="191dp" />
+        android:id="@+id/num_available"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:hint="Available"
+        android:inputType="number" />
 
     <EditText
-        android:id="@+id/availabletime"
-        android:layout_width="181dp"
-        android:layout_height="31dp"
-        android:ems="10"
-        android:inputType="time"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="191dp" />
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:hint="Next Availability"
+        android:inputType="time"/>
 
     <Button
-        android:id="@+id/button_submit"
-        android:layout_width="133dp"
-        android:layout_height="58dp"
-        android:text="submit"
-        tools:layout_editor_absoluteX="119dp"
-        tools:layout_editor_absoluteY="297dp" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/button_submitmylots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:text="Submit" />
+
+
+</RelativeLayout>
