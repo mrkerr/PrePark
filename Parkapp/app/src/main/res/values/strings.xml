@@ -4,4 +4,5 @@
     <string name="confirm_payement">Purchase</string>
     <string name="transaction_details">Transaction Details</string>
     <string name="lot_image">Lot_Image</string>
+    <string name="congratulations_your_payment_was_successful">Congratulations! Your Payment was successful</string>
 </resources>

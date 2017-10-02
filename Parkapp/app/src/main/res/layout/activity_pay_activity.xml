@@ -4,29 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@mipmap/lot"
-        android:contentDescription="@string/lot_image" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/transaction_details"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:textSize="25sp"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/bt_blue_pressed"/>
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:shadowColor="@color/white"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"/>
 
     <Button
         android:layout_width="wrap_content"
+        android:id="@+id/btn_pay"
         android:layout_height="wrap_content"
-        android:id="@+id/btnPay"
-        android:visibility="gone"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="190dp"
         android:text="@string/confirm_payement"/>
+
 </LinearLayout>

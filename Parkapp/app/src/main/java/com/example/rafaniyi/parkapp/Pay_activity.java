@@ -2,241 +2,152 @@ package com.example.rafaniyi.parkapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import static spark.Spark.*;
-
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.braintreegateway.BraintreeGateway;
-import com.braintreegateway.Environment;
-import com.braintreepayments.api.dropin.DropInActivity;
-import com.braintreepayments.api.dropin.DropInRequest;
-import com.braintreepayments.api.dropin.DropInResult;
-import com.braintreepayments.api.interfaces.HttpResponseCallback;
-import com.braintreepayments.api.internal.HttpClient;
-import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import spark.Route;
+import java.math.BigDecimal;
 
-public  class Pay_activity extends AppCompatActivity {
+public class Pay_activity extends AppCompatActivity {
 
-    private final int REQUEST_CODE = 1;
-    private final String send_payment_details = "YOUR-API-FOR-PAYMENTS";
-    private String  amount;
-    public static String token;
-    private HashMap<String, String> paramHash;
-    public Button btnPay;
-    private EditText etAmount;
+    public static final String PAYPAL_CLIENT_ID = "AUEI8B-07-XP-_Gjw5MtqWz_mdgIAZNLQfdjOXQL7WHx5oDrvJBwEwsr7X_MLMOjffWDTlOPefK0j3vV";
+    public static final int PAYPAL_REQUEST_CODE = 123;
+    private static PayPalConfiguration config;
+    private Button button;
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    /**
+     * Dispatch incoming result to the correct fragment.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PAYPAL_REQUEST_CODE) {
 
-        if (requestCode == REQUEST_CODE) {
+            //If the result is OK i.e. user has not canceled the payment
             if (resultCode == Activity.RESULT_OK) {
-                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
-                PaymentMethodNonce nonce = result.getPaymentMethodNonce();
-                String stringNonce = nonce.getNonce();
-                Log.d("mylog", "Result: " + stringNonce);
+                //Getting the payment confirmation
+                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 
-                // Send payment price with the nonce
-                // use the result to update your UI and send the payment method nonce to your server
-                if (!etAmount.getText().toString().isEmpty()) {
-                    amount = etAmount.getText().toString();
-                    paramHash = new HashMap<>();
-                    paramHash.put("amount", amount);
-                    paramHash.put("nonce", stringNonce);
-                    sendPaymentDetails();
-                } else
-                    Toast.makeText(Pay_activity.this, "Please enter a valid amount.", Toast.LENGTH_SHORT).show();
+                //if confirmation is not null
+                if (confirm != null) {
+                    try {
+                        //Getting the payment details
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.i("paymentExample", paymentDetails);
 
+                        //Starting a new activity for the payment details and also putting the payment details with intent
+                        startActivity(new Intent(this, ConfirmationActivity.class)
+                                .putExtra("PaymentDetails", paymentDetails)
+                                .putExtra("PaymentAmount", 10));
+
+                    } catch (JSONException e) {
+                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    }
+                }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                // the user canceled
-                Log.d("mylog", "user canceled");
-            } else {
-                // handle errors here, an exception may be available in
-                Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                Log.d("mylog", "Error : " + error.toString());
+                Log.i("paymentExample", "The user canceled.");
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             }
         }
     }
 
-    public void onBraintreeSubmit() {
-        DropInRequest dropInRequest = new DropInRequest()
-                .clientToken(token);
-        startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pay_activity);
+        config = new PayPalConfiguration().environment(
+                PayPalConfiguration.ENVIRONMENT_SANDBOX
+        ).clientId(PAYPAL_CLIENT_ID);
+
+
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);
+
+        button = findViewById(R.id.btn_pay);
+
+        button.setOnClickListener(view -> getPayment());
+
+
     }
+
+    private void getPayment() {
+
+        String paymentAmount = "10";
+
+        //Creating a paypalpayment
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        //Puting paypal payment to the intent
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
+}
+
+class ConfirmationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay_activity);
-        btnPay = findViewById(R.id.btnPay);
-        init_server();
+        setContentView(R.layout.confirm);
 
-        btnPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                onBraintreeSubmit();
-            }
-        });
-
-        new HttpRequest().execute();
-    }
-
-    public void init_server() {
-
-        BraintreeGateway gateway = new BraintreeGateway(
-                Environment.SANDBOX,
-                "5sqpp7pmzhdhptw9",
-                "fdc68cnngqs24b9c",
-                "9c483d0f3b361e92014cbf4f81cbe309"
-        );
-
-       token = gateway.clientToken().generate();
-        String path = "/checkout";
-
-       post(path, new Route() {
-           @Override
-           public Object handle(spark.Request request, spark.Response response) throws Exception {
-               return request.queryParams("payment_method_nonce");
-           }
-       });
-
-    }
+        //Getting Intent
+        Intent intent = getIntent();
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pay_activity, menu);
-        return true;
-    }
+        try {
+            JSONObject jsonDetails = new JSONObject(intent.getStringExtra("PaymentDetails"));
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            //Displaying payment details
+            showDetails(jsonDetails.getJSONObject("response"), intent.getStringExtra("PaymentAmount"));
+        } catch (JSONException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
+    private void showDetails(JSONObject jsonDetails, String paymentAmount) throws JSONException {
+        //Views
+        TextView textViewId = findViewById(R.id.t1);
+        TextView textViewStatus=  findViewById(R.id.t2);
+        TextView textViewAmount =  findViewById(R.id.t3);
 
-
-    private void sendPaymentDetails() {
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, send_payment_details,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if(response.contains("Successful"))
-                        {
-                            Toast.makeText(Pay_activity.this, "Transaction successful", Toast.LENGTH_LONG).show();
-                        }
-                        else Toast.makeText(Pay_activity.this, "Transaction failed", Toast.LENGTH_LONG).show();
-                        Log.d("mylog", "Final Response: " + response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("mylog", "Volley error : " + error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                if (paramHash == null)
-                    return null;
-                Map<String, String> params = new HashMap<>();
-                for (String key : paramHash.keySet()) {
-                    params.put(key, paramHash.get(key));
-                    Log.d("mylog", "Key : " + key + " Value : " + paramHash.get(key));
-                }
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                return params;
-            }
-        };
-        queue.add(stringRequest);
-    }
-
-
-}
-
- class HttpRequest extends AsyncTask  {
-    private Pay_activity pay_activity = new Pay_activity();
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-    }
-
-    @Override
-    protected Object doInBackground(Object[] objects) {
-        HttpClient client = new HttpClient();
-        client.get(Pay_activity.token, new HttpResponseCallback() {
-            @Override
-            public void success(String responseBody) {
-                Log.d("mylog", responseBody);
-
-                pay_activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        pay_activity.btnPay.setVisibility(View.VISIBLE);
-
-                    }
-                });
-
-                Pay_activity.token = responseBody;
-
-            }
-
-            @Override
-            public void failure(Exception exception) {
-                final Exception ex = exception;
-                System.out.println("EROOR ".concat(ex.toString()));
-            }
-        });
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-
+        //Showing the details from json object
+        textViewId.setText(jsonDetails.getString("id"));
+        textViewStatus.setText(jsonDetails.getString("state"));
+        textViewAmount.setText(paymentAmount.concat(" USD"));
     }
 }
