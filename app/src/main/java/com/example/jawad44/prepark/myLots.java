@@ -12,11 +12,11 @@ public class myLots extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_lots);
-        final EditText etAddress = (EditText) findViewById(R.id.etAddress);
-        final EditText spotsAvailable = (EditText) findViewById(R.id.etspotAvailable);
-        final EditText nextAvail = (EditText) findViewById(R.id.availabletime);
+        final EditText etAddress = (EditText) findViewById(R.id.address);
+        final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
+        final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
 
-        final Button b_submitML = (Button) findViewById(R.id.button_submit);
+        final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
 
         b_submitML.setOnClickListener(new View.OnClickListener() {
             @Override
