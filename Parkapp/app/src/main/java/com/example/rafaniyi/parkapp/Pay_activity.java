@@ -2,6 +2,7 @@ package com.example.rafaniyi.parkapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +62,7 @@ public class Pay_activity extends AppCompatActivity {
                         //Starting a new activity for the payment details and also putting the payment details with intent
                         startActivity(new Intent(this, ConfirmationActivity.class)
                                 .putExtra("PaymentDetails", paymentDetails)
-                                .putExtra("PaymentAmount", 10));
+                                .putExtra("PaymentAmount", 1));
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -97,7 +98,7 @@ public class Pay_activity extends AppCompatActivity {
 
     private void getPayment() {
 
-        String paymentAmount = "10";
+        String paymentAmount = "1";
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
@@ -149,5 +150,31 @@ class ConfirmationActivity extends AppCompatActivity {
         textViewId.setText(jsonDetails.getString("id"));
         textViewStatus.setText(jsonDetails.getString("state"));
         textViewAmount.setText(paymentAmount.concat(" USD"));
+
+        new Transaction(paymentAmount,jsonDetails.getString("state"),"DATE").execute();
+
+    }
+}
+
+
+class Transaction extends AsyncTask{
+
+    private String amount;
+    private String loc;
+    private String Date;
+
+    Transaction(String amount, String city, String date){
+        this.amount = amount;
+        this.Date = date;
+        this.loc = city;
+    }
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        //TODO: Send information to database
+        return null;
+    }
+
+    private String Tostring(){
+        return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
     }
 }
