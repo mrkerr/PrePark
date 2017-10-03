@@ -3,14 +3,27 @@
     $con = mysqli_connect("mysql.cs.iastate.edu", "dbu309sbb2", "5RVqfsTS", "db309sbb2");
 
     //testing conection, if it fails will output connection failed
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
     //varibles taking in corresponding variables from android
     $name = $_POST["name"];
     $username = $_POST["username"];
     $password = $_POST["password"];
     $email = $_POST["email"];
+
+    $emailstatement = mysqli_prepare($con, "SELECT count(*) FROM 'users' WHERE email = ?");
+    mysqli_stmt_bind_param($emailstatement, "s", $email);
+    $emailIsUsed = mysqli_stmt_execute($emailstatement);
+
+    if (mysql_num_rows($emailIsUsed) != 0) {
+        echo 'An account with this e-mail address already exists!';
+    }
+
+
+
+
+
 
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)");
