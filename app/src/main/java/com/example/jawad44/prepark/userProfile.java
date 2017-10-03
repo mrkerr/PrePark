@@ -10,7 +10,7 @@ public class userProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);//comment for git
         setContentView(R.layout.activity_user_profile);
 
         final Button b_setuplots = (Button) findViewById(R.id.button_setuplots);
