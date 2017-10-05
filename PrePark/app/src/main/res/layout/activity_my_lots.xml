@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:hint="Lot"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/num_available"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:hint="Available"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/nextavail"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:hint="Next Availability"
+        android:inputType="time" />
+
+    <Button
+        android:id="@+id/button_submitmylots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:text="Submit" />
+
+
+</RelativeLayout>
