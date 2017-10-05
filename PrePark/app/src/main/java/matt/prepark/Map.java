@@ -39,8 +39,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    Geocoder geocoder;
-    List<Address> lotMarker;
+    Geocoder geocoder;  //for decoding addresses into LatLng
+    List<Address> lotMarker;    //For storing addresses retrieved from geocoder
 
 
 
@@ -88,6 +88,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+        }
+
+        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA"};
+        LatLng latLng2;
+        MarkerOptions markerOptions2;
+        try {
+            for(int i = 0; i<test.length; i++){
+                lotMarker = geocoder.getFromLocationName(test[i], 1);
+                //Place marker for lot, change to for loop in future when >1 lot utilized
+                latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
+                markerOptions2 = new MarkerOptions();
+                markerOptions2.position(latLng2);
+                markerOptions2.title(test[i]);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker.showInfoWindow();
+            }
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -138,21 +159,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-        //Place marker for lot
-        String test = "4800 Mortensen Rd Ames IA";
-        try {
-            lotMarker = geocoder.getFromLocationName(test, 1);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-            LatLng latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
-            MarkerOptions markerOptions2 = new MarkerOptions();
-            markerOptions2.position(latLng2);
-            markerOptions2.title(test);
-            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            mCurrLocationMarker = mMap.addMarker(markerOptions2);
-            mCurrLocationMarker.showInfoWindow();
+
+
+
 
 
 
