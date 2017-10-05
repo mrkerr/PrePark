@@ -2,6 +2,8 @@ package matt.prepark;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +26,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Map extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -34,6 +39,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    Geocoder geocoder;
+    List<Address> lotMarker;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +70,11 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        geocoder = new Geocoder(this);
+
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -78,6 +90,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
     }
+
+
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -121,12 +135,33 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
+        //Place marker for lot
+        String test = "4800 Mortensen Rd Ames IA";
+        try {
+            lotMarker = geocoder.getFromLocationName(test, 1);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+            LatLng latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
+            MarkerOptions markerOptions2 = new MarkerOptions();
+            markerOptions2.position(latLng2);
+            markerOptions2.title(test);
+            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mCurrLocationMarker = mMap.addMarker(markerOptions2);
+            mCurrLocationMarker.showInfoWindow();
+
+
+
+
+
+
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        float zoomLevel = 16.0f; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
 
         //stop location updates
         if (mGoogleApiClient != null) {
