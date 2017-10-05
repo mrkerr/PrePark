@@ -34,27 +34,30 @@ public class EmailActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-
-                            if (success) {
-                                String email = jsonResponse.getString("email");
-
-                                Intent intent = new Intent(EmailActivity.this, LoginActivity.class);
-                                intent.putExtra("email", email);
-                                EmailActivity.this.startActivity(intent);
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(EmailActivity.this);
-                                builder.setMessage("Login Failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Intent intent = new Intent(EmailActivity.this, LoginActivity.class);
+                        //intent.putExtra("email", email);
+                        EmailActivity.this.startActivity(intent);
+//                        try {
+//                            JSONObject jsonResponse = new JSONObject(response);
+//                            boolean success = jsonResponse.getBoolean("success");
+//
+//                            if (success) {
+//                                String email = jsonResponse.getString("email");
+//
+//                                Intent intent = new Intent(EmailActivity.this, LoginActivity.class);
+//                                intent.putExtra("email", email);
+//                                EmailActivity.this.startActivity(intent);
+//                            } else {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(EmailActivity.this);
+//                                builder.setMessage("Login Failed")
+//                                        .setNegativeButton("Retry", null)
+//                                        .create()
+//                                        .show();
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 };
 
