@@ -1,0 +1,4 @@
+#Thu Sep 21 21:01:21 CDT 2017
+base.0=/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7
+renamed.0=classes.dex
+file.0=/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7/classes.dex

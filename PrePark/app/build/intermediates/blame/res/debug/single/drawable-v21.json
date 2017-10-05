@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/res/merged/debug/drawable-v21/notification_action_background.xml",
+        "source": "/Users/mattlawlor/.android/build-cache/0b0e4d07cb5874d733430c3849c31070c6f42faa/output/res/drawable-v21/notification_action_background.xml"
+    },
+    {
+        "merged": "/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/Users/mattlawlor/.android/build-cache/0b0e4d07cb5874d733430c3849c31070c6f42faa/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
+        "source": "/Users/mattlawlor/.android/build-cache/0b0e4d07cb5874d733430c3849c31070c6f42faa/output/res/drawable-v21/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/Users/mattlawlor/.android/build-cache/0b0e4d07cb5874d733430c3849c31070c6f42faa/output/res/drawable-v21/abc_btn_colored_material.xml"
+    }
+]

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3f360dac451170c707ba870ec9d2b59e38609264">
+        <dex dex="/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_983dcc4ca8413f29645928bbd79df73a8494ea69/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/mattlawlor/Documents/SB_B_2_ProjectName/PrePark/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_8d93bf2e141080bd54c2434307f98f5ea3d56b8c/classes.dex" />
+    </item>
+
+</items>

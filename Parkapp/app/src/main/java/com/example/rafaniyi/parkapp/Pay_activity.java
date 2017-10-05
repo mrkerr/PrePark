@@ -1,6 +1,8 @@
 package com.example.rafaniyi.parkapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -22,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pay_activity extends AppCompatActivity {
 
@@ -29,6 +37,7 @@ public class Pay_activity extends AppCompatActivity {
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
     private Button button;
+    private Context context;
 
     @Override
     protected void onDestroy() {
@@ -90,6 +99,8 @@ public class Pay_activity extends AppCompatActivity {
         startService(intent);
 
         button = findViewById(R.id.btn_pay);
+
+        context = this;
 
         button.setOnClickListener(view -> getPayment());
 
@@ -163,6 +174,7 @@ class Transaction extends AsyncTask{
     private String loc;
     private String Date;
 
+
     Transaction(String amount, String city, String date){
         this.amount = amount;
         this.Date = date;
@@ -171,10 +183,52 @@ class Transaction extends AsyncTask{
     @Override
     protected Object doInBackground(Object[] objects) {
         //TODO: Send information to database
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Overrid
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        System.out.println("hurray!");
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.);
+                        builder.setMessage("Register Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //String transaction = Tostring();
+        //TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
+        //RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
+        //queue.add(transactionRequest);
+
         return null;
     }
 
     private String Tostring(){
         return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
+    }
+}
+
+class TransactionRequest extends StringRequest {
+    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
+    private Map<String, String> params;
+
+    public TransactionRequest(String transaction, Response.Listener<String> listener) {
+        super(Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+        params = new HashMap<>();
+        params.put("transaction", transaction);
+    }
+
+    @Override
+    public Map<String, String> getParams() {
+        return params;
     }
 }
