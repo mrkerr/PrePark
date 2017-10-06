@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".myLots" />
+        <activity android:name=".setupLots" />
+        <activity android:name=".userProfile" />
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".EmailActivity"></activity>
     </application>
