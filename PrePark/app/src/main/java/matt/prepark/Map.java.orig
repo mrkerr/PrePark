@@ -110,7 +110,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         catch (IOException e) {
             e.printStackTrace();
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/mitch
     }
 
 
