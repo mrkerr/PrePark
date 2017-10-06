@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 /**
  * Created by mattlawlor on 9/21/17.
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText etUsername = (EditText) findViewById(R.id.etUsername);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
+        final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
+            }
+        });
+
+        tvForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(LoginActivity.this, EmailActivity.class);
+                LoginActivity.this.startActivity(emailIntent);
             }
         });
 

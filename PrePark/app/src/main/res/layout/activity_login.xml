@@ -53,4 +53,14 @@
         android:id="@+id/tvRegisterLink"
         android:layout_below="@+id/bSignIn"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#001eff"
+        android:text="Forgot Username or Password"
+        android:id="@+id/tvForgot"
+        android:layout_below="@+id/tvRegisterLink"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
