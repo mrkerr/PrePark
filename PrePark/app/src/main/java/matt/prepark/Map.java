@@ -89,6 +89,28 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
+        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA"};
+        LatLng latLng2;
+        MarkerOptions markerOptions2;
+        try {
+            for(int i = 0; i<test.length; i++){
+                lotMarker = geocoder.getFromLocationName(test[i], 1);
+                //Place marker for lot, change to for loop in future when >1 lot utilized
+                latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
+                markerOptions2 = new MarkerOptions();
+                markerOptions2.position(latLng2);
+                markerOptions2.title(test[i]);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker.showInfoWindow();
+            }
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

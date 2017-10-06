@@ -18,6 +18,7 @@ public class UserAreaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
         final Button bMap = (Button) findViewById(R.id.bMaps);
+        final Button b_userProfile = (Button) findViewById(R.id.bProfile);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -38,5 +39,14 @@ public class UserAreaActivity extends AppCompatActivity {
                 UserAreaActivity.this.startActivity(mapIntent);
             }
         });
+
+        b_userProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i_userprofile = new Intent(UserAreaActivity.this, userProfile.class);
+                startActivity(i_userprofile);
+            }
+        });
+
     }
 }
