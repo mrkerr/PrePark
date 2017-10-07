@@ -24,6 +24,7 @@ public class UserAreaActivity extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         String username = intent.getStringExtra("username");
         String email = intent.getStringExtra("email");
+        final Button b_userProfile = (Button) findViewById(R.id.bProfile);  //sending intent to userprofile
 
         EditText etUsername = (EditText) findViewById(R.id.etUsername);
         EditText etEmail = (EditText) findViewById(R.id.etEmail);
@@ -32,6 +33,7 @@ public class UserAreaActivity extends AppCompatActivity {
         etUsername.setText(username);
         etEmail.setText(email);
 
+<<<<<<< HEAD
         bMap.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -40,6 +42,8 @@ public class UserAreaActivity extends AppCompatActivity {
             }
         });
 
+=======
+>>>>>>> origin/jawad44
         b_userProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,5 +51,9 @@ public class UserAreaActivity extends AppCompatActivity {
                 startActivity(i_userprofile);
             }
         });
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/jawad44
     }
 }
