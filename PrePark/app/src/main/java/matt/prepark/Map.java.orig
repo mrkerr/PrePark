@@ -52,7 +52,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
+<<<<<<< HEAD
+=======
     ArrayList<String> mapPoints = new ArrayList<>();
+>>>>>>> origin/matt2
 
 
 
@@ -129,7 +132,24 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
+<<<<<<< HEAD
+        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA", "Iowa State University Ames Iowa"};
+        LatLng latLng2;
+        MarkerOptions markerOptions2 = new MarkerOptions();
 
+        for (String aTest : test) {
+            try {
+                lotMarker = geocoder.getFromLocationName(aTest, 1).get(0);
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                markerOptions2.position(latLng2);
+                markerOptions2.title(aTest);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker.showInfoWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+=======
         LatLng latLng2;
         MarkerOptions markerOptions2;
         try {
@@ -142,6 +162,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mCurrLocationMarker = mMap.addMarker(markerOptions2);
                 mCurrLocationMarker.showInfoWindow();
+>>>>>>> origin/matt2
         }
 
         }

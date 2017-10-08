@@ -47,6 +47,5 @@ public class UserAreaActivity extends AppCompatActivity {
                 startActivity(i_userprofile);
             }
         });
-
     }
 }
