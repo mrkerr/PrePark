@@ -40,7 +40,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
-    List<Address> lotMarker;    //For storing addresses retrieved from geocoder
+    Address lotMarker;    //For storing addresses retrieved from geocoder
 
 
 
@@ -59,15 +59,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -90,27 +82,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
-        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA"};
+        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA", "Iowa State University Ames Iowa"};
         LatLng latLng2;
-        MarkerOptions markerOptions2;
-        try {
-            for(int i = 0; i<test.length; i++){
-                lotMarker = geocoder.getFromLocationName(test[i], 1);
-                //Place marker for lot, change to for loop in future when >1 lot utilized
-                latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
-                markerOptions2 = new MarkerOptions();
+        MarkerOptions markerOptions2 = new MarkerOptions();
+
+        for (String aTest : test) {
+            try {
+                lotMarker = geocoder.getFromLocationName(aTest, 1).get(0);
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
                 markerOptions2.position(latLng2);
-                markerOptions2.title(test[i]);
+                markerOptions2.title(aTest);
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mCurrLocationMarker = mMap.addMarker(markerOptions2);
                 mCurrLocationMarker.showInfoWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 
 
 
@@ -194,9 +186,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
+
 
                 //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
@@ -245,8 +235,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
+
         }
     }
 }
