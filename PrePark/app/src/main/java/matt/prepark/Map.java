@@ -1,6 +1,8 @@
 package matt.prepark;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,6 +14,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -26,8 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class Map extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -249,4 +260,36 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             // You can add here other case statements according to your requirement.
         }
     }
+
+    ArrayList<String> address = new ArrayList<>();
+
+    // Response received from the server
+    Response.Listener<String> responseListener = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                boolean success = jsonResponse.getBoolean("success");
+
+                if (success) {
+                    String name = jsonResponse.getString("name");
+                    String email = jsonResponse.getString("email");
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+                    builder.setMessage("Login Failed")
+                            .setNegativeButton("Retry", null)
+                            .create()
+                            .show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    MapRequest mapRequest = new MapRequest(" ", responseListener);
+    RequestQueue queue = Volley.newRequestQueue(Map.this);
+    queue.add(mapRequest);
+
 }
