@@ -51,7 +51,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
-    List<Address> lotMarker;    //For storing addresses retrieved from geocoder
+    Address lotMarker;    //For storing addresses retrieved from geocoder
     ArrayList<String> mapPoints = new ArrayList<>();
 
 
@@ -75,34 +75,34 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
 
         // Response received from the server
-//        Response.Listener<String> responseListener = new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject jsonResponse = new JSONObject(response);
-//                    boolean success = jsonResponse.getBoolean("success");
-//                    if (success) {
-//                        String address = jsonResponse.getString("address");
-//                        String city = jsonResponse.getString("city");
-//                        String state = jsonResponse.getString("state");
-//                        mapPoints.add(address + " " + city + " " + state);
-//                    } else {
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-//                        builder.setMessage("Login Failed")
-//                                .setNegativeButton("Retry", null)
-//                                .create()
-//                                .show();
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//
-//        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
-//        RequestQueue queue = Volley.newRequestQueue(Map.this);
-//        queue.add(mapRequest);
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        String address = jsonResponse.getString("address");
+                        String city = jsonResponse.getString("city");
+                        String state = jsonResponse.getString("state");
+                        mapPoints.add(address + " " + city + " " + state);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Map.this);
+        queue.add(mapRequest);
     }
 
 
@@ -137,22 +137,18 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
-        String[] test = {"1732 South 4th St Ames IA", "1305 Georgia Avenue Ames IA", "2320 Lincoln Way Ames, IA"};
         LatLng latLng2;
         MarkerOptions markerOptions2;
         try {
-            for(int i = 0; i<test.length; i++){
-                lotMarker = geocoder.getFromLocationName(test[i], 1);
+                lotMarker = geocoder.getFromLocationName(mapPoints.get(0), 1).get(0);
                 //Place marker for lot, change to for loop in future when >1 lot utilized
-                latLng2 = new LatLng(lotMarker.get(0).getLatitude(), lotMarker.get(0).getLongitude());
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
-                markerOptions2.title(test[i]);
+                markerOptions2.title(mapPoints.get(0));
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mCurrLocationMarker = mMap.addMarker(markerOptions2);
                 mCurrLocationMarker.showInfoWindow();
-            }
-
         }
         catch (IOException e) {
             e.printStackTrace();

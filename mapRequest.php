@@ -14,7 +14,7 @@
     mysqli_stmt_execute($statement);
 
     mysqli_stmt_store_result($statement);
-    mysqli_stmt_bind_result($statement, $address, $city, $state;
+    mysqli_stmt_bind_result($statement, $address, $city, $state);
 
     $response = array();
     $response["success"] = false;
