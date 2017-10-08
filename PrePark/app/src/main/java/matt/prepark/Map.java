@@ -52,6 +52,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     List<Address> lotMarker;    //For storing addresses retrieved from geocoder
+    ArrayList<String> mapPoints = new ArrayList<>();
 
 
 
@@ -67,6 +68,41 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        String address = "";
+        String city = "";
+        String state = "";
+
+
+        // Response received from the server
+//        Response.Listener<String> responseListener = new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonResponse = new JSONObject(response);
+//                    boolean success = jsonResponse.getBoolean("success");
+//                    if (success) {
+//                        String address = jsonResponse.getString("address");
+//                        String city = jsonResponse.getString("city");
+//                        String state = jsonResponse.getString("state");
+//                        mapPoints.add(address + " " + city + " " + state);
+//                    } else {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+//                        builder.setMessage("Login Failed")
+//                                .setNegativeButton("Retry", null)
+//                                .create()
+//                                .show();
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//
+//        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+//        RequestQueue queue = Volley.newRequestQueue(Map.this);
+//        queue.add(mapRequest);
     }
 
 
@@ -260,36 +296,5 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             // You can add here other case statements according to your requirement.
         }
     }
-
-    ArrayList<String> address = new ArrayList<>();
-
-    // Response received from the server
-    Response.Listener<String> responseListener = new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-
-                if (success) {
-                    String name = jsonResponse.getString("name");
-                    String email = jsonResponse.getString("email");
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-                    builder.setMessage("Login Failed")
-                            .setNegativeButton("Retry", null)
-                            .create()
-                            .show();
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    MapRequest mapRequest = new MapRequest(" ", responseListener);
-    RequestQueue queue = Volley.newRequestQueue(Map.this);
-    queue.add(mapRequest);
 
 }

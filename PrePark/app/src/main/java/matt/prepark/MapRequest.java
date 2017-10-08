@@ -14,10 +14,12 @@ public class MapRequest extends StringRequest {
     private static final String MAP_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/mapRequest.php";
     private java.util.Map<String, String> params;
 
-    public MapRequest(String address, Response.Listener<String> listener) {
+    public MapRequest(String address, String city, String state, Response.Listener<String> listener) {
         super(Request.Method.POST, MAP_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("address", address);
+        params.put("city", city);
+        params.put("state", state);
     }
 
     @Override
