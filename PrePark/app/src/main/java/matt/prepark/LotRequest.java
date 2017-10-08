@@ -28,6 +28,7 @@ public class LotRequest extends StringRequest{
         params.put("username", username);
         params.put("password", password);
         params.put("email", email);
+
     }
 
     @Override
