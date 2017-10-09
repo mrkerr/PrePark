@@ -8,23 +8,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by jawad44 on 10/6/17.
+ * Created by jawad44 on 10/9/17.
  */
 
-public class LotRequest extends StringRequest{
+public class myLotsRequest extends StringRequest {
     private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
     private Map<String, String> params;
 
-    public RegisterRequest(String address, String city, String state, String zip, String spots, String time, String rate, Response.Listener<String> listener) {
+    public RegisterRequest(String address, String city, String state, String zip, String spots, String nextTime, Response.Listener<String> listener) {
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("address", address);
         params.put("city", city);
         params.put("state", state);
         params.put("zip", zip);
-        params.put("spots", spots);
-        params.put("time", time);
-        params.put("rate", rate);
+        params.put("available spots", spots);
+        params.put("Next availability", nextTime);
         params.put("username", username);
         params.put("password", password);
         params.put("email", email);
