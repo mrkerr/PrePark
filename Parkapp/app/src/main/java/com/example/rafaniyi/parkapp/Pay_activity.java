@@ -1,6 +1,10 @@
 package com.example.rafaniyi.parkapp;
 
 import android.app.Activity;
+<<<<<<< HEAD
+=======
+import android.app.AlertDialog;
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,7 +17,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.android.volley.Request;
+=======
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -28,9 +35,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+<<<<<<< HEAD
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +49,11 @@ public class Pay_activity extends AppCompatActivity {
     public static final String PAYPAL_CLIENT_ID = "AUEI8B-07-XP-_Gjw5MtqWz_mdgIAZNLQfdjOXQL7WHx5oDrvJBwEwsr7X_MLMOjffWDTlOPefK0j3vV";
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
+<<<<<<< HEAD
+=======
+    private Button button;
+    private Context context;
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
 
     @Override
     protected void onDestroy() {
@@ -101,6 +116,8 @@ public class Pay_activity extends AppCompatActivity {
 
         Button button = findViewById(R.id.btn_pay);
 
+        context = this;
+
         button.setOnClickListener(view -> getPayment());
 
 
@@ -137,7 +154,12 @@ class Transaction extends AsyncTask{
     private String Date;
     private Context context;
 
+<<<<<<< HEAD
     Transaction(String amount, String city, String date, Context context){
+=======
+
+    Transaction(String amount, String city, String date){
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
         this.amount = amount;
         this.Date = date;
         this.loc = city;
@@ -145,6 +167,7 @@ class Transaction extends AsyncTask{
     }
     @Override
     protected Object doInBackground(Object[] objects) {
+<<<<<<< HEAD
         Response.Listener<String> responseListener = response -> {
             try {
                 JSONObject jsonResponse = new JSONObject(response);
@@ -163,6 +186,34 @@ class Transaction extends AsyncTask{
         TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
         RequestQueue queue = Volley.newRequestQueue(this.context);
         queue.add(transactionRequest);
+=======
+        //TODO: Send information to database
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Overrid
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
+                        System.out.println("hurray!");
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.);
+                        builder.setMessage("Register Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //String transaction = Tostring();
+        //TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
+        //RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
+        //queue.add(transactionRequest);
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
 
         return null;
 
@@ -177,8 +228,13 @@ class TransactionRequest extends StringRequest {
     private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
     private Map<String, String> params;
 
+<<<<<<< HEAD
     TransactionRequest(String transaction, Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+=======
+    public TransactionRequest(String transaction, Response.Listener<String> listener) {
+        super(Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+>>>>>>> d3e931059e7d07d19e3b882da4397844be23797d
         params = new HashMap<>();
         params.put("transaction", transaction);
     }
