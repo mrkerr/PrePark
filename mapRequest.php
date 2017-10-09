@@ -24,7 +24,8 @@
         $response["address"] = $address;
         $response["city"] = $city;
         $response["state"] = $state;
+        echo json_encode($response);
     }
 
-    echo json_encode($response);
+    //echo json_encode($response);
 ?>

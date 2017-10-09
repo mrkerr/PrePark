@@ -12,19 +12,6 @@
     $password = $_POST["password"];
     $email = $_POST["email"];
 
-    $emailstatement = mysqli_prepare($con, "SELECT count(*) FROM 'users' WHERE email = ?");
-    mysqli_stmt_bind_param($emailstatement, "s", $email);
-    $emailIsUsed = mysqli_stmt_execute($emailstatement);
-
-    if (mysql_num_rows($emailIsUsed) != 0) {
-        echo 'An account with this e-mail address already exists!';
-    }
-
-
-
-
-
-
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)");
     //assigning the values with the ones given in android
