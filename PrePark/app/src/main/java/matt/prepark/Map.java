@@ -53,6 +53,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
     ArrayList<String> mapPoints = new ArrayList<>();
+    String [] test = new String[2];
+    boolean isReady = false;
 
 
 
@@ -65,7 +67,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             checkLocationPermission();
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -85,7 +87,13 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         String address = jsonResponse.getString("address");
                         String city = jsonResponse.getString("city");
                         String state = jsonResponse.getString("state");
-                        mapPoints.add(address + " " + city + " " + state);
+                        String combine = address + " " + city + " " + state;
+                        Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
+                        test[0] = combine;
+                        test[1] = "1305 Georgia Avenue Ames IA";
+                        addMarker(test);
+
+
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
                         builder.setMessage("Login Failed")
@@ -106,6 +114,32 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
+    public void addMarker(String[] test) {
+        LatLng latLng2;
+        MarkerOptions markerOptions2;
+        Toast.makeText(Map.this, test[0], Toast.LENGTH_SHORT).show();
+
+            for (int i = 0; i < test.length; i++) {
+                try {
+                    lotMarker = geocoder.getFromLocationName(test[i], 1).get(0);
+                    //Place marker for lot, change to for loop in future when >1 lot utilized
+                    latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                    markerOptions2 = new MarkerOptions();
+                    markerOptions2.position(latLng2);
+                    markerOptions2.title(test[i]);
+                    markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                    mCurrLocationMarker.showInfoWindow();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -123,28 +157,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
 
 
-        LatLng latLng2;
-        MarkerOptions markerOptions2;
-        try {
-                lotMarker = geocoder.getFromLocationName(mapPoints.get(0), 1).get(0);
-                //Place marker for lot, change to for loop in future when >1 lot utilized
-                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
-                markerOptions2 = new MarkerOptions();
-                markerOptions2.position(latLng2);
-                markerOptions2.title(mapPoints.get(0));
-                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                mCurrLocationMarker = mMap.addMarker(markerOptions2);
-                mCurrLocationMarker.showInfoWindow();
-        }
 
-        }
+    }
 
 
 
