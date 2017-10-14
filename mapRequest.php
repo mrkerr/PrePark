@@ -16,16 +16,35 @@
     mysqli_stmt_store_result($statement);
     mysqli_stmt_bind_result($statement, $address, $city, $state);
 
+    $responseObject = array();
+    $addressList = array();
+    $cityList = array();
+    $stateList = array();
+
     $response = array();
-    $response["success"] = false;
+    $response["success"] = true;
+    array_push($responseObject, $response);
+
+    // while(mysqli_stmt_fetch($statement)){
+    //     $response = array();
+    //     $response["success"] = true;
+    //     $response["address"] = $address;
+    //     $response["city"] = $city;
+    //     $response["state"] = $state;
+    //     array_push($responseObject, $response);
+    // }
 
     while(mysqli_stmt_fetch($statement)){
-        $response["success"] = true;
-        $response["address"] = $address;
-        $response["city"] = $city;
-        $response["state"] = $state;
-        echo json_encode($response);
+        array_push($addressList, $address);
+        array_push($cityList, $city);
+        array_push($stateList, $state);
     }
-
-    //echo json_encode($response);
+    //$output = json_encode(array('kitten' => $result));
+    $a = json_encode(array('address' => $addressList));
+    $c = json_encode(array('address' => $cityList));
+    $s = json_encode(array('address' => $stateList));
+    array_push($responseObject, $a);
+    array_push($responseObject, $c);
+    array_push($responseObject, $s);
+    echo json_encode($responseObject);
 ?>

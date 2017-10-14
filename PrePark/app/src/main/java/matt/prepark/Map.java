@@ -31,11 +31,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -82,25 +84,34 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        String address = jsonResponse.getString("address");
-                        String city = jsonResponse.getString("city");
-                        String state = jsonResponse.getString("state");
-                        String combine = address + " " + city + " " + state;
-                        Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
-                        test[0] = combine;
-                        test[1] = "1305 Georgia Avenue Ames IA";
-                        addMarker(test);
+                    //boolean success = jsonResponse.getBoolean("success");
+                    //if (success) {
+                        ArrayList<String> addressList = new ArrayList<>();
+                        ArrayList<String> cityList = new ArrayList<>();
+                        ArrayList<String> stateList = new ArrayList<>();
+
+                        JSONArray mArrayAddress  =  jsonResponse.getJSONArray("address");
+                        JSONArray mArrayCity  =  jsonResponse.getJSONArray("city");
+                        JSONArray mArrayState  =  jsonResponse.getJSONArray("state");
+
+                        for(int i=0 ; i<mArrayAddress.length(); i++)
+                        {
+                            addressList.add(mArrayAddress.get(i).toString());
+                            cityList.add(mArrayCity.get(i).toString());
+                            stateList.add(mArrayState.get(i).toString());
+                            String combine = addressList.get(i) + " " + cityList.get(i) + " " + stateList.get(i);
+                            Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
+                            //addMarker(combine);
+                        }
 
 
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-                        builder.setMessage("Login Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
+//                    } else {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+//                        builder.setMessage("Login Failed")
+//                                .setNegativeButton("Retry", null)
+//                                .create()
+//                                .show();
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,25 +119,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             }
         };
 
+
+
         MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Map.this);
         queue.add(mapRequest);
     }
 
 
-    public void addMarker(String[] test) {
+    public void addMarker(String test) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
-        Toast.makeText(Map.this, test[0], Toast.LENGTH_SHORT).show();
+        Toast.makeText(Map.this, test, Toast.LENGTH_SHORT).show();
 
-            for (int i = 0; i < test.length; i++) {
+
                 try {
-                    lotMarker = geocoder.getFromLocationName(test[i], 1).get(0);
+                    lotMarker = geocoder.getFromLocationName(test, 1).get(0);
                     //Place marker for lot, change to for loop in future when >1 lot utilized
                     latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
                     markerOptions2 = new MarkerOptions();
                     markerOptions2.position(latLng2);
-                    markerOptions2.title(test[i]);
+                    markerOptions2.title(test);
                     markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                     mCurrLocationMarker = mMap.addMarker(markerOptions2);
                     mCurrLocationMarker.showInfoWindow();
@@ -135,7 +148,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 }
 
             }
-        }
+
 
 
 
