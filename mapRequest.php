@@ -41,8 +41,8 @@
     }
     //$output = json_encode(array('kitten' => $result));
     $a = json_encode(array('address' => $addressList));
-    $c = json_encode(array('address' => $cityList));
-    $s = json_encode(array('address' => $stateList));
+    $c = json_encode(array('city' => $cityList));
+    $s = json_encode(array('state' => $stateList));
     array_push($responseObject, $a);
     array_push($responseObject, $c);
     array_push($responseObject, $s);
