@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -62,6 +64,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        final Button listView = (Button) findViewById(R.id.button1);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -75,6 +78,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         String city = "";
         String state = "";
 
+        //Sending an intent to ListOfLots
+        listView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i_ListView = new Intent(Map.this, ListOfLots.class);
+                startActivity(i_ListView);
+            }
+        });
 
         // Response received from the server
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -114,6 +125,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
+    
     public void addMarker(String[] test) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
