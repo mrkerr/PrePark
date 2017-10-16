@@ -31,7 +31,7 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/FromtimeBS"
+        android:id="@+id/FromTimeBS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/LicensePlateBS"
@@ -52,7 +52,7 @@
         android:layout_alignEnd="@+id/LicensePlateBS"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/FromtimeBS"
+        android:layout_alignTop="@+id/FromTimeBS"
         android:layout_marginBottom="220dp"
         android:layout_marginEnd="83dp"
         android:layout_marginTop="69dp"
@@ -69,3 +69,4 @@
         android:layout_marginBottom="86dp"
         android:text="Find Parking" />
 
+</RelativeLayout>
