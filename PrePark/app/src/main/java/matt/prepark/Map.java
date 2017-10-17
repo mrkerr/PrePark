@@ -83,26 +83,34 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonResponse = new JSONArray(response);
                     //boolean success = jsonResponse.getBoolean("success");
                     //if (success) {
                         ArrayList<String> addressList = new ArrayList<>();
                         ArrayList<String> cityList = new ArrayList<>();
                         ArrayList<String> stateList = new ArrayList<>();
 
-                        JSONArray mArrayAddress  =  jsonResponse.getJSONArray("address");
-                        JSONArray mArrayCity  =  jsonResponse.getJSONArray("city");
-                        JSONArray mArrayState  =  jsonResponse.getJSONArray("state");
 
-                        for(int i=0 ; i<mArrayAddress.length(); i++)
-                        {
-                            addressList.add(mArrayAddress.get(i).toString());
-                            cityList.add(mArrayCity.get(i).toString());
-                            stateList.add(mArrayState.get(i).toString());
-                            String combine = addressList.get(i) + " " + cityList.get(i) + " " + stateList.get(i);
-                            Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
-                            //addMarker(combine);
-                        }
+//                        JSONArray mArrayAddress  =  jsonResponse.getJSONArray("address");
+//                        JSONArray mArrayCity  =  jsonResponse.getJSONArray("city");
+//                        JSONArray mArrayState  =  jsonResponse.getJSONArray("state");
+
+                        //JSONObject AddressObject = jsonResponse.getJSONObject(1);
+                        JSONArray mArrayAddress = jsonResponse.getJSONArray(1);
+                        JSONObject AddressCity = jsonResponse.getJSONObject(2);
+                        JSONObject AddressState = jsonResponse.getJSONObject(3);
+                        Toast.makeText(Map.this, response.indexOf("address"), Toast.LENGTH_SHORT).show();
+
+//                        for(int i=0 ; i<mArrayAddress.length(); i++)
+//                        {
+//                            addressList.add(mArrayAddress.get(i).toString());
+//                            addressList.add(mArrayAddress.getJSONObject(1).toString());
+//                            cityList.add(mArrayCity.get(i).toString());
+//                            stateList.add(mArrayState.get(i).toString());
+//                            String combine = addressList.get(i) + " " + addressList.get(i+1)+" "+ cityList.get(i) + " " + stateList.get(i);
+//                            Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
+//                            //addMarker(combine);
+//                        }
 
 
 //                    } else {
