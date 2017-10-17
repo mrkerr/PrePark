@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Scanner;
 
 
 public class Map extends FragmentActivity implements OnMapReadyCallback,
@@ -73,7 +73,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        String address = "";
+        final String address = "";
         String city = "";
         String state = "";
 

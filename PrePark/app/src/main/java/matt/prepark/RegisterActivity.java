@@ -62,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (success) {
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                 RegisterActivity.this.startActivity(intent);
+
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 builder.setMessage("Register Failed")
