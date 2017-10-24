@@ -40,7 +40,9 @@
         <activity
             android:name=".ListOfLots"
             android:label="@string/title_activity_list_of_lots"
-            android:theme="@style/Theme.AppCompat.Light"></activity>
+            android:theme="@style/Theme.AppCompat.Light">
+
+        </activity>
     </application>
 
 </manifest>
