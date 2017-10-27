@@ -78,68 +78,98 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         String state = "";
 
 
-        // Response received from the server
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonResponse = new JSONArray(response);
-                    //boolean success = jsonResponse.getBoolean("success");
-                    //if (success) {
-                        ArrayList<String> addressList = new ArrayList<>();
-                        ArrayList<String> cityList = new ArrayList<>();
-                        ArrayList<String> stateList = new ArrayList<>();
+        while (true) {
+
+            // Response received from the server
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonResponse = new JSONArray(response);
+                        JSONObject successIndex = jsonResponse.getJSONObject(0);
+
+                        boolean success = successIndex.getBoolean("success");
+                        if (success) {
+
+                            String addressBlock = jsonResponse.getString(1);
+                            String stateBlock = jsonResponse.getString(2);
+                            String cityBlock = jsonResponse.getString(3);
+
+                            ArrayList<String> addressList = new ArrayList<>();
+                            ArrayList<String> cityList = new ArrayList<>();
+                            ArrayList<String> stateList = new ArrayList<>();
+
+                            String[] addressHead = addressBlock.split(":");
+                            String[] addressBody = addressHead[1].split(",");
+                            String[] stateHead = stateBlock.split(":");
+                            String[] stateBody = stateHead[1].split(",");
+                            String[] cityHead = cityBlock.split(":");
+                            String[] cityBody = cityHead[1].split(",");
 
 
-//                        JSONArray mArrayAddress  =  jsonResponse.getJSONArray("address");
-//                        JSONArray mArrayCity  =  jsonResponse.getJSONArray("city");
-//                        JSONArray mArrayState  =  jsonResponse.getJSONArray("state");
+                            for (int i = 0; i < addressBody.length; i++) {
+                                addressBody[i] = addressBody[i].replace("[", "");
+                                addressBody[i] = addressBody[i].replace("]", "");
+                                addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
+                                cityBody[i] = cityBody[i].replace("[", "");
+                                cityBody[i] = cityBody[i].replace("]", "");
+                                cityBody[i] = cityBody[i].replaceAll("^\"|\"$", "");
+                                stateBody[i] = stateBody[i].replace("[", "");
+                                stateBody[i] = stateBody[i].replace("]", "");
+                                stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
+                                addressList.add(addressBody[i]);
+                                cityList.add(cityBody[i]);
+                                stateList.add(stateBody[i]);
+                            }
 
-                        //JSONObject AddressObject = jsonResponse.getJSONObject(1);
-                        JSONArray mArrayAddress = jsonResponse.getJSONArray(1);
-                        JSONObject AddressCity = jsonResponse.getJSONObject(2);
-                        JSONObject AddressState = jsonResponse.getJSONObject(3);
-                        Toast.makeText(Map.this, response.indexOf("address"), Toast.LENGTH_SHORT).show();
+                            String addressEnd = addressList.get(addressList.size() - 1);
+                            addressList.remove(addressList.size() - 1);
+                            addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
+                            addressList.add(addressEnd);
 
-//                        for(int i=0 ; i<mArrayAddress.length(); i++)
-//                        {
-//                            addressList.add(mArrayAddress.get(i).toString());
-//                            addressList.add(mArrayAddress.getJSONObject(1).toString());
-//                            cityList.add(mArrayCity.get(i).toString());
-//                            stateList.add(mArrayState.get(i).toString());
-//                            String combine = addressList.get(i) + " " + addressList.get(i+1)+" "+ cityList.get(i) + " " + stateList.get(i);
-//                            Toast.makeText(Map.this, combine, Toast.LENGTH_SHORT).show();
-//                            //addMarker(combine);
-//                        }
+                            String cityEnd = cityList.get(cityList.size() - 1);
+                            cityList.remove(cityList.size() - 1);
+                            cityEnd = cityEnd.substring(0, cityEnd.length() - 2);
+                            cityList.add(cityEnd);
+
+                            String stateEnd = stateList.get(stateList.size() - 1);
+                            stateList.remove(stateList.size() - 1);
+                            stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
+                            stateList.add(stateEnd);
+                            addMarker(addressList, cityList, stateList);
 
 
-//                    } else {
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-//                        builder.setMessage("Login Failed")
-//                                .setNegativeButton("Retry", null)
-//                                .create()
-//                                .show();
-//                    }
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+                            builder.setMessage("Login Failed")
+                                    .setNegativeButton("Retry", null)
+                                    .create()
+                                    .show();
+                        }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+            };
+
+            MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(Map.this);
+            queue.add(mapRequest);
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
-
-
-
-        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(Map.this);
-        queue.add(mapRequest);
+        }
     }
 
 
-    public void addMarker(String test) {
+    public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
-        Toast.makeText(Map.this, test, Toast.LENGTH_SHORT).show();
-
+        String test = address.get(2) + " " + state.get(2) + " " + city.get(2);
+        Toast.makeText(this, test, Toast.LENGTH_LONG).show();
 
                 try {
                     lotMarker = geocoder.getFromLocationName(test, 1).get(0);
