@@ -55,9 +55,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
     ArrayList<String> mapPoints = new ArrayList<>();
-    String [] test = new String[2];
+    String[] test = new String[2];
     boolean isReady = false;
-
 
 
     @Override
@@ -78,118 +77,125 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         String state = "";
 
 
-        while (true) {
+        // Response received from the server
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //response is stored in an json array, usually it has been a json object
+                    JSONArray jsonResponse = new JSONArray(response);
+                    //because of json array, we need to cut it into json objects
+                    //here we are checking to see if the query was successful
+                    JSONObject successIndex = jsonResponse.getJSONObject(0);
 
-            // Response received from the server
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONArray jsonResponse = new JSONArray(response);
-                        JSONObject successIndex = jsonResponse.getJSONObject(0);
+                    //storing the boolean in our own variable
+                    boolean success = successIndex.getBoolean("success");
+                    if (success) {
 
-                        boolean success = successIndex.getBoolean("success");
-                        if (success) {
+                        //getting string "blocks" from the json array
+                        //the next process is formatting the strings to get the values I want
+                        String addressBlock = jsonResponse.getString(1);
+                        String stateBlock = jsonResponse.getString(2);
+                        String cityBlock = jsonResponse.getString(3);
 
-                            String addressBlock = jsonResponse.getString(1);
-                            String stateBlock = jsonResponse.getString(2);
-                            String cityBlock = jsonResponse.getString(3);
+                        //creating arraylists to store these individual variables
+                        ArrayList<String> addressList = new ArrayList<>();
+                        ArrayList<String> cityList = new ArrayList<>();
+                        ArrayList<String> stateList = new ArrayList<>();
 
-                            ArrayList<String> addressList = new ArrayList<>();
-                            ArrayList<String> cityList = new ArrayList<>();
-                            ArrayList<String> stateList = new ArrayList<>();
+                        //the head of these "blocks" are not needed so I split the strings
+                        //then split the body so we now have an array with just the variables
+                        //but they have some extra characters we don't want
+                        String[] addressHead = addressBlock.split(":");
+                        String[] addressBody = addressHead[1].split(",");
+                        String[] stateHead = stateBlock.split(":");
+                        String[] stateBody = stateHead[1].split(",");
+                        String[] cityHead = cityBlock.split(":");
+                        String[] cityBody = cityHead[1].split(",");
 
-                            String[] addressHead = addressBlock.split(":");
-                            String[] addressBody = addressHead[1].split(",");
-                            String[] stateHead = stateBlock.split(":");
-                            String[] stateBody = stateHead[1].split(",");
-                            String[] cityHead = cityBlock.split(":");
-                            String[] cityBody = cityHead[1].split(",");
-
-
-                            for (int i = 0; i < addressBody.length; i++) {
-                                addressBody[i] = addressBody[i].replace("[", "");
-                                addressBody[i] = addressBody[i].replace("]", "");
-                                addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
-                                cityBody[i] = cityBody[i].replace("[", "");
-                                cityBody[i] = cityBody[i].replace("]", "");
-                                cityBody[i] = cityBody[i].replaceAll("^\"|\"$", "");
-                                stateBody[i] = stateBody[i].replace("[", "");
-                                stateBody[i] = stateBody[i].replace("]", "");
-                                stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
-                                addressList.add(addressBody[i]);
-                                cityList.add(cityBody[i]);
-                                stateList.add(stateBody[i]);
-                            }
-
-                            String addressEnd = addressList.get(addressList.size() - 1);
-                            addressList.remove(addressList.size() - 1);
-                            addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
-                            addressList.add(addressEnd);
-
-                            String cityEnd = cityList.get(cityList.size() - 1);
-                            cityList.remove(cityList.size() - 1);
-                            cityEnd = cityEnd.substring(0, cityEnd.length() - 2);
-                            cityList.add(cityEnd);
-
-                            String stateEnd = stateList.get(stateList.size() - 1);
-                            stateList.remove(stateList.size() - 1);
-                            stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
-                            stateList.add(stateEnd);
-                            addMarker(addressList, cityList, stateList);
-
-
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-                            builder.setMessage("Login Failed")
-                                    .setNegativeButton("Retry", null)
-                                    .create()
-                                    .show();
+                        //we take these extra characters out and store them
+                        //into our arraylists
+                        for (int i = 0; i < addressBody.length; i++) {
+                            addressBody[i] = addressBody[i].replace("[", "");
+                            addressBody[i] = addressBody[i].replace("]", "");
+                            addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
+                            cityBody[i] = cityBody[i].replace("[", "");
+                            cityBody[i] = cityBody[i].replace("]", "");
+                            cityBody[i] = cityBody[i].replaceAll("^\"|\"$", "");
+                            stateBody[i] = stateBody[i].replace("[", "");
+                            stateBody[i] = stateBody[i].replace("]", "");
+                            stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
+                            addressList.add(addressBody[i]);
+                            cityList.add(cityBody[i]);
+                            stateList.add(stateBody[i]);
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
+                        //the last element in our arraylist doesn't have these
+                        //extra characters removed. There are extra characters
+                        //at the last two indices of the string
+                        //this section removes the last two elements
+                        String addressEnd = addressList.get(addressList.size() - 1);
+                        addressList.remove(addressList.size() - 1);
+                        addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
+                        addressList.add(addressEnd);
 
-            MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(Map.this);
-            queue.add(mapRequest);
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                        String cityEnd = cityList.get(cityList.size() - 1);
+                        cityList.remove(cityList.size() - 1);
+                        cityEnd = cityEnd.substring(0, cityEnd.length() - 2);
+                        cityList.add(cityEnd);
+
+                        String stateEnd = stateList.get(stateList.size() - 1);
+                        stateList.remove(stateList.size() - 1);
+                        stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
+                        stateList.add(stateEnd);
+
+                        //the arraylists are now all "clean" and are able to be plotted
+                        addMarker(addressList, cityList, stateList);
+
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        };
+
+        //sending a request to the server with address, city, state and responseListener
+        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Map.this);
+        queue.add(mapRequest);
+
     }
 
 
     public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
-        String test = address.get(2) + " " + state.get(2) + " " + city.get(2);
+        String test = address.get(0) + " " + state.get(0) + " " + city.get(0);
         Toast.makeText(this, test, Toast.LENGTH_LONG).show();
 
-                try {
-                    lotMarker = geocoder.getFromLocationName(test, 1).get(0);
-                    //Place marker for lot, change to for loop in future when >1 lot utilized
-                    latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
-                    markerOptions2 = new MarkerOptions();
-                    markerOptions2.position(latLng2);
-                    markerOptions2.title(test);
-                    markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                    mCurrLocationMarker = mMap.addMarker(markerOptions2);
-                    mCurrLocationMarker.showInfoWindow();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            lotMarker = geocoder.getFromLocationName(test, 1).get(0);
+            //Place marker for lot, change to for loop in future when >1 lot utilized
+            latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+            markerOptions2 = new MarkerOptions();
+            markerOptions2.position(latLng2);
+            markerOptions2.title(test);
+            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mCurrLocationMarker = mMap.addMarker(markerOptions2);
+            mCurrLocationMarker.showInfoWindow();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            }
-
-
-
-
+    }
 
 
     @Override
@@ -214,11 +220,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         }
 
 
-
     }
-
-
-
 
 
     protected synchronized void buildGoogleApiClient() {
@@ -267,14 +269,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
 
-
-
-
-
-
-
-
-
         //move map camera
         float zoomLevel = 16.0f; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
@@ -292,7 +286,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
+
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -300,7 +295,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
 
 
                 //Prompt the user once explanation has been shown

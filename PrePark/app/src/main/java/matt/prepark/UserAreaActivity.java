@@ -32,9 +32,9 @@ public class UserAreaActivity extends AppCompatActivity {
         etUsername.setText(username);
         etEmail.setText(email);
 
-        bMap.setOnClickListener(new View.OnClickListener(){
+        bMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent mapIntent = new Intent(UserAreaActivity.this, Map.class);
                 UserAreaActivity.this.startActivity(mapIntent);
             }

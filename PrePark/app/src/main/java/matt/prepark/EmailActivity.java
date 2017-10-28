@@ -29,6 +29,7 @@ public class EmailActivity extends AppCompatActivity {
         bSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //storing value given into a variable
                 final String email = etEmail.getText().toString();
 
                 // Response received from the server
@@ -36,9 +37,11 @@ public class EmailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            //creating a jsonResponse that will receive the php json
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
+                                //php was successful with the query and we now will change to the LoginActivity
                                 Intent intent = new Intent(EmailActivity.this, LoginActivity.class);
                                 EmailActivity.this.startActivity(intent);
                             } else {
@@ -55,6 +58,7 @@ public class EmailActivity extends AppCompatActivity {
                     }
                 };
 
+                //sending a request to the server with email variable and responseListener
                 EmailRequest emailRequest = new EmailRequest(email, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(EmailActivity.this);
                 queue.add(emailRequest);

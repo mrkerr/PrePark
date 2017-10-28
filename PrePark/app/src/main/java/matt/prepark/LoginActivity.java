@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //storing values into variables given from EditText
                 final String username = etUsername.getText().toString();
                 final String password = etPassword.getText().toString();
 
@@ -60,13 +61,18 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            //creating a jsonResponse that will receive the php json
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
+                                //php was successful with the query
+                                //from the json we get the name and email from the query results
                                 String name = jsonResponse.getString("name");
                                 String email = jsonResponse.getString("email");
 
+                                //change screen to the user area
+                                //keep name, email, username variables
                                 Intent intent = new Intent(LoginActivity.this, UserAreaActivity.class);
                                 intent.putExtra("name", name);
                                 intent.putExtra("email", email);
@@ -86,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 };
 
+                //sending a request to the server with username, password variables and responseListener
                 LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
