@@ -4,6 +4,9 @@ package matt.prepark;
  * @author JawadMRahman
  */
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +27,23 @@ import java.sql.Time;
 
 public class setupLots extends AppCompatActivity {
 
+    private void Notify(){
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n  = new Notification.Builder(this)
+                .setContentTitle("Thank you!")
+                .setContentText("Your parking lot at  "+address+" has been created")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0,n);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +61,7 @@ public class setupLots extends AppCompatActivity {
         final EditText spotsSL = (EditText) findViewById(R.id.num_spots_setuplots); //TODO time
         final EditText maxtimeSL = (EditText) findViewById(R.id.time_maxtime_setuplots); //TODO Time
         final EditText rateSL = (EditText) findViewById(R.id.rate_setuplots);   //TODO digit
+
 
         b_submitSL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +126,7 @@ public class setupLots extends AppCompatActivity {
                 LotRequest lotRequest = new LotRequest(address, city, state, zip, spots, time, rate, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(setupLots.this);
                 queue.add(lotRequest);
-
+                notify();
 
             }
         });
