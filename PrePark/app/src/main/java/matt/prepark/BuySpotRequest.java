@@ -17,16 +17,13 @@ public class BuySpotRequest extends StringRequest{
         private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
         private Map<String, String> params;
 
-        public BuySpotRequest(String address, String city, String state, String zip, String spots, String time, String rate, Response.Listener<String> listener) {
+        public BuySpotRequest(String zip, String licensePlate, String fromTime, String toTime, Response.Listener<String> listener) {
             super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
             params = new HashMap<>();
-            params.put("address", address);
-            params.put("city", city);
-            params.put("state", state);
+            params.put("address", licensePlate);
+            params.put("city", fromTime);
+            params.put("state", toTime);
             params.put("zip", zip);
-            params.put("spots", spots);
-            params.put("time", time);
-            params.put("rate", rate);
             params.put("username", username);
             params.put("password", password);
             params.put("email", email);
