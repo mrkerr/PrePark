@@ -2,13 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="matt.prepark">
 
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
 
     <application
         android:allowBackup="true"
@@ -17,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,16 +27,17 @@
         <activity android:name=".setupLots" />
         <activity android:name=".userProfile" />
         <activity android:name=".UserAreaActivity" />
-        <activity android:name=".EmailActivity"></activity>
+        <activity android:name=".EmailActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAWDXK1pHPzdBiaSFAZwymV428ORQH3Y_w" />
 
-
         <activity
             android:name=".Map"
             android:exported="true"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map" />
+        <activity android:name=".TransactionActivity"></activity>
     </application>
 
 </manifest>

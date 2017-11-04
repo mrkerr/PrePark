@@ -35,5 +35,12 @@ public class userProfile extends AppCompatActivity {
                 startActivity(i_mylots);
             }
         });
+        b_transactions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent transactionIntent = new Intent(userProfile.this, TransactionActivity.class);
+                userProfile.this.startActivity(transactionIntent);
+            }
+        });
     }
 }
