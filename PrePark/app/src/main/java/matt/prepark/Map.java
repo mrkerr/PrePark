@@ -57,6 +57,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> mapPoints = new ArrayList<>();
     String[] test = new String[2];
     boolean isReady = false;
+    Intent intent = getIntent();
+    final String username = intent.getStringExtra("username");
 
 
     @Override
