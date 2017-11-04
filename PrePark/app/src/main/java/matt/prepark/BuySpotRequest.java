@@ -17,7 +17,7 @@ public class BuySpotRequest extends StringRequest{
         private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
         private Map<String, String> params;
 
-        public RegisterRequest(String address, String city, String state, String zip, String spots, String time, String rate, Response.Listener<String> listener) {
+        public BuySpotRequest(String address, String city, String state, String zip, String spots, String time, String rate, Response.Listener<String> listener) {
             super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
             params = new HashMap<>();
             params.put("address", address);
