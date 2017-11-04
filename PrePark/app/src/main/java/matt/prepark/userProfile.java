@@ -38,7 +38,7 @@ public class userProfile extends AppCompatActivity {
         b_transactions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent transactionIntent = new Intent(userProfile.this, TransactionActivity.class);
+                Intent transactionIntent = new Intent(userProfile.this, transactionHistory.class);
                 userProfile.this.startActivity(transactionIntent);
             }
         });

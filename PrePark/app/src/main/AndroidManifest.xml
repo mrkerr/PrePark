@@ -37,7 +37,9 @@
             android:name=".Map"
             android:exported="true"
             android:label="@string/title_activity_map" />
-        <activity android:name=".TransactionActivity"></activity>
+        <activity android:name=".ConfirmationActivity" />
+        <activity android:name=".Pay_activity" />
+        <activity android:name=".transactionHistory" />
     </application>
 
 </manifest>
