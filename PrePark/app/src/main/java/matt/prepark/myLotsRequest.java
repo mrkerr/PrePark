@@ -15,12 +15,10 @@ public class myLotsRequest extends StringRequest {
     private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
     private Map<String, String> params;
 
-    public RegisterRequest(String address, String city, String state, String zip, String spots, String nextTime, Response.Listener<String> listener) {
+    public RegisterRequest(String address, String zip, String spots, String nextTime, Response.Listener<String> listener) {
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("address", address);
-        params.put("city", city);
-        params.put("state", state);
         params.put("zip", zip);
         params.put("available spots", spots);
         params.put("Next availability", nextTime);

@@ -60,25 +60,13 @@
         android:hint="Spots"
         android:inputType="number" />
 
-    <Switch
-        android:id="@+id/contactme_setuplots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="270dp"
-        android:hint="Contact Me" />
 
-    <Switch
-        android:id="@+id/overnight_setuplots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="310dp"
-        android:hint="Overnight" />
 
     <EditText
         android:id="@+id/time_maxtime_setuplots"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="280dp"
         android:hint="Max Time"
         android:inputType="time" />
 
@@ -86,23 +74,16 @@
         android:id="@+id/rate_setuplots"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="390dp"
+        android:layout_marginTop="320dp"
         android:hint="Rate"
         android:inputType="number" />
 
 
 
-
-    <Button
-        android:id="@+id/button_save_setuplots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="440dp"
-        android:text="Save" />
     <Button
         android:id="@+id/button_submit_setuplots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="490dp"
+        android:layout_marginTop="400dp"
         android:text="submit" />
 </RelativeLayout>

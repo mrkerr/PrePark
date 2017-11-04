@@ -61,9 +61,9 @@ public class BuySpot extends AppCompatActivity {
                     }
                 };
 
-                LotRequest BuySpotRequest = new LotRequest(zip, licensePlate, fromTime, toTime, responseListener);
+                BuySpotRequest bsRequest = new BuySpotRequest(zip, licensePlate, fromTime, toTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
-                queue.add(lotRequest);
+                queue.add(bsRequest;
 
 
             }

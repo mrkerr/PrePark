@@ -22,7 +22,7 @@
         android:id="@+id/num_available"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="170dp"
         android:hint="Available"
         android:inputType="number" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/nextavail"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="250dp"
         android:hint="Next Availability"
         android:inputType="time" />
 
@@ -40,6 +40,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="450dp"
         android:text="Submit" />
+
+    <EditText
+        android:id="@+id/zip_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/address"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Zip"
+        android:inputType="number" />
 
 
 </RelativeLayout>

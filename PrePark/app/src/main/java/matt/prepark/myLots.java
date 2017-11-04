@@ -28,6 +28,7 @@ public class myLots extends AppCompatActivity {
         final EditText etAddress = (EditText) findViewById(R.id.address);
         final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
         final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
+        final EditText zipML = (EditText) findViewById(R.id.zip_num);
 
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
 
@@ -35,12 +36,9 @@ public class myLots extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String address = etAddress.getText().toString();
-                final String city = et_citySL.getText().toString();
-                final String state = et_stateSL.getText().toString();
-                final String zip = et_zipSL.getText().toString();
                 final String spots = spotsAvailable.getText().toString();
                 final String nextTime = nextAvail.getText().toString();
-                final String rate = rateSL.getText().toString();
+                final String zip = zipML.getText().toString();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -65,7 +63,7 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-                LotRequest myLotsRequest = new LotRequest(address, city, state, zip, spots, nextTime, rate, responseListener);
+                LotRequest myLotsRequest = new LotRequest(address,zip, spots, nextTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(myLots.this);
                 queue.add(myLotsRequest);
 
