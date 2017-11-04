@@ -1,10 +1,16 @@
 package com.example.rafaniyi.parkapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -16,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +31,8 @@ import java.util.Map;
  */
 
 public class transactionHistory extends AppCompatActivity {
-    public static String trans;
+    public static ArrayList<String> arr;
+    public static String string;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +42,23 @@ public class transactionHistory extends AppCompatActivity {
 
         new req(getApplicationContext()).execute();
 
-        TextView textView = findViewById(R.id.trans);
 
-        if(trans.length() > 0)
-        textView.setText(trans);
+
+        TextView textView = findViewById(R.id.trans);
+        ListView listView = findViewById(R.id.listview);
+
+        if(arr.size() > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,arr);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener((adapterView, view, i, l) -> {
+
+                string = (String)listView.getAdapter().getItem(i);
+                Intent intent = new Intent(getApplicationContext(),getTransaction.class);
+                startActivity(intent);
+            });
+
+        }
 
         else
             textView.setText(empty);
@@ -77,7 +98,7 @@ class req extends AsyncTask{
                 boolean success = jsonResponse.getBoolean("success");
                 if (success) {
                     System.out.println("hurray!");
-                    transactionHistory.trans  = response;
+                    transactionHistory.arr.add(response);
                 } else {
                     System.out.println("Sorry!");
                 }
@@ -90,5 +111,19 @@ class req extends AsyncTask{
         RequestQueue queue = Volley.newRequestQueue(this.context);
         queue.add(new request(responseListener));
         return null;
+    }
+}
+
+
+class getTransaction extends FragmentActivity{
+
+    public getTransaction() {
+        super();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.get_transaction);
     }
 }

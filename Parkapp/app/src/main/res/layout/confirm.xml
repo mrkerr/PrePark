@@ -51,4 +51,12 @@
         android:shadowDy="1"
         android:shadowRadius="1"/>
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/share"
+        android:text="@string/share"
+        android:background="@color/colorPrimary"/>
+
 </LinearLayout>

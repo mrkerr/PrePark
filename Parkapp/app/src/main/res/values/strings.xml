@@ -5,4 +5,6 @@
     <string name="transaction_details">Transaction Details</string>
     <string name="lot_image">Lot_Image</string>
     <string name="congratulations_your_payment_was_successful">Congratulations! Your Payment was successful</string>
+    <string name="share">Share</string>
+    <string name="transaction_history">TRANSACTION HISTORY</string>
 </resources>
