@@ -21,10 +21,14 @@ public class userProfile extends AppCompatActivity {
         final Button b_mylots = (Button) findViewById(R.id.button_mylots);
         final Button b_transactions = (Button) findViewById(R.id.button_transactions);
 
+        Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
+
         b_setuplots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i_setuplots = new Intent(userProfile.this, setupLots.class);
+                i_setuplots.putExtra("username", username);
                 startActivity(i_setuplots);
             }
         });
@@ -32,6 +36,7 @@ public class userProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i_mylots = new Intent(userProfile.this, myLots.class);
+                i_mylots.putExtra("username", username);
                 startActivity(i_mylots);
             }
         });
@@ -39,6 +44,7 @@ public class userProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent transactionIntent = new Intent(userProfile.this, transactionHistory.class);
+                transactionIntent.putExtra("username", username);
                 userProfile.this.startActivity(transactionIntent);
             }
         });

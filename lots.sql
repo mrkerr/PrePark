@@ -1,4 +1,5 @@
 create table lots(
+username varchar (32),
 address varchar (50),
 city varchar (50),
 state varchar (50),
@@ -9,7 +10,7 @@ rate varchar (50));
 
 select * from lots;
 
-delete from lots;
+drop table lots;
 
 insert into lots values ("Iowa State University", "Ames", "IA", "50010", "10", "60", "10");
 

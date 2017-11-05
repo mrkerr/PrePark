@@ -30,6 +30,10 @@ public class setupLots extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_lots);
+
+        Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
+
         final Button b_submitSL = (Button) findViewById(R.id.button_submit_setuplots);
         final Button b_saveSL = (Button) findViewById(R.id.button_save_setuplots);
         final Switch s_contact = (Switch) findViewById(R.id.contactme_setuplots);
@@ -83,6 +87,7 @@ public class setupLots extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
                                 Intent intent = new Intent(setupLots.this, Map.class); //merge with mitch for this class
+                                intent.putExtra("username", username);
                                 setupLots.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(setupLots.this);
@@ -97,7 +102,7 @@ public class setupLots extends AppCompatActivity {
                     }
                 };
 
-                LotRequest lotRequest = new LotRequest(address, city, state, zip, spots, time, rate, responseListener);
+                LotRequest lotRequest = new LotRequest(username, address, city, state, zip, spots, time, rate, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(setupLots.this);
                 queue.add(lotRequest);
 

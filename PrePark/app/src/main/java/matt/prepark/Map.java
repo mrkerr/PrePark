@@ -57,14 +57,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> mapPoints = new ArrayList<>();
     String[] test = new String[2];
     boolean isReady = false;
-    Intent intent = getIntent();
-    final String username = intent.getStringExtra("username");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();

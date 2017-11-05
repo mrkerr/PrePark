@@ -44,6 +44,7 @@ public class UserAreaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i_userprofile = new Intent(UserAreaActivity.this, userProfile.class);
+                i_userprofile.putExtra("username", username);
                 startActivity(i_userprofile);
             }
         });

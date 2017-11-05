@@ -187,8 +187,8 @@ class TransactionRequest extends StringRequest {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
 
         params = new HashMap<>();
-        params.put("buyer",);
-        params.put("seller",);
+//        params.put("buyer",);
+//        params.put("seller",);
         params.put("transaction", transaction);
         params.put("date", Transaction.Date);
 

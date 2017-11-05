@@ -74,10 +74,10 @@ class request extends StringRequest {
     request( Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
         params = new HashMap<>();
-        params.put("buyer",);
-        params.put("seller",);
-        params.put("transaction");
-        params.put("date",);
+//        params.put("buyer",);
+//        params.put("seller",);
+//        params.put("transaction");
+//        params.put("date",);
 
     }
 
