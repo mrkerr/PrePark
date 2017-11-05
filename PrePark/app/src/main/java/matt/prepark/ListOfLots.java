@@ -28,6 +28,7 @@ public class ListOfLots extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_lots);
         listView = findViewById(R.id.list_view);
 
+
         final String[] listofLots = {"Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
         + "123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
                 + " 123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"

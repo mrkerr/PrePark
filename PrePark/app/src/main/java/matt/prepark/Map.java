@@ -184,6 +184,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         RequestQueue queue = Volley.newRequestQueue(Map.this);
         queue.add(mapRequest);
 
+
     }
 
 
