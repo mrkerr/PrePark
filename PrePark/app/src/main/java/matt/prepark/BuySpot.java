@@ -25,7 +25,7 @@ public class BuySpot extends AppCompatActivity {
         final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
-        final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
+        //final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
         final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
         final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
 
@@ -33,7 +33,7 @@ public class BuySpot extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String zip = zipBS.getText().toString();
-                final String licensePlate = lincenseplateBS.getText().toString();
+                //final String licensePlate = lincenseplateBS.getText().toString();
                 final String fromTime = fromBS.getText().toString();
                 final String toTime = toBS.getText().toString();
 
@@ -61,9 +61,9 @@ public class BuySpot extends AppCompatActivity {
                     }
                 };
 
-                BuySpotRequest bsRequest = new BuySpotRequest(zip, licensePlate, fromTime, toTime, responseListener);
+                BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
-                queue.add(bsRequest;
+                queue.add(bsRequest);
 
 
             }

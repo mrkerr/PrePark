@@ -20,17 +20,6 @@
         android:inputType="textPostalAddress" />
 
     <EditText
-        android:id="@+id/LicensePlateBS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/address_BS"
-        android:layout_marginTop="34dp"
-        android:ems="10"
-        android:hint="License Plate"
-        android:inputType="text" />
-
-    <EditText
         android:id="@+id/FromTimeBS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
