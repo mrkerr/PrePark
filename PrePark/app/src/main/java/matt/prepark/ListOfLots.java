@@ -28,30 +28,35 @@ public class ListOfLots extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_lots);
         listView = findViewById(R.id.list_view);
 
+        Intent MapIntent = getIntent();
+        ArrayList<String> aList = MapIntent.getStringArrayListExtra("addressList");
+        ArrayList<String> cList = MapIntent.getStringArrayListExtra("cityList");
+        ArrayList<String> sList = MapIntent.getStringArrayListExtra("stateList");
+        final String username = MapIntent.getStringExtra("username");
 
-        final String[] listofLots = {"Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
-        + "123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
-                + " 123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
-                + " 123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
-                + " 123 Main Street Ames, IA", "Iowa State University, Ames IA", "1305 Georgia Avenue Ames, IA", "4800 Mortensen Rd Ames IA", "Jack Trice Stadium Ames, IA"
-                + " 123 Main Street Ames, IA"};
+     ;
 
-        adapter = new ArrayAdapter(ListOfLots.this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ListHelper.class);
-                intent.putExtra("detail", listofLots[i]);
+                intent.putExtra("detailA", aList.get(i));
+                intent.putExtra("detailC", cList.get(i));
+                intent.putExtra("detailS", sList.get(i));
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
 
 
-        for(int i = 0; i < listofLots.length; i++){
-            list.add(listofLots[i]);
+        for(int i = 0; i < aList.size(); i++){
+            list.add(aList.get(i));
         }
+
+        adapter = new ArrayAdapter(ListOfLots.this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
 
 
 

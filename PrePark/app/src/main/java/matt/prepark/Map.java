@@ -41,12 +41,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-<<<<<<< HEAD
-=======
-import java.util.Scanner;
+
 import java.util.Timer;
 import java.util.TimerTask;
->>>>>>> origin/matt3
+
 
 
 public class Map extends FragmentActivity implements OnMapReadyCallback,
@@ -85,42 +83,30 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         getAddress(false);
 
-<<<<<<< HEAD
+
         //Sending an intent to ListOfLots
         listView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent i_ListView = new Intent(Map.this, ListOfLots.class);
+                i_ListView.putExtra("username", username);
+                i_ListView.putStringArrayListExtra("addressList", globalAddress);
+                i_ListView.putStringArrayListExtra("cityList", globalCity);
+                i_ListView.putStringArrayListExtra("stateList", globalState);
                 startActivity(i_ListView);
             }
         });
 
-        // Response received from the server
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-=======
         new Timer().scheduleAtFixedRate(new TimerTask() {
->>>>>>> origin/matt3
+
             @Override
-            public void run() {
-                getAddress(true);
-                }
-<<<<<<< HEAD
-            }
-        };
-
-        //sending a request to the server with address, city, state and responseListener
-        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(Map.this);
-        queue.add(mapRequest);
-
-
-=======
+            public void run() { getAddress(true); }
             } , 0, 10000);
->>>>>>> origin/matt3
+
     }
 
 
-    
+
     public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
@@ -128,8 +114,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         for (int i = 0; i < address.size(); i++) {
             plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
-<<<<<<< HEAD
-=======
         }
 
         plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";
@@ -148,25 +132,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             } catch (IOException e) {
                 e.printStackTrace();
             }
->>>>>>> origin/matt3
-        }
-        plotPoint[plotPoint.length - 1] = "Iowa State University Ames IA";
 
-        for(int j =0; j< plotPoint.length; j++){
-            try{
-                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
-                //Place marker for lot, change to for loop in future when >1 lot utilized
-                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
-                markerOptions2 = new MarkerOptions();
-                markerOptions2.position(latLng2);
-                markerOptions2.title(plotPoint[j]);
-                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                mCurrLocationMarker = mMap.addMarker(markerOptions2);
-                mCurrLocationMarker.showInfoWindow();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+
+
 
 
 

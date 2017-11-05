@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ public class Pay_activity extends AppCompatActivity {
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
     public static String username, address;
+    private String price;
 
     private Button button;
     private Context context;
@@ -95,13 +97,18 @@ public class Pay_activity extends AppCompatActivity {
         ).clientId(PAYPAL_CLIENT_ID);
 
         Intent nameIntent = getIntent();
-
         username = nameIntent.getStringExtra("username");
         address = nameIntent.getStringExtra("address");
+
 
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
+
+        TextView t = findViewById(R.id.t);
+
+        String j = "PRICE: " + price + "\n" + "Address: " + Pay_activity.address;
+        t.setText(j);
 
         Button button = findViewById(R.id.btn_pay);
 
@@ -109,7 +116,33 @@ public class Pay_activity extends AppCompatActivity {
 
         button.setOnClickListener(view -> getPayment());
 
+        // Response received from the server
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //creating a jsonResponse that will receive the php json
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if (success) {
 
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
+                        builder.setMessage("Failed TO Send Email")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        DetailsRequest detailsRequest = new DetailsRequest(address, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
+        queue.add(detailsRequest);
     }
 
     private void getPayment() {
@@ -241,6 +274,25 @@ class SellerRequest extends StringRequest {
         params = new HashMap<>();
         params.put("username", seller);
         params.put("address", Pay_activity.address);
+
+
+    }
+
+    @Override
+    public Map<String, String> getParams() {
+        return params;
+    }
+}
+
+class DetailsRequest extends StringRequest {
+    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/details.php";
+    private Map<String, String> params;
+
+    DetailsRequest(String address, Response.Listener<String> listener) {
+        super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+
+        params = new HashMap<>();
+        params.put("address", address);
 
 
     }
