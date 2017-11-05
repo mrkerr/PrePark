@@ -24,9 +24,9 @@ public class BuySpotRequest extends StringRequest{
             params.put("From", fromTime);
             params.put("To", toTime);
             params.put("zip", zip);
-            params.put("username", username);
-            params.put("password", password);
-            params.put("email", email);
+//            params.put("username", username);
+//            params.put("password", password);
+//            params.put("email", email);
 
         }
 

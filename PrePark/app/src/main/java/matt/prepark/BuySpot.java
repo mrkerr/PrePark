@@ -64,6 +64,8 @@ public class BuySpot extends AppCompatActivity {
                 BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
+                Intent i_mylots = new Intent(BuySpot.this, Map.class);
+                startActivity(i_mylots);
 
 
             }
