@@ -63,9 +63,9 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-                LotRequest myLotsRequest = new LotRequest(address, zip, spots, nextTime, responseListener); //?????????????
-                RequestQueue queue = Volley.newRequestQueue(myLots.this);
-                queue.add(myLotsRequest);
+//                LotRequest myLotsRequest = new LotRequest(address, zip, spots, nextTime, responseListener);
+//                RequestQueue queue = Volley.newRequestQueue(myLots.this);
+//                queue.add(myLotsRequest);
 
 
             }

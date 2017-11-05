@@ -28,8 +28,6 @@ public class LotRequest extends StringRequest {
         params.put("spots", spots);
         params.put("time", time);
         params.put("rate", rate);
-        params.put("password", password);
-        params.put("email", email);
 
     }
 
