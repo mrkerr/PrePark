@@ -7,4 +7,5 @@
     <string name="confirm_payement">Confirm Payement</string>
     <string name="transaction_history">Transaction History</string>
     <string name="congratulations_your_payement_was_succesful">Congratulations Your Payement was Succesful</string>
+    <string name="action_setting">action setting</string>
 </resources>
