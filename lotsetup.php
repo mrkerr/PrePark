@@ -7,6 +7,7 @@
     die("Connection failed: " . $con->connect_error);
 }
     //varibles taking in corresponding variables from android
+    $username = $_POST["username"];
     $address = $_POST["address"];
     $city = $_POST["city"];
     $state = $_POST["state"];
@@ -16,9 +17,9 @@
     $rate = $_POST["rate"];
 
     //passing in an insert statement
-    $statement = mysqli_prepare($con, "INSERT INTO lots (address, city, state, zip, spots, time, rate) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $statement = mysqli_prepare($con, "INSERT INTO lots (username, address, city, state, zip, spots, time, rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     //assigning the values with the ones given in android
-    mysqli_stmt_bind_param($statement, "sssssss", $address, $city, $state, $zip, $spots, $time, $rate);
+    mysqli_stmt_bind_param($statement, "ssssssss", $username, $address, $city, $state, $zip, $spots, $time, $rate);
     //executing statement
     mysqli_stmt_execute($statement);
 

@@ -21,9 +21,8 @@ public class UserAreaActivity extends AppCompatActivity {
         final Button b_userProfile = (Button) findViewById(R.id.bProfile);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String username = intent.getStringExtra("username");
-        String email = intent.getStringExtra("email");
+        final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
 
         EditText etUsername = (EditText) findViewById(R.id.etUsername);
         EditText etEmail = (EditText) findViewById(R.id.etEmail);
@@ -32,10 +31,11 @@ public class UserAreaActivity extends AppCompatActivity {
         etUsername.setText(username);
         etEmail.setText(email);
 
-        bMap.setOnClickListener(new View.OnClickListener(){
+        bMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent mapIntent = new Intent(UserAreaActivity.this, Map.class);
+                mapIntent.putExtra("username", username);
                 UserAreaActivity.this.startActivity(mapIntent);
             }
         });
@@ -44,6 +44,7 @@ public class UserAreaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i_userprofile = new Intent(UserAreaActivity.this, userProfile.class);
+                i_userprofile.putExtra("username", username);
                 startActivity(i_userprofile);
             }
         });

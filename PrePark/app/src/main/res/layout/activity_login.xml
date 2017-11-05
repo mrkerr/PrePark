@@ -43,7 +43,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/etPassword"
-        android:text="Sign In" />
+        android:text="Sign In"
+        android:theme="@style/MyButton"/>
+        <!--android:background="@drawable/image"-->
+
 
     <TextView
         android:layout_width="wrap_content"

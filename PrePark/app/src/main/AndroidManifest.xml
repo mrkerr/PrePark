@@ -31,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAWDXK1pHPzdBiaSFAZwymV428ORQH3Y_w" />
 
         <activity
             android:name=".Map"
@@ -44,6 +44,10 @@
         <activity android:name=".ListHelper"
             android:theme="@style/Theme.AppCompat.Dialog.Alert">
         </activity>
+        <activity android:name=".ConfirmationActivity" />
+        <activity android:name=".Pay_activity" />
+        <activity android:name=".transactionHistory" />
+        <activity android:name=".BuySpot"></activity>
     </application>
 
 </manifest>

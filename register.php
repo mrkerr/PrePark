@@ -5,26 +5,39 @@
     //testing conection, if it fails will output connection failed
     if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
-}
+  }
     //varibles taking in corresponding variables from android
     $name = $_POST["name"];
     $username = $_POST["username"];
     $password = $_POST["password"];
     $email = $_POST["email"];
 
-    $emailstatement = mysqli_prepare($con, "SELECT count(*) FROM 'users' WHERE email = ?");
-    mysqli_stmt_bind_param($emailstatement, "s", $email);
-    $emailIsUsed = mysqli_stmt_execute($emailstatement);
+    $existing_statement = mysqli_prepare($con, "SELECT username, email FROM user WHERE username = ? and email = ?");
+    mysqli_stmt_bind_param($existing_statement, "ss", $username, $email);
+    mysqli_stmt_execute($existing_statement);
 
-    if (mysql_num_rows($emailIsUsed) != 0) {
-        echo 'An account with this e-mail address already exists!';
+    mysqli_stmt_store_result($existing_statement);
+    mysqli_stmt_bind_result($existing_statement, $existing_username, $existing_email);
+
+    while(mysqli_stmt_fetch($existing_statement)){
+        $u = $existing_username;
+        $e = $existing_email;
     }
 
+    if (strcmp($username, $u) == 0 || strcmp($email, $e) == 0){
+      $fail = array();
+      $fail["success"] = false;
+      echo json_encode($fail);
+      die();
+    }
 
-
-
-
-
+    if ($name = null || $username == null || $password == null || $email == null) {
+      $fail = array();
+      $fail["success"] = false;
+      echo json_encode($fail);
+      die();
+    }
+    
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)");
     //assigning the values with the ones given in android

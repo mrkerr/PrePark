@@ -9,26 +9,28 @@
     //varibles taking in corresponding variables from android
     $email = $_POST["email"];
 
-    $statement = mysqli_prepare($con, "SELECT username, password FROM 'users' WHERE email = ?");
+    $statement = mysqli_prepare($con, "SELECT username, password FROM user WHERE email = ?");
     mysqli_stmt_bind_param($statement, "s", $email);
-    $query = mysqli_stmt_execute($statement);
+    mysqli_stmt_execute($statement);
 
-    //mysqli_stmt_store_result($statement);
-    //mysqli_stmt_bind_result($statement, $username, $password);
+    mysqli_stmt_store_result($statement);
+    mysqli_stmt_bind_result($statement, $username, $password);
 
-    $result = mysqli_fetch_array($query);
-    $username = $result['username'];
-    $password = $result['password'];
+    $response = array();
+    $response["success"] = false;
+
+    while(mysqli_stmt_fetch($statement)){
+        $response["success"] = true;
+        $u = $username;
+        $p = $password;
+    }
 
     //send email here
     $to = $email;
     $subject = "PrePark Username And Password";
-    $message = "Here is your username: " . $username . " and password: " . $password;
+    $message = "Here is your username: " . $u . " and password: " . $p;
 
     mail($to,$subject,$message);
-
-    $response = array();
-    $response["success"] = true;
 
     //sends back to server with response in json
     echo json_encode($response);
