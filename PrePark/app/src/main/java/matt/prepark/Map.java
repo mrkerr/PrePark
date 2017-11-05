@@ -180,21 +180,28 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
         LatLng latLng2;
         MarkerOptions markerOptions2;
-        String test = address.get(0) + " " + state.get(0) + " " + city.get(0);
-        Toast.makeText(this, test, Toast.LENGTH_LONG).show();
+        String[] plotPoint = new String[address.size() + 1];
 
-        try {
-            lotMarker = geocoder.getFromLocationName(test, 1).get(0);
-            //Place marker for lot, change to for loop in future when >1 lot utilized
-            latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
-            markerOptions2 = new MarkerOptions();
-            markerOptions2.position(latLng2);
-            markerOptions2.title(test);
-            markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            mCurrLocationMarker = mMap.addMarker(markerOptions2);
-            mCurrLocationMarker.showInfoWindow();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < address.size(); i++) {
+            plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
+        }
+
+        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";
+
+        for (int j = 0; j < plotPoint.length; j++) {
+            try {
+                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
+                //Place marker for lot, change to for loop in future when >1 lot utilized
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                markerOptions2 = new MarkerOptions();
+                markerOptions2.position(latLng2);
+                markerOptions2.title(plotPoint[j]);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker.showInfoWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
