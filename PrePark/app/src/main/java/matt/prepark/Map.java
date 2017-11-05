@@ -41,6 +41,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+>>>>>>> origin/matt3
 
 
 public class Map extends FragmentActivity implements OnMapReadyCallback,
@@ -55,9 +61,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
-    ArrayList<String> mapPoints = new ArrayList<>();
-    String[] test = new String[2];
-    boolean isReady = false;
+    ArrayList<String> globalAddress = new ArrayList<>();
+    ArrayList<String> globalCity = new ArrayList<>();
+    ArrayList<String> globalState = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +83,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        final String address = "";
-        String city = "";
-        String state = "";
+        getAddress(false);
 
+<<<<<<< HEAD
         //Sending an intent to ListOfLots
         listView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -91,91 +97,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         // Response received from the server
         Response.Listener<String> responseListener = new Response.Listener<String>() {
+=======
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+>>>>>>> origin/matt3
             @Override
-            public void onResponse(String response) {
-                try {
-                    //response is stored in an json array, usually it has been a json object
-                    JSONArray jsonResponse = new JSONArray(response);
-                    //because of json array, we need to cut it into json objects
-                    //here we are checking to see if the query was successful
-                    JSONObject successIndex = jsonResponse.getJSONObject(0);
-
-                    //storing the boolean in our own variable
-                    boolean success = successIndex.getBoolean("success");
-                    if (success) {
-
-                        //getting string "blocks" from the json array
-                        //the next process is formatting the strings to get the values I want
-                        String addressBlock = jsonResponse.getString(1);
-                        String stateBlock = jsonResponse.getString(2);
-                        String cityBlock = jsonResponse.getString(3);
-
-                        //creating arraylists to store these individual variables
-                        ArrayList<String> addressList = new ArrayList<>();
-                        ArrayList<String> cityList = new ArrayList<>();
-                        ArrayList<String> stateList = new ArrayList<>();
-
-                        //the head of these "blocks" are not needed so I split the strings
-                        //then split the body so we now have an array with just the variables
-                        //but they have some extra characters we don't want
-                        String[] addressHead = addressBlock.split(":");
-                        String[] addressBody = addressHead[1].split(",");
-                        String[] stateHead = stateBlock.split(":");
-                        String[] stateBody = stateHead[1].split(",");
-                        String[] cityHead = cityBlock.split(":");
-                        String[] cityBody = cityHead[1].split(",");
-
-                        //we take these extra characters out and store them
-                        //into our arraylists
-                        for (int i = 0; i < addressBody.length; i++) {
-                            addressBody[i] = addressBody[i].replace("[", "");
-                            addressBody[i] = addressBody[i].replace("]", "");
-                            addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
-                            cityBody[i] = cityBody[i].replace("[", "");
-                            cityBody[i] = cityBody[i].replace("]", "");
-                            cityBody[i] = cityBody[i].replaceAll("^\"|\"$", "");
-                            stateBody[i] = stateBody[i].replace("[", "");
-                            stateBody[i] = stateBody[i].replace("]", "");
-                            stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
-                            addressList.add(addressBody[i]);
-                            cityList.add(cityBody[i]);
-                            stateList.add(stateBody[i]);
-                        }
-
-                        //the last element in our arraylist doesn't have these
-                        //extra characters removed. There are extra characters
-                        //at the last two indices of the string
-                        //this section removes the last two elements
-                        String addressEnd = addressList.get(addressList.size() - 1);
-                        addressList.remove(addressList.size() - 1);
-                        addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
-                        addressList.add(addressEnd);
-
-                        String cityEnd = cityList.get(cityList.size() - 1);
-                        cityList.remove(cityList.size() - 1);
-                        cityEnd = cityEnd.substring(0, cityEnd.length() - 2);
-                        cityList.add(cityEnd);
-
-                        String stateEnd = stateList.get(stateList.size() - 1);
-                        stateList.remove(stateList.size() - 1);
-                        stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
-                        stateList.add(stateEnd);
-
-                        //the arraylists are now all "clean" and are able to be plotted
-                        addMarker(addressList, cityList, stateList);
-
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
-                        builder.setMessage("Login Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void run() {
+                getAddress(true);
                 }
+<<<<<<< HEAD
             }
         };
 
@@ -185,6 +114,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         queue.add(mapRequest);
 
 
+=======
+            } , 0, 10000);
+>>>>>>> origin/matt3
     }
 
 
@@ -196,6 +128,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         for (int i = 0; i < address.size(); i++) {
             plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
+<<<<<<< HEAD
+=======
+        }
+
+        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";
+
+        for (int j = 0; j < plotPoint.length; j++) {
+            try {
+                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
+                //Place marker for lot, change to for loop in future when >1 lot utilized
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                markerOptions2 = new MarkerOptions();
+                markerOptions2.position(latLng2);
+                markerOptions2.title(plotPoint[j]);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker.showInfoWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+>>>>>>> origin/matt3
         }
         plotPoint[plotPoint.length - 1] = "Iowa State University Ames IA";
 
@@ -368,6 +321,127 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
 
         }
+    }
+
+    public void getAddress(boolean needsUpdate) {
+        final String address = "";
+        String city = "";
+        String state = "";
+
+
+        // Response received from the server
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //response is stored in an json array, usually it has been a json object
+                    JSONArray jsonResponse = new JSONArray(response);
+                    //because of json array, we need to cut it into json objects
+                    //here we are checking to see if the query was successful
+                    JSONObject successIndex = jsonResponse.getJSONObject(0);
+
+                    //storing the boolean in our own variable
+                    boolean success = successIndex.getBoolean("success");
+                    if (success) {
+
+                        //getting string "blocks" from the json array
+                        //the next process is formatting the strings to get the values I want
+                        String addressBlock = jsonResponse.getString(1);
+                        String stateBlock = jsonResponse.getString(2);
+                        String cityBlock = jsonResponse.getString(3);
+
+                        //creating arraylists to store these individual variables
+                        ArrayList<String> addressList = new ArrayList<>();
+                        ArrayList<String> cityList = new ArrayList<>();
+                        ArrayList<String> stateList = new ArrayList<>();
+
+                        //the head of these "blocks" are not needed so I split the strings
+                        //then split the body so we now have an array with just the variables
+                        //but they have some extra characters we don't want
+                        String[] addressHead = addressBlock.split(":");
+                        String[] addressBody = addressHead[1].split(",");
+                        String[] stateHead = stateBlock.split(":");
+                        String[] stateBody = stateHead[1].split(",");
+                        String[] cityHead = cityBlock.split(":");
+                        String[] cityBody = cityHead[1].split(",");
+
+                        //we take these extra characters out and store them
+                        //into our arraylists
+                        for (int i = 0; i < addressBody.length; i++) {
+                            addressBody[i] = addressBody[i].replace("[", "");
+                            addressBody[i] = addressBody[i].replace("]", "");
+                            addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
+                            cityBody[i] = cityBody[i].replace("[", "");
+                            cityBody[i] = cityBody[i].replace("]", "");
+                            cityBody[i] = cityBody[i].replaceAll("^\"|\"$", "");
+                            stateBody[i] = stateBody[i].replace("[", "");
+                            stateBody[i] = stateBody[i].replace("]", "");
+                            stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
+                            addressList.add(addressBody[i]);
+                            cityList.add(cityBody[i]);
+                            stateList.add(stateBody[i]);
+                        }
+
+                        //the last element in our arraylist doesn't have these
+                        //extra characters removed. There are extra characters
+                        //at the last two indices of the string
+                        //this section removes the last two elements
+                        String addressEnd = addressList.get(addressList.size() - 1);
+                        addressList.remove(addressList.size() - 1);
+                        addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
+                        addressList.add(addressEnd);
+
+                        String cityEnd = cityList.get(cityList.size() - 1);
+                        cityList.remove(cityList.size() - 1);
+                        cityEnd = cityEnd.substring(0, cityEnd.length() - 2);
+                        cityList.add(cityEnd);
+
+                        String stateEnd = stateList.get(stateList.size() - 1);
+                        stateList.remove(stateList.size() - 1);
+                        stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
+                        stateList.add(stateEnd);
+
+                        if (needsUpdate == false) {
+                            //the arraylists are now all "clean" and are able to be plotted
+                            addMarker(addressList, cityList, stateList);
+                            globalAddress = addressList;
+                            globalCity = cityList;
+                            globalState = stateList;
+                        } else {
+                            if (addressList.size() > globalAddress.size()) {
+                                ArrayList<String> newAddressList = new ArrayList<>();
+                                ArrayList<String> newCityList = new ArrayList<>();
+                                ArrayList<String> newStateList = new ArrayList<>();
+                                for (int i = globalAddress.size(); i < addressList.size(); i++) {
+                                    newAddressList.add(addressList.get(i));
+                                    newCityList.add(cityList.get(i));
+                                    newStateList.add(stateList.get(i));
+                                }
+                                addMarker(newAddressList, newCityList, newStateList);
+                                globalAddress = newAddressList;
+                                globalCity = newCityList;
+                                globalState = newStateList;
+                            }
+                        }
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Map.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        //sending a request to the server with address, city, state and responseListener
+        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(Map.this);
+        queue.add(mapRequest);
     }
 
 }

@@ -34,7 +34,7 @@ public class Pay_activity extends AppCompatActivity {
     public static final String PAYPAL_CLIENT_ID = "AUEI8B-07-XP-_Gjw5MtqWz_mdgIAZNLQfdjOXQL7WHx5oDrvJBwEwsr7X_MLMOjffWDTlOPefK0j3vV";
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
-
+    public static String username, address;
 
     private Button button;
     private Context context;
@@ -94,6 +94,10 @@ public class Pay_activity extends AppCompatActivity {
                 PayPalConfiguration.ENVIRONMENT_SANDBOX
         ).clientId(PAYPAL_CLIENT_ID);
 
+        Intent nameIntent = getIntent();
+
+        username = nameIntent.getStringExtra("username");
+        address = nameIntent.getStringExtra("address");
 
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -138,6 +142,8 @@ class Transaction extends AsyncTask{
     private String loc;
     public static String Date;
     private Context context;
+    private String lotOwner;
+
 
 
     Transaction(String amount, String city, String date, Context context) {
@@ -149,6 +155,27 @@ class Transaction extends AsyncTask{
     }
     @Override
     protected Object doInBackground(Object[] objects) {
+
+        String seller = "";
+        Response.Listener<String> ResponseListener = response -> {
+            try {
+                JSONObject jsonResponse = new JSONObject(response);
+                boolean success = jsonResponse.getBoolean("success");
+                if (success) {
+                    System.out.println("hurray!");
+                    lotOwner = jsonResponse.getString("username");
+                } else {
+                    System.out.println("Sorry!");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+
+        SellerRequest sellerRequest = new SellerRequest(seller, ResponseListener);
+        RequestQueue q = Volley.newRequestQueue(this.context);
+        q.add(sellerRequest);
+
 
         Response.Listener<String> responseListener = response -> {
             try {
@@ -176,21 +203,45 @@ class Transaction extends AsyncTask{
         return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
     }
 
+
+    private class TransactionRequest extends StringRequest {
+        private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
+        private Map<String, String> params;
+
+
+        TransactionRequest(String transaction, Response.Listener<String> listener) {
+            super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+
+            params = new HashMap<>();
+            params.put("buyer", Pay_activity.username);
+            params.put("seller",lotOwner);
+            params.put("transaction", transaction);
+            params.put("date", Transaction.Date);
+
+        }
+
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
 }
 
-class TransactionRequest extends StringRequest {
-    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
+
+class SellerRequest extends StringRequest {
+    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
     private Map<String, String> params;
 
 
-    TransactionRequest(String transaction, Response.Listener<String> listener) {
+
+    SellerRequest(String seller, Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
 
         params = new HashMap<>();
-//        params.put("buyer",);
-//        params.put("seller",);
-        params.put("transaction", transaction);
-        params.put("date", Transaction.Date);
+        params.put("username", seller);
+        params.put("address", Pay_activity.address);
+
 
     }
 
@@ -199,4 +250,3 @@ class TransactionRequest extends StringRequest {
         return params;
     }
 }
-

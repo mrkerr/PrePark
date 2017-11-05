@@ -7,12 +7,15 @@
     die("Connection failed: " . $con->connect_error);
 }
     //varibles taking in corresponding variables from android
-    $transaction = $_POST["transaction"];
+	$buyer = $_POST["buyer"];
+	$seller = $_POST["seller"];
+	$transaction = $_POST["transaction"];
+    $date = $_POST["date"];
 
     //passing in an insert statement
-    $statement = mysqli_prepare($con, "INSERT INTO payment_history (payment) VALUES (?)");
+    $statement = mysqli_prepare($con, "INSERT INTO payment_history VALUES (?, ?, ?, ?)");
     //assigning the values with the ones given in android
-    mysqli_stmt_bind_param($statement, "s", $transaction);
+    mysqli_stmt_bind_param($statement, "ssss", $buyer, $seller, $transaction, $date);
     //executing statement
     mysqli_stmt_execute($statement);
 

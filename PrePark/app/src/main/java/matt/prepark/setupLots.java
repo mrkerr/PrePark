@@ -28,25 +28,25 @@ import java.sql.Time;
 //import java.util.Map;
 
 public class setupLots extends AppCompatActivity {
-//
-//    private void Notify(){
-//
-//        NotificationManager notificationManager = (NotificationManager)
-//                getSystemService(NOTIFICATION_SERVICE);
-//
-//        Intent intent = new Intent(this, Map.class);
-//        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-//
-//        Notification n  = new Notification.Builder(this)
-//                .setContentTitle("Thank you!")
-//                .setContentText("Your parking lot at  "+address+" has been created")
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .setContentIntent(pIntent)
-//                .setAutoCancel(true)
-//                .build();
-//
-//        notificationManager.notify(0,n);
-//    }
+   //private String address = null;
+    private void Notify(){
+
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n  = new Notification.Builder(this)
+                .setContentTitle("Congratulations!")
+                .setContentText("Your parking lot has been created")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0,n);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +105,7 @@ public class setupLots extends AppCompatActivity {
                 LotRequest lotRequest = new LotRequest(username, address, city, state, zip, spots, time, rate, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(setupLots.this);
                 queue.add(lotRequest);
-
-
+                Notify();
             }
         });
     }
