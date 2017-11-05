@@ -7,21 +7,35 @@
     }
 
     $username = $_POST["username"];
-    
-    $statement = mysqli_prepare($con, "SELECT payment FROM payement_history WHERE username = ?");
-    mysqli_stmt_bind_param($statement, "s", $username,);
-    mysqli_stmt_execute($statement);
+    $transaction = $_POST["transaction"];
+    $date = $_POST["date"];
+
+    $statement = mysqli_prepare($con, "SELECT buyer, seller, payment, date FROM payment_history WHERE buyer = ? or seller = ? and payment = ? and date = ?");
+    mysqli_stmt_bind_param($statement, "ssss", $username, $username, $transaction, $date);
 
     mysqli_stmt_store_result($statement);
-    mysqli_stmt_bind_result($statement,$transaction);
+    mysqli_stmt_bind_result($statement, $username, $transaction, $date);
+
+    $responseObject = array();
+    $usernameList = array();
+    $transactionList = array();
+    $dateList = array();
 
     $response = array();
-    $response["success"] = false;
+    $response["success"] = true;
+    array_push($responseObject, $response);
 
     while(mysqli_stmt_fetch($statement)){
-        $response["success"] = true;
-        $response["payment"] = $transaction;
+        array_push($usernameList, $username);
+        array_push($transactionList, $transaction);
+        array_push($dateList, $date);
     }
-
-    echo json_encode($response);
+    //$output = json_encode(array('kitten' => $result));
+    $u = json_encode(array('username' => $usernameList));
+    $t = json_encode(array('transaction' => $transactionList));
+    $d = json_encode(array('date' => $dateList));
+    array_push($responseObject, $u);
+    array_push($responseObject, $t);
+    array_push($responseObject, $d);
+    echo json_encode($responseObject);
 ?>
