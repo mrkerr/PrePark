@@ -1,9 +1,5 @@
 package matt.prepark;
 
-/**
- * @author JawadMRahman
- */
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,26 +15,28 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class myLots extends AppCompatActivity {
+public class BuySpot extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_lots);
-        final EditText etAddress = (EditText) findViewById(R.id.address);
-        final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
-        final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
-        final EditText zipML = (EditText) findViewById(R.id.zip_num);
+        setContentView(R.layout.activity_buy_spot);
 
-        final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
+        final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
-        b_submitML.setOnClickListener(new View.OnClickListener() {
+        final EditText zipBS = (EditText) findViewById(R.id.address_BS);
+        //final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
+        final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
+        final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
+
+        b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String address = etAddress.getText().toString();
-                final String spots = spotsAvailable.getText().toString();
-                final String nextTime = nextAvail.getText().toString();
-                final String zip = zipML.getText().toString();
+                final String zip = zipBS.getText().toString();
+                //final String licensePlate = lincenseplateBS.getText().toString();
+                final String fromTime = fromBS.getText().toString();
+                final String toTime = toBS.getText().toString();
+
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -48,10 +46,10 @@ public class myLots extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                Intent intent = new Intent(myLots.this, Map.class); //merge with mitch for this class
-                                myLots.this.startActivity(intent);
+                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
+                                BuySpot.this.startActivity(intent);
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(myLots.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BuySpot.this);
                                 builder.setMessage("Register Failed")
                                         .setNegativeButton("Retry", null)
                                         .create()
@@ -63,12 +61,15 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-                LotRequest myLotsRequest = new LotRequest(address, zip, spots, nextTime, responseListener); //?????????????
-                RequestQueue queue = Volley.newRequestQueue(myLots.this);
-                queue.add(myLotsRequest);
+                BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
+                queue.add(bsRequest);
+                Intent i_map = new Intent(BuySpot.this, Map.class);
+                startActivity(i_map);
 
 
             }
         });
+
     }
 }

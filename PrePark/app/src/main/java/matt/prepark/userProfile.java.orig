@@ -41,19 +41,20 @@ public class userProfile extends AppCompatActivity {
                 startActivity(i_mylots);
             }
         });
+<<<<<<< HEAD
         b_transactions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent transactionIntent = new Intent(userProfile.this, transactionHistory.class);
                 transactionIntent.putExtra("username", username);
                 userProfile.this.startActivity(transactionIntent);
-		}
-	});
+=======
         b_searchParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i_buyspot = new Intent(userProfile.this, BuySpot.class);
                 startActivity(i_buyspot);
+>>>>>>> origin/jawad44
             }
         });
     }
