@@ -62,6 +62,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> globalAddress = new ArrayList<>();
     ArrayList<String> globalCity = new ArrayList<>();
     ArrayList<String> globalState = new ArrayList<>();
+    String username2 = "";
 
 
     @Override
@@ -72,6 +73,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         Intent intent = getIntent();
         final String username = intent.getStringExtra("username");
+        username2 = username;
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -148,7 +150,16 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         geocoder = new Geocoder(this);
-
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                final String username3 = username2;
+                Intent intent2 = new Intent(Map.this, Pay_activity.class);
+                intent2.putExtra("address", marker.getTitle());
+                intent2.putExtra("username", username3);
+                startActivity(intent2);
+            }
+        });
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

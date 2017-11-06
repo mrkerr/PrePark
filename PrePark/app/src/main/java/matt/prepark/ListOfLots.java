@@ -52,7 +52,7 @@ public class ListOfLots extends AppCompatActivity {
 
 
         for(int i = 0; i < aList.size(); i++){
-            list.add(aList.get(i));
+            list.add(aList.get(i) +"\n" + sList.get(i) + "\n" + cList.get(i));
         }
 
         adapter = new ArrayAdapter(ListOfLots.this, android.R.layout.simple_list_item_1, list);
