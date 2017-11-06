@@ -5,6 +5,7 @@ package matt.prepark;
  */
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,8 +30,15 @@ public class myLots extends AppCompatActivity {
         final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
         final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
         final EditText zipML = (EditText) findViewById(R.id.zip_num);
-
+        final Button b_listView = (Button) findViewById(R.id.button_list);
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
+
+        b_listView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         b_submitML.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +48,9 @@ public class myLots extends AppCompatActivity {
                 final String nextTime = nextAvail.getText().toString();
                 final String zip = zipML.getText().toString();
 
+                ProgressDialog dialog = new ProgressDialog(myLots.this);
+                dialog.setMessage("Updating...");
+                dialog.show();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -63,9 +74,9 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-//                LotRequest myLotsRequest = new LotRequest(address, zip, spots, nextTime, responseListener);
-//                RequestQueue queue = Volley.newRequestQueue(myLots.this);
-//                queue.add(myLotsRequest);
+                myLotsRequest request = new myLotsRequest(address, zip, spots, nextTime, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(myLots.this);
+                queue.add(request);
 
 
             }

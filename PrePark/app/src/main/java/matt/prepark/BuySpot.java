@@ -39,7 +39,7 @@ public class BuySpot extends AppCompatActivity {
                 final String toTime = toBS.getText().toString();
                 //progress dialog
                 ProgressDialog dialog = new ProgressDialog(BuySpot.this);
-                dialog.setTitle("Searching");
+                dialog.setTitle("Please wait");
                 dialog.setMessage("Finding the right options for you...");
                 dialog.show();
 
