@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ListOfLots extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_lots);
         listView = findViewById(R.id.list_view);
+
 
         Intent MapIntent = getIntent();
         ArrayList<String> aList = MapIntent.getStringArrayListExtra("addressList");

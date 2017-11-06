@@ -20,7 +20,7 @@ public class ListHelper extends AppCompatActivity {
         setTitle("Lot Info");
 
         Intent intent = getIntent();
-        String val = intent.getStringExtra("detailA") + "\n" + intent.getStringExtra("detailC") + "\n" + intent.getStringExtra("detailS");
+        String val = intent.getStringExtra("detailA") + "\n" + intent.getStringExtra("detailS") + "\n" + intent.getStringExtra("detailC");
        final String aName = intent.getStringExtra("detailA");
         final String username = intent.getStringExtra("username");
         TextView tv = findViewById(R.id.textView3);

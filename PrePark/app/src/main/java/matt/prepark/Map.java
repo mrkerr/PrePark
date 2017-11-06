@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -123,7 +124,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         for (int j = 0; j < plotPoint.length; j++) {
             try {
                 lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
-                //Place marker for lot, change to for loop in future when >1 lot utilized
                 latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
@@ -153,10 +153,12 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                String distanceTo = getDistance(marker.getPosition(), mCurrLocationMarker.getPosition());
                 final String username3 = username2;
-                Intent intent2 = new Intent(Map.this, Pay_activity.class);
+                Intent intent2 = new Intent(Map.this, MapHelper.class);
                 intent2.putExtra("address", marker.getTitle());
                 intent2.putExtra("username", username3);
+                intent2.putExtra("distance", distanceTo);
                 startActivity(intent2);
             }
         });
@@ -422,6 +424,24 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Map.this);
         queue.add(mapRequest);
+    }
+    public String getDistance(LatLng from, LatLng to){
+        try{
+            Location malLoc = new Location("");
+            malLoc.setLatitude(from.latitude);
+            malLoc.setLongitude(from.longitude);
+
+            Location userLoc = new Location("");
+            userLoc.setLatitude(to.latitude);
+            userLoc.setLongitude(to.longitude);
+
+            double distance = malLoc.distanceTo(userLoc) / 1000;
+            distance = distance * 0.62137;
+            return "You are " + String.format(Locale.getDefault(), "%.2f", distance) + " miles away from the lot";
+
+        } catch(Exception e){
+            return "Unknown distance";
+        }
     }
 
 }
