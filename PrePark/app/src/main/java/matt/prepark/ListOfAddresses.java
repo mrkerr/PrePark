@@ -21,7 +21,7 @@ public class ListOfAddresses extends ListActivity {
         //zipList.get
 
         //keep adding
-        for(int i=0; i<list.size();i++)
+    //    for(int i=0; i<list.size();i++)
         {
             //list.add()
         }
