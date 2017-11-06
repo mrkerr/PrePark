@@ -5,6 +5,9 @@ package matt.prepark;
  */
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +24,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class myLots extends AppCompatActivity {
+    private void Notify(){
 
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n  = new Notification.Builder(this)
+                .setContentText("Lot updated")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0,n);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +96,7 @@ public class myLots extends AppCompatActivity {
                 myLotsRequest request = new myLotsRequest(address, zip, spots, nextTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(myLots.this);
                 queue.add(request);
-
+                Notify();
 
             }
         });
