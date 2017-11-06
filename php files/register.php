@@ -41,12 +41,12 @@
     }
 
     //checking for spaces
-    if (strlen(trim($name)) == 0 || strlen(trim($username)) == 0  || strlen(trim($password)) == 0  || $strlen(trim($email)) == 0 ) {
-      $fail = array();
-      $fail["success"] = false;
-      echo json_encode($fail);
-      die();
-    }
+    // if (strlen(trim($name)) == 0 || strlen(trim($username)) == 0  || strlen(trim($password)) == 0  || $strlen(trim($email)) == 0 ) {
+    //   $fail = array();
+    //   $fail["success"] = false;
+    //   echo json_encode($fail);
+    //   die();
+    // }
 
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)");

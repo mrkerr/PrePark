@@ -20,4 +20,4 @@ email varchar (32));
 
 delete from user where name = " ";
 
-insert into user values ("Matt", "mlawlor", "password", "mlawlor@iastate.edu");
+insert into user values (" ", " ", " ", " ");

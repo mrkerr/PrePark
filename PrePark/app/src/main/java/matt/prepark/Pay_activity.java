@@ -128,9 +128,9 @@ public class Pay_activity extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
-                        spots = jsonResponse.getString("spots");
-                        time = jsonResponse.getString("time");
-                        rate = jsonResponse.getString("rate");
+//                        spots = jsonResponse.getString("spots");  //TODO
+//                        time = jsonResponse.getString("time");    //TODO
+//                        rate = jsonResponse.getString("rate");    //TODO
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
