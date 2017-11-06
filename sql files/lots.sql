@@ -16,4 +16,4 @@ insert into lots values ("Iowa State University", "Ames", "IA", "50010", "10", "
 
 SELECT address, city, state FROM lots;
 
-delete from lots;
+delete from lots where username is null;

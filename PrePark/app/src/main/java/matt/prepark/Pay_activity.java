@@ -42,6 +42,8 @@ public class Pay_activity extends AppCompatActivity {
     private Context context;
 
 
+
+
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
@@ -99,6 +101,7 @@ public class Pay_activity extends AppCompatActivity {
         Intent nameIntent = getIntent();
         username = nameIntent.getStringExtra("username");
         address = nameIntent.getStringExtra("address");
+        final String spots, time, rate;
 
 
         Intent intent = new Intent(this, PayPalService.class);
@@ -125,6 +128,9 @@ public class Pay_activity extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
+                        spots = jsonResponse.getString("spots");
+                        time = jsonResponse.getString("time");
+                        rate = jsonResponse.getString("rate");
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
