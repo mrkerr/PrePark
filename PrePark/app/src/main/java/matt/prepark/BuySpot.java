@@ -1,6 +1,7 @@
 package matt.prepark;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,7 +37,11 @@ public class BuySpot extends AppCompatActivity {
                 //final String licensePlate = lincenseplateBS.getText().toString();
                 final String fromTime = fromBS.getText().toString();
                 final String toTime = toBS.getText().toString();
-
+                //progress dialog
+                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
+                dialog.setTitle("Please wait");
+                dialog.setMessage("Finding the right options for you...");
+                dialog.show();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -64,8 +69,8 @@ public class BuySpot extends AppCompatActivity {
                 BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
-                Intent i_map = new Intent(BuySpot.this, Map.class);
-                startActivity(i_map);
+//                Intent i_map = new Intent(BuySpot.this, Map.class);
+ //               startActivity(i_map);
 
 
             }

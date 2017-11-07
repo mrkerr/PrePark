@@ -77,7 +77,7 @@ public class setupLots extends AppCompatActivity {
                 final String spots = spotsSL.getText().toString();
                 final String time = maxtimeSL.getText().toString();
                 final String rate = rateSL.getText().toString();
-
+                Notify();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -105,7 +105,6 @@ public class setupLots extends AppCompatActivity {
                 LotRequest lotRequest = new LotRequest(username, address, city, state, zip, spots, time, rate, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(setupLots.this);
                 queue.add(lotRequest);
-                Notify();
             }
         });
     }
