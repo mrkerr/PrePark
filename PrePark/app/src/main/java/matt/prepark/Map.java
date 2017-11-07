@@ -214,9 +214,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onInfoWindowClick(Marker marker) {
                 String spotTimeRate = marker.getSnippet();  //Get formatted string
-                String[] parts = spotTimeRate.split("|");   //Split at "|" marker
+                String[] parts = spotTimeRate.split("\\|");   //Split at "|" marker
+
                 String spotTemp = parts[0];                 //Get first part
-                String spot = spotTemp.substring(7, spotTemp.length()-1);
+                String spot = spotTemp.substring(7, spotTemp.length());
 
                 String timeTemp = parts[1];                 //Get second part
                 String time = timeTemp.substring(7, timeTemp.length()-9);
