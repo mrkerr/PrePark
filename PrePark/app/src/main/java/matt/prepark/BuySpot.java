@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuySpot extends AppCompatActivity {
-    ArrayList<String> gAddress = new ArrayList<>();
+   public ArrayList<String> gAddress = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,8 @@ public class BuySpot extends AppCompatActivity {
                                 addressList.remove(addressList.size() - 1);
                                 addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
                                 addressList.add(addressEnd);
+                              //  Log.d("baz", addressList.toString());
+
                                 gAddress = addressList;
 
 //                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
@@ -120,4 +123,5 @@ public class BuySpot extends AppCompatActivity {
         });
 
     }
+
 }
