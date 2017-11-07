@@ -62,6 +62,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> globalAddress = new ArrayList<>();
     ArrayList<String> globalCity = new ArrayList<>();
     ArrayList<String> globalState = new ArrayList<>();
+    ArrayList<String> globalSpots = new ArrayList<>();
+    ArrayList<String> globalTime = new ArrayList<>();
+    ArrayList<String> globalRate = new ArrayList<>();
+
 
 
     @Override
@@ -93,6 +97,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 i_ListView.putStringArrayListExtra("addressList", globalAddress);
                 i_ListView.putStringArrayListExtra("cityList", globalCity);
                 i_ListView.putStringArrayListExtra("stateList", globalState);
+                i_ListView.putStringArrayListExtra("spotsList", globalSpots);
+                i_ListView.putStringArrayListExtra("timeList", globalTime);
+                i_ListView.putStringArrayListExtra("rateList", globalRate);
                 startActivity(i_ListView);
             }
         });
@@ -296,6 +303,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         final String address = "";
         String city = "";
         String state = "";
+        String spots = "";
+        String time = "";
+        String rate = "";
 
 
         // Response received from the server
@@ -318,11 +328,17 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         String addressBlock = jsonResponse.getString(1);
                         String stateBlock = jsonResponse.getString(2);
                         String cityBlock = jsonResponse.getString(3);
+                        String spotsBlock = jsonResponse.getString(4);
+                        String timeBlock = jsonResponse.getString(5);
+                        String rateBlock = jsonResponse.getString(6);
 
                         //creating arraylists to store these individual variables
                         ArrayList<String> addressList = new ArrayList<>();
                         ArrayList<String> cityList = new ArrayList<>();
                         ArrayList<String> stateList = new ArrayList<>();
+                        ArrayList<String> spotsList = new ArrayList<>();
+                        ArrayList<String> timeList = new ArrayList<>();
+                        ArrayList<String> rateList = new ArrayList<>();
 
                         //the head of these "blocks" are not needed so I split the strings
                         //then split the body so we now have an array with just the variables
@@ -333,6 +349,13 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         String[] stateBody = stateHead[1].split(",");
                         String[] cityHead = cityBlock.split(":");
                         String[] cityBody = cityHead[1].split(",");
+
+                        String[] spotsHead = spotsBlock.split(":");
+                        String[] spotsBody = spotsHead[1].split(",");
+                        String[] timeHead = timeBlock.split(":");
+                        String[] timeBody = timeHead[1].split(",");
+                        String[] rateHead = rateBlock.split(":");
+                        String[] rateBody = rateHead[1].split(",");
 
                         //we take these extra characters out and store them
                         //into our arraylists
@@ -346,9 +369,26 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                             stateBody[i] = stateBody[i].replace("[", "");
                             stateBody[i] = stateBody[i].replace("]", "");
                             stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
+
+                            spotsBody[i] = spotsBody[i].replace("[", "");
+                            spotsBody[i] = spotsBody[i].replace("]", "");
+                            spotsBody[i] = spotsBody[i].replaceAll("^\"|\"$", "");
+
+                            timeBody[i] = timeBody[i].replace("[", "");
+                            timeBody[i] = timeBody[i].replace("]", "");
+                            timeBody[i] = timeBody[i].replaceAll("^\"|\"$", "");
+
+                            rateBody[i] = rateBody[i].replace("[", "");
+                            rateBody[i] = rateBody[i].replace("]", "");
+                            rateBody[i] = rateBody[i].replaceAll("^\"|\"$", "");
+
                             addressList.add(addressBody[i]);
                             cityList.add(cityBody[i]);
                             stateList.add(stateBody[i]);
+
+                            spotsList.add(spotsBody[i]);
+                            timeList.add(timeBody[i]);
+                            rateList.add(rateBody[i]);
                         }
 
                         //the last element in our arraylist doesn't have these
@@ -370,26 +410,58 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
                         stateList.add(stateEnd);
 
+                        String spotsEnd = spotsList.get(spotsList.size() - 1);
+                        stateList.remove(spotsList.size() - 1);
+                        spotsEnd = spotsEnd.substring(0, spotsEnd.length() - 2);
+                        spotsList.add(spotsEnd);
+
+                        String timeEnd = timeList.get(timeList.size() - 1);
+                        timeList.remove(timeList.size() - 1);
+                        timeEnd = timeEnd.substring(0, timeEnd.length() - 2);
+                        timeList.add(timeEnd);
+
+                        String rateEnd = rateList.get(rateList.size() - 1);
+                        rateList.remove(rateList.size() - 1);
+                        rateEnd = rateEnd.substring(0, rateEnd.length() - 2);
+                        rateList.add(rateEnd);
+
                         if (needsUpdate == false) {
                             //the arraylists are now all "clean" and are able to be plotted
                             addMarker(addressList, cityList, stateList);
                             globalAddress = addressList;
                             globalCity = cityList;
                             globalState = stateList;
+
+                            globalSpots = spotsList;
+                            globalTime = timeList;
+                            globalRate = rateList;
+
                         } else {
                             if (addressList.size() > globalAddress.size()) {
                                 ArrayList<String> newAddressList = new ArrayList<>();
                                 ArrayList<String> newCityList = new ArrayList<>();
                                 ArrayList<String> newStateList = new ArrayList<>();
+
+                                ArrayList<String> newSpotsList = new ArrayList<>();
+                                ArrayList<String> newTimeList = new ArrayList<>();
+                                ArrayList<String> newRateList = new ArrayList<>();
                                 for (int i = globalAddress.size(); i < addressList.size(); i++) {
                                     newAddressList.add(addressList.get(i));
                                     newCityList.add(cityList.get(i));
                                     newStateList.add(stateList.get(i));
+
+                                    newSpotsList.add(spotsList.get(i));
+                                    newTimeList.add(timeList.get(i));
+                                    newRateList.add(rateList.get(i));
                                 }
                                 addMarker(newAddressList, newCityList, newStateList);
                                 globalAddress = newAddressList;
                                 globalCity = newCityList;
                                 globalState = newStateList;
+
+                                globalSpots = newSpotsList;
+                                globalTime = newTimeList;
+                                globalRate = newRateList;
                             }
                         }
 
@@ -408,7 +480,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         };
 
         //sending a request to the server with address, city, state and responseListener
-        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+        MapRequest mapRequest = new MapRequest(address, city, state, spots, time, rate, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Map.this);
         queue.add(mapRequest);
     }

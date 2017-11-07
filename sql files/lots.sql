@@ -16,4 +16,6 @@ insert into lots values ("Iowa State University", "Ames", "IA", "50010", "10", "
 
 SELECT address, city, state FROM lots;
 
-delete from lots where username is null;
+delete from lots where username = " ";
+
+SET SQL_SAFE_UPDATES = 0;
