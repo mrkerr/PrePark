@@ -129,17 +129,20 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 *
 * This method adds a marker at every address obtained from the database
  */
-    public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
+    public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state, ArrayList<String> spots, ArrayList<String> time, ArrayList<String> rate) {
         LatLng latLng2; //For tracking LatLng data from address
         MarkerOptions markerOptions2;   //For displaying marker
         String[] plotPoint = new String[address.size() + 1];    //Add 1 index for storing dummy address
-
+        String[] pointInfo = new String[address.size() + 1];
         //Add every address, city, and state to array
         for (int i = 0; i < address.size(); i++) {
             plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
+            pointInfo[i] = "Spots: " + spots.get(i) + " | Time: " + time.get(i) + " minutes | Rate: $"  + rate.get(i);
         }
 
         plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";    //dummy address
+        pointInfo[plotPoint.length -1] = "20 5 3";
+
 
         //Adding marker for every address in array
         for (int j = 0; j < plotPoint.length; j++) {
@@ -149,7 +152,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
                 markerOptions2.title(plotPoint[j]);
-                markerOptions2.snippet("Hello World");
+                markerOptions2.snippet(pointInfo[j]);
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mCurrLocationMarker = mMap.addMarker(markerOptions2);   //add marker
                 mCurrLocationMarker.showInfoWindow();
@@ -210,11 +213,24 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                String spotTimeRate = marker.getSnippet();  //Get formatted string
+                String[] parts = spotTimeRate.split("|");   //Split at "|" marker
+                String spotTemp = parts[0];                 //Get first part
+                String spot = spotTemp.substring(7, spotTemp.length()-1);
+
+                String timeTemp = parts[1];                 //Get second part
+                String time = timeTemp.substring(7, timeTemp.length()-9);
+
+                String rateTemp = parts[2];                 //Get first part
+                String rate = rateTemp.substring(8, rateTemp.length());
 
                 final String username3 = username2;
                 Intent intent2 = new Intent(Map.this, Pay_activity.class);
                 intent2.putExtra("address", marker.getTitle());
                 intent2.putExtra("username", username3);
+                intent2.putExtra("spot", spot);
+                intent2.putExtra("time", time);
+                intent2.putExtra("rate", rate);
                 startActivity(intent2);
             }
         });
@@ -473,7 +489,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         stateList.add(stateEnd);
 
                         String spotsEnd = spotsList.get(spotsList.size() - 1);
-                        stateList.remove(spotsList.size() - 1);
+                        spotsList.remove(spotsList.size() - 1);
                         spotsEnd = spotsEnd.substring(0, spotsEnd.length() - 2);
                         spotsList.add(spotsEnd);
 
@@ -489,7 +505,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
                         if (needsUpdate == false) {
                             //the arraylists are now all "clean" and are able to be plotted
-                            addMarker(addressList, cityList, stateList);
+                            addMarker(addressList, cityList, stateList, spotsList, timeList, rateList);
                             globalAddress = addressList;
                             globalCity = cityList;
                             globalState = stateList;
@@ -516,7 +532,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                                     newTimeList.add(timeList.get(i));
                                     newRateList.add(rateList.get(i));
                                 }
-                                addMarker(newAddressList, newCityList, newStateList);
+                                addMarker(newAddressList, newCityList, newStateList, newSpotsList, newTimeList, newRateList);
                                 globalAddress = newAddressList;
                                 globalCity = newCityList;
                                 globalState = newStateList;

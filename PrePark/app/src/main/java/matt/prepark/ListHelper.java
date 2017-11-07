@@ -21,6 +21,9 @@ public class ListHelper extends AppCompatActivity {
 
         Intent intent = getIntent();
         String val = intent.getStringExtra("detailA") + "\n" + intent.getStringExtra("detailS") + "\n" + intent.getStringExtra("detailC");
+        String spot = intent.getStringExtra("detailSpot");
+        String time = intent.getStringExtra("detailTime");
+        String rate = intent.getStringExtra("detailRate");
        final String aName = intent.getStringExtra("detailA");
         final String username = intent.getStringExtra("username");
         TextView tv = findViewById(R.id.textView3);
@@ -31,6 +34,9 @@ public class ListHelper extends AppCompatActivity {
             Intent i_purchaseScreen = new Intent(ListHelper.this, Pay_activity.class);
             i_purchaseScreen.putExtra( "address", aName);
             i_purchaseScreen.putExtra("username", username);
+            i_purchaseScreen.putExtra("spot", spot);
+            i_purchaseScreen.putExtra("time", time);
+            i_purchaseScreen.putExtra("rate", rate);
             startActivity(i_purchaseScreen);
 
       });

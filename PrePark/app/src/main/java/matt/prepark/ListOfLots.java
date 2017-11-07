@@ -34,6 +34,9 @@ public class ListOfLots extends AppCompatActivity {
         ArrayList<String> aList = MapIntent.getStringArrayListExtra("addressList");
         ArrayList<String> cList = MapIntent.getStringArrayListExtra("cityList");
         ArrayList<String> sList = MapIntent.getStringArrayListExtra("stateList");
+        ArrayList<String> spotList = MapIntent.getStringArrayListExtra("spotsList");
+        ArrayList<String> timeList = MapIntent.getStringArrayListExtra("timeList");
+        ArrayList<String> rateList = MapIntent.getStringArrayListExtra("rateList");
         final String username = MapIntent.getStringExtra("username");
 
      ;
@@ -47,6 +50,9 @@ public class ListOfLots extends AppCompatActivity {
                 intent.putExtra("detailA", aList.get(i));
                 intent.putExtra("detailC", cList.get(i));
                 intent.putExtra("detailS", sList.get(i));
+                intent.putExtra("detailSpot", spotList.get(i));
+                intent.putExtra("detailTime", timeList.get(i));
+                intent.putExtra("detailRate", rateList.get(i));
                 intent.putExtra("username", username);
                 startActivity(intent);
             }
