@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = etPassword.getText().toString();
                 final String email = etEmail.getText().toString();
 
-                
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

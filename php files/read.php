@@ -10,8 +10,8 @@
     $transaction = $_POST["transaction"];
     $date = $_POST["date"];
 
-    $statement = mysqli_prepare($con, "SELECT buyer, seller, payment, date FROM payment_history WHERE buyer = ? or seller = ? and payment = ? and date = ?");
-    mysqli_stmt_bind_param($statement, "ssss", $username, $username, $transaction, $date);
+    $statement = mysqli_prepare($con, "SELECT buyer, seller, payment, date FROM payment_history WHERE buyer = ?");
+    mysqli_stmt_bind_param($statement, "s", $username);
 
     mysqli_stmt_store_result($statement);
     mysqli_stmt_bind_result($statement, $username, $transaction, $date);
