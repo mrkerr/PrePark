@@ -90,7 +90,7 @@ public class BuySpot extends AppCompatActivity {
                                 addressList.remove(addressList.size() - 1);
                                 addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
                                 addressList.add(addressEnd);
-
+                                gAddress = addressList;
 
 //                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
 //                                BuySpot.this.startActivity(intent);
@@ -113,7 +113,7 @@ public class BuySpot extends AppCompatActivity {
 
                 Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
                 //i_listZ.putExtra("username", username);
-                i_listZ.putStringArrayListExtra("addressList", )    //TODO
+                i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
                 startActivity(i_listZ);
 
             }
