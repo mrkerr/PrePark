@@ -142,6 +142,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
                 markerOptions2.title(plotPoint[j]);
+                markerOptions2.snippet("Hello World");
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mCurrLocationMarker = mMap.addMarker(markerOptions2);   //add marker
                 mCurrLocationMarker.showInfoWindow();
@@ -184,7 +185,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 title.setGravity(Gravity.CENTER);
                 title.setTypeface(null, Typeface.BOLD);
                 String distanceTo = getDistance(marker.getPosition(), mCurrLocationMarker.getPosition());
-                title.setText(marker.getTitle() + "\n" + distanceTo + "\n" + "Click to purchase spot" );
+                title.setText(marker.getTitle() + "\n" + distanceTo + "\n" + "Click to purchase spot ");
 
                 TextView snippet = new TextView(context);
                 snippet.setTextColor(Color.GRAY);

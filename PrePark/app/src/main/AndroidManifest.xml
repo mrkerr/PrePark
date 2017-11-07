@@ -39,8 +39,8 @@
             android:label="@string/title_activity_map" />
         <activity
             android:name=".ListOfLots"
-            android:label="List of Lots"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:label="List of Lots" />
+           <!-- android:theme="@style/Theme.AppCompat.Light" /> -->
         <activity
             android:name=".ListHelper"
             android:theme="@style/Theme.AppCompat.Dialog.Alert"></activity>
