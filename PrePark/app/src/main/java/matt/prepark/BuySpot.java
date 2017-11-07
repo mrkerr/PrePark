@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.ListView;
+import android.app.ListActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
@@ -16,8 +18,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BuySpot extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class BuySpot extends AppCompatActivity {
+    ArrayList<String> gAddress = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +32,16 @@ public class BuySpot extends AppCompatActivity {
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
         //final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
-        final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
-        final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
+        //final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
+        //final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
 
         b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String zip = zipBS.getText().toString();
                 //final String licensePlate = lincenseplateBS.getText().toString();
-                final String fromTime = fromBS.getText().toString();
-                final String toTime = toBS.getText().toString();
+               // final String fromTime = fromBS.getText().toString();
+               // final String toTime = toBS.getText().toString();
                 //progress dialog
                 ProgressDialog dialog = new ProgressDialog(BuySpot.this);
                 dialog.setTitle("Please wait");
@@ -66,12 +71,14 @@ public class BuySpot extends AppCompatActivity {
                     }
                 };
 
-                BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
+                BuySpotRequest bsRequest = new BuySpotRequest(zip, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
-//                Intent i_map = new Intent(BuySpot.this, Map.class);
- //               startActivity(i_map);
 
+                Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
+                //i_listZ.putExtra("username", username);
+                i_listZ.putStringArrayListExtra("addressList", )
+                startActivity(i_listZ);
 
             }
         });
