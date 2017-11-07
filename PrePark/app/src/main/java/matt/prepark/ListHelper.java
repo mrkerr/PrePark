@@ -18,14 +18,18 @@ public class ListHelper extends AppCompatActivity {
         setContentView(R.layout.activity_list_helper);
         final Button purchaseSpot = findViewById(R.id.purchaseButton);
         setTitle("Lot Info");
-
         Intent intent = getIntent();
-        String val = intent.getStringExtra("detailA") + "\n" + intent.getStringExtra("detailS") + "\n" + intent.getStringExtra("detailC");
+
+        final String aName = intent.getStringExtra("detailA");
+        String rate = intent.getStringExtra("detailRate");
+
+        String val = "Address: " + aName + "\n" + "City: " + intent.getStringExtra("detailS") + ", " + intent.getStringExtra("detailC")
+                + "\n" + "Rate: $" + rate;
+
         String spot = intent.getStringExtra("detailSpot");
         String time = intent.getStringExtra("detailTime");
-        String rate = intent.getStringExtra("detailRate");
-       final String aName = intent.getStringExtra("detailA");
         final String username = intent.getStringExtra("username");
+
         TextView tv = findViewById(R.id.textView3);
         tv.setText(val);
 

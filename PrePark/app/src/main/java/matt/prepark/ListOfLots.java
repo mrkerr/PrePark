@@ -60,7 +60,8 @@ public class ListOfLots extends AppCompatActivity {
 
 
         for(int i = 0; i < aList.size(); i++){
-            list.add(aList.get(i) +"\n" + sList.get(i) + "\n" + cList.get(i));
+            list.add("Address: " + aList.get(i) + "\n" + "City: " + sList.get(i) + ", " + cList.get(i) + "\n" + "Spots: " + spotList.get(i) + "\n"
+                    + "Time: " + timeList.get(i) + "\n" + "Rate: $" + rateList.get(i));
         }
 
         adapter = new ArrayAdapter(ListOfLots.this, android.R.layout.simple_list_item_1, list);
