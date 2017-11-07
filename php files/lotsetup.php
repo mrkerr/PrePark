@@ -16,6 +16,14 @@
     $time = $_POST["time"];
     $rate = $_POST["rate"];
 
+    //checking if null
+    if ($address == null || $city== null || $state == null || $zip == null || $spots == null || $time == null || $rate == null) {
+      $fail = array();
+      $fail["success"] = false;
+      echo json_encode($fail);
+      die();
+    }
+
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO lots (username, address, city, state, zip, spots, time, rate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     //assigning the values with the ones given in android

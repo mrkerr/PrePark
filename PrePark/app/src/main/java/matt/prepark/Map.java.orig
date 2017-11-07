@@ -67,14 +67,20 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
+<<<<<<< HEAD
     ArrayList<String> globalAddress = new ArrayList<>();    //For storing addresses added to server after map open
     ArrayList<String> globalCity = new ArrayList<>();       //For storing cities added to server after map open
     ArrayList<String> globalState = new ArrayList<>();      //For storing states added to server after map open
     String username2 = "";
+=======
+    ArrayList<String> globalAddress = new ArrayList<>();
+    ArrayList<String> globalCity = new ArrayList<>();
+    ArrayList<String> globalState = new ArrayList<>();
     ArrayList<String> globalSpots = new ArrayList<>();
     ArrayList<String> globalTime = new ArrayList<>();
     ArrayList<String> globalRate = new ArrayList<>();
 
+>>>>>>> matt3
 
 
     @Override

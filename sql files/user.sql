@@ -17,3 +17,7 @@ name varchar (32),
 username varchar (32),
 password varchar (32),
 email varchar (32));
+
+delete from user where name = " ";
+
+insert into user values (" ", " ", " ", " ");

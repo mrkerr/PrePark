@@ -24,6 +24,7 @@
         $e = $existing_email;
     }
 
+    //checking if taken
     if (strcmp($username, $u) == 0 || strcmp($email, $e) == 0){
       $fail = array();
       $fail["success"] = false;
@@ -31,13 +32,22 @@
       die();
     }
 
-    if ($name = null || $username == null || $password == null || $email == null) {
+    //checking if null
+    if ($name == null || $username == null || $password == null || $email == null) {
       $fail = array();
       $fail["success"] = false;
       echo json_encode($fail);
       die();
     }
-    
+
+    //checking for spaces
+    // if (strlen(trim($name)) == 0 || strlen(trim($username)) == 0  || strlen(trim($password)) == 0  || $strlen(trim($email)) == 0 ) {
+    //   $fail = array();
+    //   $fail["success"] = false;
+    //   echo json_encode($fail);
+    //   die();
+    // }
+
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO user (name, username, password, email) VALUES (?, ?, ?, ?)");
     //assigning the values with the ones given in android
