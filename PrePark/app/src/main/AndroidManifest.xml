@@ -41,7 +41,8 @@
         <activity android:name=".Pay_activity" />
         <activity android:name=".transactionHistory" />
         <activity android:name=".BuySpot" />
-        <activity android:name=".ListOfAddresses"></activity>
+        <activity android:name=".ListOfAddresses" />
+        <activity android:name=".ListOfZip"></activity>
     </application>
 
 </manifest>

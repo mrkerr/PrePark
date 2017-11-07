@@ -51,12 +51,14 @@ public class myLots extends AppCompatActivity {
         final EditText zipML = (EditText) findViewById(R.id.zip_num);
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
         final Button b_list = (Button) findViewById(R.id.button_list);
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
 
         b_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i_list = new Intent(myLots.this, ListOfAddresses.class);
-                //i_list.putExtra("username", username);
+                i_list.putExtra("username", username);
                 startActivity(i_list);
             }
         });
