@@ -141,7 +141,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         }
 
         plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";    //dummy address
-        pointInfo[plotPoint.length -1] = "20 5 3";
+        pointInfo[plotPoint.length -1] = "Spots: 20 | Time: 5 | Rate: $3";
 
 
         //Adding marker for every address in array
@@ -222,7 +222,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 String timeTemp = parts[1];                 //Get second part
                 String time = timeTemp.substring(7, timeTemp.length()-9);
 
-                String rateTemp = parts[2];                 //Get first part
+                String rateTemp = parts[2];                 //Get third part
                 String rate = rateTemp.substring(8, rateTemp.length());
 
                 final String username3 = username2;
