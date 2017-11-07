@@ -14,7 +14,7 @@ import java.util.Map;
 public class BuySpotRequest extends StringRequest{
 
 
-        private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
+        private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/buyspotlist.php";   //change
         private Map<String, String> params;
 
         public BuySpotRequest(String zip, String fromTime, String toTime, Response.Listener<String> listener) {
@@ -22,10 +22,6 @@ public class BuySpotRequest extends StringRequest{
             params = new HashMap<>();
             //params.put("address", licensePlate);
             params.put("zip", zip);
-//            params.put("username", username);
-//            params.put("password", password);
-//            params.put("email", email);
-
         }
 
         @Override

@@ -12,7 +12,7 @@ import java.util.Map;
  */
 
 public class myLotsRequest extends StringRequest {
-    private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/lotsetup.php";
+    private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/mylots.php"; //change
     private Map<String, String> params;
 
     public myLotsRequest(String address, String zip, String spots, String nextTime, Response.Listener<String> listener) {
