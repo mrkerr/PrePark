@@ -5,6 +5,10 @@ package matt.prepark;
  */
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +24,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class myLots extends AppCompatActivity {
+    private void Notify(){
 
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n  = new Notification.Builder(this)
+                .setContentText("Lot updated")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0,n);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +49,21 @@ public class myLots extends AppCompatActivity {
         final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
         final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
         final EditText zipML = (EditText) findViewById(R.id.zip_num);
-
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
+        final Button b_list = (Button) findViewById(R.id.button_list);
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+
+        b_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i_list = new Intent(myLots.this, ListOfAddresses.class);
+                i_list.putExtra("username", username);
+                startActivity(i_list);
+            }
+        });
+
+
 
         b_submitML.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +73,10 @@ public class myLots extends AppCompatActivity {
                 final String nextTime = nextAvail.getText().toString();
                 final String zip = zipML.getText().toString();
 
-
+                ProgressDialog dialog = new ProgressDialog(myLots.this);
+                dialog.setMessage("Updating...");
+                dialog.show();
+                Notify();
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -63,10 +99,9 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-//                LotRequest myLotsRequest = new LotRequest(address, zip, spots, nextTime, responseListener);
-//                RequestQueue queue = Volley.newRequestQueue(myLots.this);
-//                queue.add(myLotsRequest);
-
+                myLotsRequest request = new myLotsRequest(address, zip, spots, nextTime, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(myLots.this);
+                queue.add(request);
 
             }
         });
