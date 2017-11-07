@@ -22,9 +22,6 @@ public class myLotsRequest extends StringRequest {
         params.put("zip", zip);
         params.put("available spots", spots);
         params.put("Next availability", nextTime);
-//        params.put("username", username);
-//        params.put("password", password);
-//        params.put("email", email);
 
     }
 

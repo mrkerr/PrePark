@@ -12,7 +12,7 @@ public class ListOfAddresses extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_addresses);
 
-        String[] lotsIown = {"42 walby way, sydney", "10880 Malibu Point, CA"};
+        String[] lotsIown = {"42 Walby way, sydney", "10880 Malibu Point, CA", "167H University Village, Ames", "Wayne Manor, Gotham City", };
         //get the list of address, city, state
         //somehow create an intent from the data base
         //// addressList.get

@@ -40,6 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="450dp"
         android:text="Submit" />
+    <Button
+        android:id="@+id/button_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:text="List" />
 
     <EditText
         android:id="@+id/zip_num"
@@ -52,14 +58,6 @@
         android:hint="Zip"
         android:inputType="number" />
 
-    <Button
-        android:id="@+id/button_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_submitmylots"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="49dp"
-        android:text="List" />
 
 
 </RelativeLayout>

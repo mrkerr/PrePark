@@ -49,15 +49,19 @@ public class myLots extends AppCompatActivity {
         final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
         final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
         final EditText zipML = (EditText) findViewById(R.id.zip_num);
-        final Button b_listView = (Button) findViewById(R.id.button_list);
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
+        final Button b_list = (Button) findViewById(R.id.button_list);
 
-        b_listView.setOnClickListener(new View.OnClickListener() {
+        b_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i_list = new Intent(myLots.this, ListOfAddresses.class);
+                //i_list.putExtra("username", username);
+                startActivity(i_list);
             }
         });
+
+
 
         b_submitML.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +74,7 @@ public class myLots extends AppCompatActivity {
                 ProgressDialog dialog = new ProgressDialog(myLots.this);
                 dialog.setMessage("Updating...");
                 dialog.show();
-
+                Notify();
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -96,7 +100,6 @@ public class myLots extends AppCompatActivity {
                 myLotsRequest request = new myLotsRequest(address, zip, spots, nextTime, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(myLots.this);
                 queue.add(request);
-                Notify();
 
             }
         });
