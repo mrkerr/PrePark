@@ -33,15 +33,6 @@
     $response["success"] = true;
     array_push($responseObject, $response);
 
-    // while(mysqli_stmt_fetch($statement)){
-    //     $response = array();
-    //     $response["success"] = true;
-    //     $response["address"] = $address;
-    //     $response["city"] = $city;
-    //     $response["state"] = $state;
-    //     array_push($responseObject, $response);
-    // }
-
     while(mysqli_stmt_fetch($statement)){
         array_push($addressList, $address);
         array_push($cityList, $city);

@@ -37,20 +37,22 @@
             android:name=".Map"
             android:exported="true"
             android:label="@string/title_activity_map" />
-<<<<<<< HEAD
         <activity
             android:name=".ListOfLots"
-            android:label="@string/title_activity_list_of_lots"
-            android:theme="@style/Theme.AppCompat.Light"></activity>
-        <activity android:name=".ListHelper"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert">
-        </activity>
-=======
+            android:label="List of Lots" />
+           <!-- android:theme="@style/Theme.AppCompat.Light" /> -->
+        <activity
+            android:name=".ListHelper"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"></activity>
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".Pay_activity" />
         <activity android:name=".transactionHistory" />
-        <activity android:name=".BuySpot"></activity>
->>>>>>> origin/matt3
+        <activity android:name=".BuySpot" />
+<<<<<<< HEAD
+        <activity android:name=".ListOfAddresses" />
+        <activity android:name=".ListOfZip"></activity>
+=======
+>>>>>>> mitch
     </application>
 
 </manifest>

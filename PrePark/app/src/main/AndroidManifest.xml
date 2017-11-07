@@ -39,11 +39,11 @@
             android:label="@string/title_activity_map" />
         <activity
             android:name=".ListOfLots"
-            android:label="title activity list of lots"
-            android:theme="@style/Theme.AppCompat.Light"></activity>
-        <activity android:name=".ListHelper"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert">
-        </activity>
+            android:label="List of Lots" />
+           <!-- android:theme="@style/Theme.AppCompat.Light" /> -->
+        <activity
+            android:name=".ListHelper"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"></activity>
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".Pay_activity" />
         <activity android:name=".transactionHistory" />

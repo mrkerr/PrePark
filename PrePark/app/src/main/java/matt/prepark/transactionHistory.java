@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +37,7 @@ import java.util.Map;
 public class transactionHistory extends AppCompatActivity {
     public static ArrayList<String> arr;
     public static String string;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +45,10 @@ public class transactionHistory extends AppCompatActivity {
 
         String empty = "NO TRANSACTION HAS BEEN RECORDED";
 
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+
         arr = new ArrayList<>();
-
-        new req(getApplicationContext()).execute();
-
 
         TextView textView = findViewById(R.id.trans);
         ListView listView = findViewById(R.id.listview);
@@ -54,46 +56,139 @@ public class transactionHistory extends AppCompatActivity {
         Button c = findViewById(R.id.bt2);
         Button d = findViewById(R.id.bt3);
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-            }
-        });
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getHistory(username, );
+//            }
+//        });
 
         c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getHistory(username, 2);
             }
         });
 
         d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                getHistory(username, 3);
             }
         });
 
-        if(arr.size() > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,arr);
+        if (arr.size() > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, arr);
             listView.setAdapter(adapter);
 
-          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-              @Override
-              public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-              }
-          });
+                }
+            });
 
-        }
-
-        else
+        } else
             textView.setText(empty);
 
+    }
+
+
+    public void getHistory(String username, int timeLine) {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Toast.makeText(transactionHistory.this, response, Toast.LENGTH_SHORT).show();
+                    //response is stored in an json array, usually it has been a json object
+                    JSONArray jsonResponse = new JSONArray(response);
+                    //because of json array, we need to cut it into json objects
+                    //here we are checking to see if the query was successful
+                    JSONObject successIndex = jsonResponse.getJSONObject(0);
+
+                    //storing the boolean in our own variable
+                    boolean success = successIndex.getBoolean("success");
+                    if (success) {
+
+                        //getting string "blocks" from the json array
+                        //the next process is formatting the strings to get the values I want
+                        String usernameBlock = jsonResponse.getString(1);
+                        String transactionBlock = jsonResponse.getString(2);
+                        String dateBlock = jsonResponse.getString(3);
+
+                        //creating arraylists to store these individual variables
+                        ArrayList<String> usernameList = new ArrayList<>();
+                        ArrayList<String> transactionList = new ArrayList<>();
+                        ArrayList<String> dateList = new ArrayList<>();
+
+                        //the head of these "blocks" are not needed so I split the strings
+                        //then split the body so we now have an array with just the variables
+                        //but they have some extra characters we don't want
+                        String[] usernameHead = usernameBlock.split(":");
+                        String[] usernameBody = usernameHead[1].split(",");
+                        String[] transactionHead = transactionBlock.split(":");
+                        String[] transactionBody = transactionHead[1].split(",");
+                        String[] dateHead = dateBlock.split(":");
+                        String[] dateBody = dateHead[1].split(",");
+
+                        //we take these extra characters out and store them
+                        //into our arraylists
+                        for (int i = 0; i < usernameBody.length; i++) {
+                            usernameBody[i] = usernameBody[i].replace("[", "");
+                            usernameBody[i] = usernameBody[i].replace("]", "");
+                            usernameBody[i] = usernameBody[i].replaceAll("^\"|\"$", "");
+                            transactionBody[i] = transactionBody[i].replace("[", "");
+                            transactionBody[i] = transactionBody[i].replace("]", "");
+                            transactionBody[i] = transactionBody[i].replaceAll("^\"|\"$", "");
+                            dateBody[i] = dateBody[i].replace("[", "");
+                            dateBody[i] = dateBody[i].replace("]", "");
+                            dateBody[i] = dateBody[i].replaceAll("^\"|\"$", "");
+                            usernameList.add(usernameBody[i]);
+                            transactionList.add(transactionBody[i]);
+                            dateList.add(dateBody[i]);
+                        }
+
+                        Toast.makeText(transactionHistory.this, usernameList.get(0), Toast.LENGTH_LONG).show();
+                        //the last element in our arraylist doesn't have these
+                        //extra characters removed. There are extra characters
+                        //at the last two indices of the string
+                        //this section removes the last two elements
+//                        String usernameEnd = usernameList.get(usernameList.size() - 1);
+//                        usernameList.remove(usernameList.size() - 1);
+//                        usernameEnd = usernameEnd.substring(0, usernameEnd.length() - 2);
+//                        usernameList.add(usernameEnd);
+//
+//                        String transactionEnd = transactionList.get(transactionList.size() - 1);
+//                        transactionList.remove(transactionList.size() - 1);
+//                        transactionEnd = transactionEnd.substring(0, transactionEnd.length() - 2);
+//                        transactionList.add(transactionEnd);
+//
+//                        String dateEnd = dateList.get(dateList.size() - 1);
+//                        dateList.remove(dateList.size() - 1);
+//                        dateEnd = dateEnd.substring(0, dateEnd.length() - 2);
+//                        dateList.add(dateEnd);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+
+        if (timeLine == 2) {
+            ReadRequest readRequest = new ReadRequest(username, "11", "2", responseListener);
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(readRequest);
+        }
+
+        if (timeLine == 3) {
+            ReadRequest readRequest = new ReadRequest(username, "2017", "3", responseListener);
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(readRequest);
+        }
     }
 }
 
@@ -101,114 +196,18 @@ class ReadRequest extends StringRequest {
     private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/read.php";
     private Map<String, String> params;
 
-    ReadRequest(String username, String transaction, String date, Response.Listener<String> listener) {
+    ReadRequest(String username, String date, String when, Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
         params = new HashMap<>();
-        params.put("username",username);
-        params.put("transaction", transaction);
+        params.put("username", username);
         params.put("date", date);
+        params.put("when", when);
 
     }
 
     @Override
     public Map<String, String> getParams() {
         return params;
-    }
-}
-
-class req extends AsyncTask{
-
-    private Context context;
-    private String username = "", transaction = "", date = "";
-
-    req(Context context){
-        this.context = context;
-    }
-    @Override
-    protected Object doInBackground(Object[] params) {
-        Response.Listener<String>responseListener = response ->{
-            try {
-                //response is stored in an json array, usually it has been a json object
-                JSONArray jsonResponse = new JSONArray(response);
-                //because of json array, we need to cut it into json objects
-                //here we are checking to see if the query was successful
-                JSONObject successIndex = jsonResponse.getJSONObject(0);
-
-                //storing the boolean in our own variable
-                boolean success = successIndex.getBoolean("success");
-                if (success) {
-
-                    //getting string "blocks" from the json array
-                    //the next process is formatting the strings to get the values I want
-                    String usernameBlock = jsonResponse.getString(1);
-                    String transactionBlock = jsonResponse.getString(2);
-                    String dateBlock = jsonResponse.getString(3);
-
-                    //creating arraylists to store these individual variables
-                    ArrayList<String> usernameList = new ArrayList<>();
-                    ArrayList<String> transactionList = new ArrayList<>();
-                    ArrayList<String> dateList = new ArrayList<>();
-
-                    //the head of these "blocks" are not needed so I split the strings
-                    //then split the body so we now have an array with just the variables
-                    //but they have some extra characters we don't want
-                    String[] usernameHead = usernameBlock.split(":");
-                    String[] usernameBody = usernameHead[1].split(",");
-                    String[] transactionHead = transactionBlock.split(":");
-                    String[] transactionBody = transactionHead[1].split(",");
-                    String[] dateHead = dateBlock.split(":");
-                    String[] dateBody = dateHead[1].split(",");
-
-                    //we take these extra characters out and store them
-                    //into our arraylists
-                    for (int i = 0; i < usernameBody.length; i++) {
-                        usernameBody[i] = usernameBody[i].replace("[", "");
-                        usernameBody[i] = usernameBody[i].replace("]", "");
-                        usernameBody[i] = usernameBody[i].replaceAll("^\"|\"$", "");
-                        transactionBody[i] = transactionBody[i].replace("[", "");
-                        transactionBody[i] = transactionBody[i].replace("]", "");
-                        transactionBody[i] = transactionBody[i].replaceAll("^\"|\"$", "");
-                        dateBody[i] = dateBody[i].replace("[", "");
-                        dateBody[i] = dateBody[i].replace("]", "");
-                        dateBody[i] = dateBody[i].replaceAll("^\"|\"$", "");
-                        usernameList.add(usernameBody[i]);
-                        transactionList.add(transactionBody[i]);
-                        dateList.add(dateBody[i]);
-                    }
-
-                    //the last element in our arraylist doesn't have these
-                    //extra characters removed. There are extra characters
-                    //at the last two indices of the string
-                    //this section removes the last two elements
-                    String usernameEnd = usernameList.get(usernameList.size() - 1);
-                    usernameList.remove(usernameList.size() - 1);
-                    usernameEnd = usernameEnd.substring(0, usernameEnd.length() - 2);
-                    usernameList.add(usernameEnd);
-
-                    String transactionEnd = transactionList.get(transactionList.size() - 1);
-                    transactionList.remove(transactionList.size() - 1);
-                    transactionEnd = transactionEnd.substring(0, transactionEnd.length() - 2);
-                    transactionList.add(transactionEnd);
-
-                    String dateEnd = dateList.get(dateList.size() - 1);
-                    dateList.remove(dateList.size() - 1);
-                    dateEnd = dateEnd.substring(0, dateEnd.length() - 2);
-                    dateList.add(dateEnd);
-
-                    transactionHistory.arr.add(response);
-
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-    };
-
-        ReadRequest readRequest = new ReadRequest(username, transaction, date, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.add(readRequest);
-        return null;
     }
 }
 

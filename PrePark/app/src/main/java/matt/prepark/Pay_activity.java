@@ -102,9 +102,10 @@ public class Pay_activity extends AppCompatActivity {
         Intent nameIntent = getIntent();
         username = nameIntent.getStringExtra("username");
         address = nameIntent.getStringExtra("address");
-        spots = nameIntent.getStringExtra("spots");
+        spots = nameIntent.getStringExtra("spot");
         time = nameIntent.getStringExtra("time");
         rate = nameIntent.getStringExtra("rate");
+
 
 
         Intent intent = new Intent(this, PayPalService.class);
