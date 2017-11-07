@@ -128,7 +128,7 @@ public class Pay_activity extends AppCompatActivity {
 
     private void getPayment() {
 
-        String paymentAmount = "1";
+        String paymentAmount = rate;
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
