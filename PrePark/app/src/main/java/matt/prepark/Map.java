@@ -2,8 +2,11 @@ package matt.prepark;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,8 +15,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -60,9 +67,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
-    ArrayList<String> globalAddress = new ArrayList<>();
-    ArrayList<String> globalCity = new ArrayList<>();
-    ArrayList<String> globalState = new ArrayList<>();
+    ArrayList<String> globalAddress = new ArrayList<>();    //For storing addresses added to server after map open
+    ArrayList<String> globalCity = new ArrayList<>();       //For storing cities added to server after map open
+    ArrayList<String> globalState = new ArrayList<>();      //For storing states added to server after map open
     String username2 = "";
 
 
@@ -70,11 +77,12 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        final Button listView = (Button) findViewById(R.id.button1);
+        final Button listView = (Button) findViewById(R.id.button1);    //Represents List View button
 
-        Intent intent = getIntent();
-        final String username = intent.getStringExtra("username");
-        username2 = username;
+
+        Intent intent = getIntent();   //Get intent from hub
+        final String username = intent.getStringExtra("username");  //Get username from hub
+        username2 = username;   //Store username in global
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -100,6 +108,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
+        //Set timer to run function every 10 seconds to check for new lots to be added to map
         new Timer().scheduleAtFixedRate(new TimerTask() {
 
             @Override
@@ -109,27 +118,32 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
-
+/*
+*
+* This method adds a marker at every address obtained from the database
+ */
     public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
-        LatLng latLng2;
-        MarkerOptions markerOptions2;
-        String[] plotPoint = new String[address.size() + 1];
+        LatLng latLng2; //For tracking LatLng data from address
+        MarkerOptions markerOptions2;   //For displaying marker
+        String[] plotPoint = new String[address.size() + 1];    //Add 1 index for storing dummy address
 
+        //Add every address, city, and state to array
         for (int i = 0; i < address.size(); i++) {
             plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
         }
 
-        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";
+        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";    //dummy address
 
+        //Adding marker for every address in array
         for (int j = 0; j < plotPoint.length; j++) {
             try {
-                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
-                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);   //Return one Address object for every address
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());    //Get LatLng from address
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
                 markerOptions2.title(plotPoint[j]);
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);   //add marker
                 mCurrLocationMarker.showInfoWindow();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -150,15 +164,49 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         geocoder = new Geocoder(this);
+
+        //Overriding method to change size of info window
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;    //On return null, calls getInfoContents
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                Context context = getApplicationContext();
+
+                LinearLayout info = new LinearLayout(context);
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(context);
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                String distanceTo = getDistance(marker.getPosition(), mCurrLocationMarker.getPosition());
+                title.setText(marker.getTitle() + "\n" + distanceTo + "\n" + "Click to purchase spot" );
+
+                TextView snippet = new TextView(context);
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+
+                info.addView(title);
+                info.addView(snippet);
+
+                return info;
+            }
+
+        });
+
+        //Sending intent to Pay_Activity on window click
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                String distanceTo = getDistance(marker.getPosition(), mCurrLocationMarker.getPosition());
+
                 final String username3 = username2;
-                Intent intent2 = new Intent(Map.this, MapHelper.class);
+                Intent intent2 = new Intent(Map.this, Pay_activity.class);
                 intent2.putExtra("address", marker.getTitle());
                 intent2.putExtra("username", username3);
-                intent2.putExtra("distance", distanceTo);
                 startActivity(intent2);
             }
         });
@@ -437,7 +485,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
             double distance = malLoc.distanceTo(userLoc) / 1000;
             distance = distance * 0.62137;
-            return "You are " + String.format(Locale.getDefault(), "%.2f", distance) + " miles away from the lot";
+            return "You are " + String.format(Locale.getDefault(), "%.2f", distance) + " miles away from this lot";
 
         } catch(Exception e){
             return "Unknown distance";

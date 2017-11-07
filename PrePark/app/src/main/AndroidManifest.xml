@@ -48,7 +48,6 @@
         <activity android:name=".Pay_activity" />
         <activity android:name=".transactionHistory" />
         <activity android:name=".BuySpot" />
-        <activity android:name=".MapHelper"></activity>
     </application>
 
 </manifest>
