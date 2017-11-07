@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.app.ListActivity;
+import android.widget.Toast;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
@@ -54,6 +56,7 @@ public class BuySpot extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                      //  Toast.makeText(BuySpot.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONArray jsonresponse = new JSONArray(response);
                             JSONObject successIndex = new JSONObject(response);

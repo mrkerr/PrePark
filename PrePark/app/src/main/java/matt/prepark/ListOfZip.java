@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +22,14 @@ public class ListOfZip extends ListActivity {
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
 
-       // String[] abc = {"jawad", "matt", "mitch"};
+      // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
-        Log.d("jawad", address.toString());
-        for(int i=0; i<address.size();i++)
-        {
-            list.add(address.get(i));
-        }
+ //       Log.d("jawad", address.toString());
+//        for(int i=0; i<address.size();i++)
+//        {
+//            list.add(address.get(i));
+//        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
