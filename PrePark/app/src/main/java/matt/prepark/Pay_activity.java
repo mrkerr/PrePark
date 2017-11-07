@@ -36,7 +36,7 @@ public class Pay_activity extends AppCompatActivity {
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
     public static String username, address;
-    private String price;
+    private String spots, time, rate;
 
     private Button button;
     private Context context;
@@ -101,7 +101,7 @@ public class Pay_activity extends AppCompatActivity {
         Intent nameIntent = getIntent();
         username = nameIntent.getStringExtra("username");
         address = nameIntent.getStringExtra("address");
-        final String spots, time, rate;
+
 
 
         Intent intent = new Intent(this, PayPalService.class);
@@ -110,8 +110,7 @@ public class Pay_activity extends AppCompatActivity {
 
         TextView t = findViewById(R.id.t);
 
-        String j = "PRICE: " + price + "\n" + "Address: " + Pay_activity.address;
-        t.setText(j);
+
 
         Button button = findViewById(R.id.btn_pay);
 
@@ -128,9 +127,9 @@ public class Pay_activity extends AppCompatActivity {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
                     if (success) {
-//                        spots = jsonResponse.getString("spots");  //TODO
-//                        time = jsonResponse.getString("time");    //TODO
-//                        rate = jsonResponse.getString("rate");    //TODO
+                        spots = jsonResponse.getString("spots");
+                        time = jsonResponse.getString("time");
+                        rate = jsonResponse.getString("rate");
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
@@ -149,6 +148,10 @@ public class Pay_activity extends AppCompatActivity {
         DetailsRequest detailsRequest = new DetailsRequest(address, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
         queue.add(detailsRequest);
+
+        String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address +"\n"
+                +" Spots: "+spots+"\n"+" Time: "+time ;
+        t.setText(j);
     }
 
     private void getPayment() {
