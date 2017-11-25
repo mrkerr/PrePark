@@ -99,7 +99,6 @@ public class transactionHistory extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Toast.makeText(transactionHistory.this, response, Toast.LENGTH_SHORT).show();
                     //response is stored in an json array, usually it has been a json object
                     JSONArray jsonResponse = new JSONArray(response);
                     //because of json array, we need to cut it into json objects
@@ -109,7 +108,6 @@ public class transactionHistory extends AppCompatActivity {
                     //storing the boolean in our own variable
                     boolean success = successIndex.getBoolean("success");
                     if (success) {
-
                         //getting string "blocks" from the json array
                         //the next process is formatting the strings to get the values I want
                         String usernameBlock = jsonResponse.getString(1);
@@ -148,26 +146,25 @@ public class transactionHistory extends AppCompatActivity {
                             dateList.add(dateBody[i]);
                         }
 
-                        Toast.makeText(transactionHistory.this, usernameList.get(0), Toast.LENGTH_LONG).show();
                         //the last element in our arraylist doesn't have these
                         //extra characters removed. There are extra characters
                         //at the last two indices of the string
                         //this section removes the last two elements
-//                        String usernameEnd = usernameList.get(usernameList.size() - 1);
-//                        usernameList.remove(usernameList.size() - 1);
-//                        usernameEnd = usernameEnd.substring(0, usernameEnd.length() - 2);
-//                        usernameList.add(usernameEnd);
-//
-//                        String transactionEnd = transactionList.get(transactionList.size() - 1);
-//                        transactionList.remove(transactionList.size() - 1);
-//                        transactionEnd = transactionEnd.substring(0, transactionEnd.length() - 2);
-//                        transactionList.add(transactionEnd);
-//
-//                        String dateEnd = dateList.get(dateList.size() - 1);
-//                        dateList.remove(dateList.size() - 1);
-//                        dateEnd = dateEnd.substring(0, dateEnd.length() - 2);
-//                        dateList.add(dateEnd);
+                        String usernameEnd = usernameList.get(usernameList.size() - 1);
+                        usernameList.remove(usernameList.size() - 1);
+                        usernameEnd = usernameEnd.substring(0, usernameEnd.length() - 2);
+                        usernameList.add(usernameEnd);
 
+                        String transactionEnd = transactionList.get(transactionList.size() - 1);
+                        transactionList.remove(transactionList.size() - 1);
+                        transactionEnd = transactionEnd.substring(0, transactionEnd.length() - 2);
+                        transactionList.add(transactionEnd);
+
+                        String dateEnd = dateList.get(dateList.size() - 1);
+                        dateList.remove(dateList.size() - 1);
+                        dateEnd = dateEnd.substring(0, dateEnd.length() - 2);
+                        dateList.add(dateEnd);
+                        
                     }
 
                 } catch (JSONException e) {
@@ -179,7 +176,7 @@ public class transactionHistory extends AppCompatActivity {
         };
 
         if (timeLine == 2) {
-            ReadRequest readRequest = new ReadRequest(username, "11", "2", responseListener);
+            ReadRequest readRequest = new ReadRequest(username, "2", "2", responseListener);
             RequestQueue queue = Volley.newRequestQueue(this);
             queue.add(readRequest);
         }

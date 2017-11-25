@@ -8,7 +8,6 @@
 }
     //varibles taking in corresponding variables from android
     $zip = $_POST["zip"];
-    $time = $_POST["time"];	
 
     //passing in an insert statement
     $statement = mysqli_prepare($con, "SELECT address FROM lots WHERE zip = ?");

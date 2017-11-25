@@ -11,17 +11,17 @@
     $when = $_POST["when"];
 
     if ($when == 2) {
-      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE month(date) == ?");
+      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE month(date) = ?");
       mysqli_stmt_bind_param($statement, "s", $date);
-
+      mysqli_stmt_execute($statement);
       mysqli_stmt_store_result($statement);
       mysqli_stmt_bind_result($statement, $username, $transaction, $date);
     }
 
     if ($when == 3) {
-      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE month(date) == ?");
+      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE year(date) = ?");
       mysqli_stmt_bind_param($statement, "s", $date);
-
+      mysqli_stmt_execute($statement);
       mysqli_stmt_store_result($statement);
       mysqli_stmt_bind_result($statement, $username, $transaction, $date);
     }

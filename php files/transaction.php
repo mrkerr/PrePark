@@ -10,7 +10,7 @@
 	$buyer = $_POST["buyer"];
 	$seller = $_POST["seller"];
 	$transaction = $_POST["transaction"];
-    $date = $_POST["date"];
+  $date = $_POST["date"];
 
     //passing in an insert statement
     $statement = mysqli_prepare($con, "INSERT INTO payment_history VALUES (?, ?, ?, ?)");
