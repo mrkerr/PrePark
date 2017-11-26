@@ -14,6 +14,25 @@
     <!-- Colors specific to Material themes.
          Taken from: sdk/platforms/android-L/data/res/values/colors_material.xml -->
 <resources>
+
+
+
+    <color name="primary">#F44336</color>
+    <color name="primary_dark">#D32F2F</color>
+    <color name="primary_light">#FFCDD2</color>
+    <color name="accent">#ffc107</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#ffffff</color>
+    <color name="divider">#BDBDBD</color>
+
+
+
+
+
+
+
+
     <color name="black">#FF121111</color>
     <color name="white">#FFFFFFFF</color>
 

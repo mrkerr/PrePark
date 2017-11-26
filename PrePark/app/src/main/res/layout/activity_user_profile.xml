@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/button_setuplots"
         android:layout_width="149dp"
         android:layout_height="57dp"
-        android:text="Setup Lots"
-        android:layout_marginTop="150dp"
         android:layout_gravity="center"
-        android:gravity="center" />
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:text="Setup Lots" />
 
     <Button
         android:id="@+id/button_mylots"
@@ -21,8 +21,7 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="My Lots"
-        />
+        android:text="My Lots" />
 
     <Button
         android:id="@+id/button_transactions"
@@ -30,8 +29,7 @@
         android:layout_height="53dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Transactions"
-        />
+        android:text="Transactions" />
 
     <Button
         android:id="@+id/button_searchparking"
@@ -40,4 +38,17 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Search Parking" />
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/primary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_navigation_main" />
+
+
 </LinearLayout>

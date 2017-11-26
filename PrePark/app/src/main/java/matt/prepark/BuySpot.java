@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,21 +39,22 @@ public class BuySpot extends AppCompatActivity {
                 final String fromTime = fromBS.getText().toString();
                 final String toTime = toBS.getText().toString();
                 //progress dialog
-                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
-                dialog.setTitle("Please wait");
-                dialog.setMessage("Finding the right options for you...");
-                dialog.show();
+//                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
+//                dialog.setTitle("Please wait");
+//                dialog.setMessage("Finding the right options for you...");
+//                dialog.show();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Toast.makeText(BuySpot.this, response, Toast.LENGTH_SHORT).show();
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
-                                BuySpot.this.startActivity(intent);
+//                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
+//                                BuySpot.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(BuySpot.this);
                                 builder.setMessage("Register Failed")

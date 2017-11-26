@@ -21,21 +21,21 @@
     mysqli_stmt_bind_result($statement, $address);
     //
 
+
+    $addressList = array();
     $responseObject = array();
+
     $response = array();
     $response["success"] = true;
     array_push($responseObject, $response);
 
-    $addressList = array();
-    
-
     while(mysqli_stmt_fetch($statement)){
-	array_push($addressList, $address);
+	     array_push($addressList, $address);
 	}
-
-     $a = json_encode(array('address' => $addressList));
-     array_push($responseObject, $a);
-
-    //sends back to server with response in json
-    echo json_encode($responseObject);
+  echo json_encode($addressList);
+  //    $a = json_encode(array('address' => $addressList));
+  //    array_push($responseObject, $a);
+  //
+  //   //sends back to server with response in json
+  //   echo json_encode($responseObject);
 ?>
