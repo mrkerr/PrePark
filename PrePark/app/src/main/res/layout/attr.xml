@@ -18,5 +18,14 @@
         <item android:name="iconPlaceholder">@drawable/i_light_plholder</item>
     </style>
 
+
     <!-- Dark base activity theme -->
+    <style android:name="ActivityTheme.Primary.Base.Dark"    android:parent="Theme.AppCompat.NoActionBar">
+        <item android:name="primaryTextColor">#33343B/item>
+        <item android:name="secondaryTextColor">#8033343B</item>
+        <item android:name="backgroundCardColor">#28292e</item>
+        <item android:name="dividerColor">#F2F2F3</item>
+        <item android:name="iconPlaceholder">@drawable/i_dark_pholder</item>
+    </style>
+
 </LinearLayout>
