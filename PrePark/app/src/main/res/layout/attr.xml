@@ -9,4 +9,14 @@
         <attr android:name="backgroundCardColor" android:format="color"/>
         <attr android:name="iconPlaceholder" android:format="integer"/>
     </declare-styleable>
+    <!-- Light base activity theme -->
+    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.NoActionBar">
+        <item name="primaryTextColor">#F4F4F6</item>
+        <item name="secondaryTextColor">#96F4F4F6</item>
+        <item name="backgroundCardColor">#FFFF</item>
+        <item name="dividerColor">#F2F2F3</item>
+        <item name="iconPlaceholder">@drawable/i_light_plholder</item>
+    </style>
+
+    <!-- Dark base activity theme -->
 </LinearLayout>
