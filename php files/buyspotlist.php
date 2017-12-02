@@ -19,7 +19,6 @@
     mysqli_stmt_store_result($statement);
 
     mysqli_stmt_bind_result($statement, $address);
-    //
 
 
     $addressList = array();
@@ -32,7 +31,6 @@
     while(mysqli_stmt_fetch($statement)){
 	     array_push($addressList, $address);
 	}
-  echo json_encode($addressList);
      $a = json_encode(array('address' => $addressList));
      array_push($responseObject, $a);
 

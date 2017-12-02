@@ -53,10 +53,18 @@ public class BuySpot extends AppCompatActivity {
                     public void onResponse(String response) {
                         //  Toast.makeText(BuySpot.this, response, Toast.LENGTH_SHORT).show();
                         try {
+                            //response is stored in an json array, usually it has been a json object
                             JSONArray jsonresponse = new JSONArray(response);
-                            JSONObject successIndex = new JSONObject(response);
+                            //because of json array, we need to cut it into json objects
+                            //here we are checking to see if the query was successful
+                            JSONObject successIndex = jsonresponse.getJSONObject(0);
+
+                            //storing the boolean in our own variable
                             boolean success = successIndex.getBoolean("success");
                             if (success) {
+
+                                //Toast.makeText(BuySpot.this, "we out here", Toast.LENGTH_SHORT).show();
+
                                 //getting string "blocks" from the json array
                                 //the next process is formatting the strings to get the values I want
                                 String addressBlock = jsonresponse.getString(1);
@@ -79,7 +87,10 @@ public class BuySpot extends AppCompatActivity {
                                     addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
 
                                     addressList.add(addressBody[i]);
+
                                 }
+
+                               // Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
 
                                 //the last element in our arraylist doesn't have these
                                 //extra characters removed. There are extra characters
@@ -91,8 +102,14 @@ public class BuySpot extends AppCompatActivity {
                                 addressList.add(addressEnd);
                                 //  Log.d("baz", addressList.toString());
 
+                                //Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
                                 gAddress = addressList;
 
+                                Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
+                                //i_listZ.putExtra("username", username);
+                                i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
+                                startActivity(i_listZ);
+                                //Toast.makeText(BuySpot.this, gAddress.get(0), Toast.LENGTH_SHORT).show();
 //                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
 //                                BuySpot.this.startActivity(intent);
                             } else {
@@ -112,11 +129,6 @@ public class BuySpot extends AppCompatActivity {
                 BuySpotRequest bsRequest = new BuySpotRequest(zip, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
-
-                Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
-                //i_listZ.putExtra("username", username);
-                i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
-                startActivity(i_listZ);
 
             }
 
