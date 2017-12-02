@@ -86,6 +86,7 @@ public class transactionHistory extends AppCompatActivity {
               @Override
               public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                   //Use the arraylist "arr";
               }
           });
 

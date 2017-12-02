@@ -1,0 +1,106 @@
+[
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\wallet_primary_text_holo_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\4ec4f30405a4f7841589994c6edd9634a162c798\\output\\res\\color\\wallet_primary_text_holo_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_default.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_default.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\design_tint_password_toggle.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\f6cf78f6dcb1e99ca3252a2f699a0cd3b817daa1\\output\\res\\color\\design_tint_password_toggle.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_seek_thumb.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_search_url_text.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\5c2e77c1d2edc8d57a7f743c9818ddcfedbe5b2e\\output\\res\\color\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\wallet_secondary_text_holo_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\4ec4f30405a4f7841589994c6edd9634a162c798\\output\\res\\color\\wallet_secondary_text_holo_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\design_error.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\f6cf78f6dcb1e99ca3252a2f699a0cd3b817daa1\\output\\res\\color\\design_error.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_btn_colored_borderless_text_material.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_spinner.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_spinner.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_edittext.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_edittext.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_btn_checkable.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_btn_colored_text_material.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_tint.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\5c2e77c1d2edc8d57a7f743c9818ddcfedbe5b2e\\output\\res\\color\\common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\5c2e77c1d2edc8d57a7f743c9818ddcfedbe5b2e\\output\\res\\color\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_switch_track.xml",
+        "source": "C:\\Users\\rafaniyi\\.android\\build-cache\\0116691090f6d944c350a47d2709aef32d323fc3\\output\\res\\color\\abc_tint_switch_track.xml"
+    }
+]
