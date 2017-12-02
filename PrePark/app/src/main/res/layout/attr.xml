@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <declare-styleable android:name= "CTAppTheme">
+        <attr android:name = "primaryTextColor" android:format="color"/>
+        <attr android:name= "secondaryTextColor" android:format="color"/>
+        <attr android:name="dividerColor" android:format="color"/>
+        <attr android:name="backgroundCardColor" android:format="color"/>
+        <attr android:name="iconPlaceholder" android:format="integer"/>
+    </declare-styleable>
+</LinearLayout>

@@ -35,9 +35,7 @@ public class BuySpot extends AppCompatActivity {
         final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
-        //final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
-        //final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
-        //final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
+
 
         b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override
