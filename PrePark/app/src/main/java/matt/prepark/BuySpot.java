@@ -27,17 +27,11 @@ public class BuySpot extends AppCompatActivity {
         final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
-        //final EditText lincenseplateBS = (EditText) findViewById(R.id.LicensePlateBS);
-        final EditText fromBS = (EditText) findViewById(R.id.FromTimeBS);
-        final EditText toBS = (EditText) findViewById(R.id.ToTimeBS);
 
         b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String zip = zipBS.getText().toString();
-                //final String licensePlate = lincenseplateBS.getText().toString();
-                final String fromTime = fromBS.getText().toString();
-                final String toTime = toBS.getText().toString();
                 //progress dialog
 //                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
 //                dialog.setTitle("Please wait");
@@ -68,7 +62,7 @@ public class BuySpot extends AppCompatActivity {
                     }
                 };
 
-                BuySpotRequest bsRequest = new BuySpotRequest(zip, fromTime, toTime, responseListener);
+                BuySpotRequest bsRequest = new BuySpotRequest(zip, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
 //                Intent i_map = new Intent(BuySpot.this, Map.class);

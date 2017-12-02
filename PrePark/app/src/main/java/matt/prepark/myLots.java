@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,21 +49,9 @@ public class myLots extends AppCompatActivity {
         final EditText etAddress = (EditText) findViewById(R.id.address);
         final EditText spotsAvailable = (EditText) findViewById(R.id.num_available);
         final EditText nextAvail = (EditText) findViewById(R.id.nextavail);
-        final EditText zipML = (EditText) findViewById(R.id.zip_num);
         final Button b_submitML = (Button) findViewById(R.id.button_submitmylots);
-        final Button b_list = (Button) findViewById(R.id.button_list);
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-
-        b_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i_list = new Intent(myLots.this, ListOfAddresses.class);
-                i_list.putExtra("username", username);
-                startActivity(i_list);
-            }
-        });
-
 
 
         b_submitML.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +59,13 @@ public class myLots extends AppCompatActivity {
             public void onClick(View v) {
                 final String address = etAddress.getText().toString();
                 final String spots = spotsAvailable.getText().toString();
-                final String nextTime = nextAvail.getText().toString();
-                final String zip = zipML.getText().toString();
+                final String time = nextAvail.getText().toString();
 
-                ProgressDialog dialog = new ProgressDialog(myLots.this);
-                dialog.setMessage("Updating...");
-                dialog.show();
-                Notify();
+
+//                ProgressDialog dialog = new ProgressDialog(myLots.this);
+//                dialog.setMessage("Updating...");
+//                dialog.show();
+//                Notify();
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -84,7 +73,7 @@ public class myLots extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                Intent intent = new Intent(myLots.this, Map.class); //merge with mitch for this class
+                                Intent intent = new Intent(myLots.this, userProfile.class); //merge with mitch for this class
                                 myLots.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(myLots.this);
@@ -99,7 +88,7 @@ public class myLots extends AppCompatActivity {
                     }
                 };
 
-                myLotsRequest request = new myLotsRequest(address, zip, spots, nextTime, responseListener);
+                myLotsRequest request = new myLotsRequest(address, spots, time, username, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(myLots.this);
                 queue.add(request);
 

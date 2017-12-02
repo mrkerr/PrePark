@@ -12,16 +12,16 @@ import java.util.Map;
  */
 
 public class myLotsRequest extends StringRequest {
-    private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/mylots.php"; //change
+    private static final String REGISTER_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/mylots.php";
     private Map<String, String> params;
 
-    public myLotsRequest(String address, String zip, String spots, String nextTime, Response.Listener<String> listener) {
+    public myLotsRequest(String address, String spots, String time, String username, Response.Listener<String> listener) {
         super(Request.Method.POST, REGISTER_REQUEST_URL, listener, null);
         params = new HashMap<>();
         params.put("address", address);
-        params.put("zip", zip);
-        params.put("available spots", spots);
-        params.put("Next availability", nextTime);
+        params.put("spots", spots);
+        params.put("time", time);
+        params.put("username", username);
 
     }
 

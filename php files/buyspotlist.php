@@ -1,6 +1,6 @@
 <?php
     //establilsh connection to database with hostname, username, password, schema
-    $connect = mysqli_connect("mysql.cs.iastate.edu", "dbu309sbb2", "5RVqfsTS", "db309sbb2");
+    $con = mysqli_connect("mysql.cs.iastate.edu", "dbu309sbb2", "5RVqfsTS", "db309sbb2");
 
     //testing conection, if it fails will output connection failed
     if ($connect->connect_error) {
@@ -33,9 +33,9 @@
 	     array_push($addressList, $address);
 	}
   echo json_encode($addressList);
-  //    $a = json_encode(array('address' => $addressList));
-  //    array_push($responseObject, $a);
-  //
-  //   //sends back to server with response in json
-  //   echo json_encode($responseObject);
+     $a = json_encode(array('address' => $addressList));
+     array_push($responseObject, $a);
+
+    //sends back to server with response in json
+    echo json_encode($responseObject);
 ?>

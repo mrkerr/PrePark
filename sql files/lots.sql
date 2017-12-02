@@ -19,3 +19,5 @@ SELECT address, city, state FROM lots;
 delete from lots where username = "rmdjawad";
 
 SET SQL_SAFE_UPDATES = 0;
+
+update lots set spots = 22, time = 100 where username = "mlawlor" and address = "2154 Hawthorn Ct Dr";

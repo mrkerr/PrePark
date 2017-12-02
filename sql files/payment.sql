@@ -18,6 +18,6 @@ insert into payment_history values ("Matt", "lot 23", '1997-02-28');
 
 insert into payment_history values ("Matt", "Ridwan", "lot 21", '1997-02-28');
 
-select * from payment_history where month(date) = 02;
+select seller, payment, date from payment_history where month(date) = 2;
 
 select * from payment_history where year(date) = 1997;
