@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfZip extends ListActivity {
-
+    private ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class ListOfZip extends ListActivity {
 
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
-        EditText filter = (EditText) findViewById(R.id.searchFilter);
+        EditText myfilter = (EditText) findViewById(R.id.searchFilter);
       // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
@@ -34,10 +34,10 @@ public class ListOfZip extends ListActivity {
 //            list.add(address.get(i));
 //        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
+        adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
        //filter stuff
-        filter.addTextChangedListener(new TextWatcher() {
+        myfilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -45,7 +45,7 @@ public class ListOfZip extends ListActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            ListOfZip.this.adapter.getFilter().filter(charSequence);
             }
 
             @Override
