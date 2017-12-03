@@ -23,5 +23,12 @@ public class networkReceiver extends BroadcastReceiver{
         LocalBroadcastManager.getInstance(context).sendBroadcast(networkStateIntent);
 
     }
+    private boolean isConnectedToInternet(Context context) {
+        try {
+            if (context != null) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                return networkInfo != null && networkInfo.isConnected();
+            }
 
 }
