@@ -82,6 +82,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         final Button listView = (Button) findViewById(R.id.button1);    //Represents List View button
+        final Button countdown = (Button) findViewById(R.id.button8);
 
 
         Intent intent = getIntent();   //Get intent from hub
@@ -112,6 +113,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 i_ListView.putStringArrayListExtra("timeList", globalTime);
                 i_ListView.putStringArrayListExtra("rateList", globalRate);
                 startActivity(i_ListView);
+            }
+        });
+
+        countdown.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent i_countdown = new Intent(Map.this, Countdown.class);
+                startActivity(i_countdown);
             }
         });
 
