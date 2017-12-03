@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,6 +35,16 @@ public class ListOfZip extends ListActivity {
 
         adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
+                if(postion ==0)
+                {
+                    Intent myintent = new Intent(view.getContext(),Map.class);
+                    startActivityForResult(myintent,0);
+                }
+            }
+        });
        //filter stuff
         myfilter.addTextChangedListener(new TextWatcher() {
             @Override
