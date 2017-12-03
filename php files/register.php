@@ -33,7 +33,7 @@
     }
 
     //checking if null
-    if ($name = null || $username == null || $password == null || $email == null) {
+    if ($name == null || $username == null || $password == null || $email == null) {
       $fail = array();
       $fail["success"] = false;
       echo json_encode($fail);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,14 @@ public class ListOfLots extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_lots);
         listView = findViewById(R.id.list_view);
 
+
         Intent MapIntent = getIntent();
         ArrayList<String> aList = MapIntent.getStringArrayListExtra("addressList");
         ArrayList<String> cList = MapIntent.getStringArrayListExtra("cityList");
         ArrayList<String> sList = MapIntent.getStringArrayListExtra("stateList");
+        ArrayList<String> spotList = MapIntent.getStringArrayListExtra("spotsList");
+        ArrayList<String> timeList = MapIntent.getStringArrayListExtra("timeList");
+        ArrayList<String> rateList = MapIntent.getStringArrayListExtra("rateList");
         final String username = MapIntent.getStringExtra("username");
 
      ;
@@ -45,6 +50,9 @@ public class ListOfLots extends AppCompatActivity {
                 intent.putExtra("detailA", aList.get(i));
                 intent.putExtra("detailC", cList.get(i));
                 intent.putExtra("detailS", sList.get(i));
+                intent.putExtra("detailSpot", spotList.get(i));
+                intent.putExtra("detailTime", timeList.get(i));
+                intent.putExtra("detailRate", rateList.get(i));
                 intent.putExtra("username", username);
                 startActivity(intent);
             }
@@ -52,7 +60,8 @@ public class ListOfLots extends AppCompatActivity {
 
 
         for(int i = 0; i < aList.size(); i++){
-            list.add(aList.get(i));
+            list.add("Address: " + aList.get(i) + "\n" + "City: " + sList.get(i) + ", " + cList.get(i) + "\n" + "Spots: " + spotList.get(i) + "\n"
+                    + "Time: " + timeList.get(i) + "\n" + "Rate: $" + rateList.get(i));
         }
 
         adapter = new ArrayAdapter(ListOfLots.this, android.R.layout.simple_list_item_1, list);

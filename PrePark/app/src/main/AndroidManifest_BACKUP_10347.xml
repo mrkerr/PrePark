@@ -28,6 +28,9 @@
         <activity android:name=".userProfile" />
         <activity android:name=".UserAreaActivity" />
         <activity android:name=".EmailActivity" />
+<<<<<<< HEAD
+        <activity android:name=".BuySpot"></activity>
+=======
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,31 +40,10 @@
             android:name=".Map"
             android:exported="true"
             android:label="@string/title_activity_map" />
-        <activity
-            android:name=".ListOfLots"
-<<<<<<< HEAD
-            android:label="title activity list of lots"
-            android:theme="@style/Theme.AppCompat.Light" />
-=======
-            android:label="List of Lots" />
-           <!-- android:theme="@style/Theme.AppCompat.Light" /> -->
->>>>>>> matt3
-        <activity
-            android:name=".ListHelper"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert"></activity>
         <activity android:name=".ConfirmationActivity" />
         <activity android:name=".Pay_activity" />
         <activity android:name=".transactionHistory" />
-        <activity android:name=".BuySpot" />
-<<<<<<< HEAD
-        <activity
-            android:name=".view_transactions"
-            android:label="@string/title_activity_view_transactions"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-=======
-        <activity android:name=".ListOfAddresses" />
-        <activity android:name=".ListOfZip"></activity>
->>>>>>> matt3
+>>>>>>> origin/matt3
     </application>
 
 </manifest>

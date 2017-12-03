@@ -5,8 +5,11 @@ package matt.prepark;
  */
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,6 +27,7 @@ public class userProfile extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
 
         b_setuplots.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +58,33 @@ public class userProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i_buyspot = new Intent(userProfile.this, BuySpot.class);
                 startActivity(i_buyspot);
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(userProfile.this, Map.class);
+                        mapIntent.putExtra("username", username);
+                        userProfile.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(userProfile.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(userProfile.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        userProfile.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
             }
         });
     }

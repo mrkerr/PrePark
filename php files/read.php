@@ -7,14 +7,24 @@
     }
 
     $username = $_POST["username"];
-    $transaction = $_POST["transaction"];
     $date = $_POST["date"];
+    $when = $_POST["when"];
 
-    $statement = mysqli_prepare($con, "SELECT buyer, seller, payment, date FROM payment_history WHERE buyer = ? or seller = ? and payment = ? and date = ?");
-    mysqli_stmt_bind_param($statement, "ssss", $username, $username, $transaction, $date);
+    if ($when == 2) {
+      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE month(date) = ?");
+      mysqli_stmt_bind_param($statement, "s", $date);
+      mysqli_stmt_execute($statement);
+      mysqli_stmt_store_result($statement);
+      mysqli_stmt_bind_result($statement, $username, $transaction, $date);
+    }
 
-    mysqli_stmt_store_result($statement);
-    mysqli_stmt_bind_result($statement, $username, $transaction, $date);
+    if ($when == 3) {
+      $statement = mysqli_prepare($con, "SELECT seller, payment, date FROM payment_history WHERE year(date) = ?");
+      mysqli_stmt_bind_param($statement, "s", $date);
+      mysqli_stmt_execute($statement);
+      mysqli_stmt_store_result($statement);
+      mysqli_stmt_bind_result($statement, $username, $transaction, $date);
+    }
 
     $responseObject = array();
     $usernameList = array();

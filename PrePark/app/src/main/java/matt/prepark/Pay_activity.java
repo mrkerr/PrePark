@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,8 +36,8 @@ public class Pay_activity extends AppCompatActivity {
     public static final String PAYPAL_CLIENT_ID = "AUEI8B-07-XP-_Gjw5MtqWz_mdgIAZNLQfdjOXQL7WHx5oDrvJBwEwsr7X_MLMOjffWDTlOPefK0j3vV";
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
-    public static String username, address;
-    private String spots, time, rate;
+    public static String username, address, spots, time, rate;
+
 
     private Button button;
     private Context context;
@@ -101,6 +102,9 @@ public class Pay_activity extends AppCompatActivity {
         Intent nameIntent = getIntent();
         username = nameIntent.getStringExtra("username");
         address = nameIntent.getStringExtra("address");
+        spots = nameIntent.getStringExtra("spot");
+        time = nameIntent.getStringExtra("time");
+        rate = nameIntent.getStringExtra("rate");
 
 
 
@@ -118,37 +122,6 @@ public class Pay_activity extends AppCompatActivity {
 
         button.setOnClickListener(view -> getPayment());
 
-        // Response received from the server
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    //creating a jsonResponse that will receive the php json
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        spots = jsonResponse.getString("spots");
-                        time = jsonResponse.getString("time");
-                        rate = jsonResponse.getString("rate");
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
-                        builder.setMessage("Failed TO Send Email")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        DetailsRequest detailsRequest = new DetailsRequest(address, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
-        queue.add(detailsRequest);
-
         String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address +"\n"
                 +" Spots: "+spots+"\n"+" Time: "+time ;
         t.setText(j);
@@ -156,7 +129,7 @@ public class Pay_activity extends AppCompatActivity {
 
     private void getPayment() {
 
-        String paymentAmount = "1";
+        String paymentAmount = rate;
 
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
@@ -283,25 +256,6 @@ class SellerRequest extends StringRequest {
         params = new HashMap<>();
         params.put("username", seller);
         params.put("address", Pay_activity.address);
-
-
-    }
-
-    @Override
-    public Map<String, String> getParams() {
-        return params;
-    }
-}
-
-class DetailsRequest extends StringRequest {
-    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/details.php";
-    private Map<String, String> params;
-
-    DetailsRequest(String address, Response.Listener<String> listener) {
-        super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
-
-        params = new HashMap<>();
-        params.put("address", address);
 
 
     }

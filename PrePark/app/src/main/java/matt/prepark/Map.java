@@ -2,8 +2,11 @@ package matt.prepark;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,8 +15,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -42,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,19 +67,26 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     Geocoder geocoder;  //for decoding addresses into LatLng
     Address lotMarker;    //For storing addresses retrieved from geocoder
-    ArrayList<String> globalAddress = new ArrayList<>();
-    ArrayList<String> globalCity = new ArrayList<>();
-    ArrayList<String> globalState = new ArrayList<>();
+    ArrayList<String> globalAddress = new ArrayList<>();    //For storing addresses added to server after map open
+    ArrayList<String> globalCity = new ArrayList<>();       //For storing cities added to server after map open
+    ArrayList<String> globalState = new ArrayList<>();      //For storing states added to server after map open
+    String username2 = "";
+    ArrayList<String> globalSpots = new ArrayList<>();
+    ArrayList<String> globalTime = new ArrayList<>();
+    ArrayList<String> globalRate = new ArrayList<>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        final Button listView = (Button) findViewById(R.id.button1);
+        final Button listView = (Button) findViewById(R.id.button1);    //Represents List View button
 
-        Intent intent = getIntent();
-        final String username = intent.getStringExtra("username");
+
+        Intent intent = getIntent();   //Get intent from hub
+        final String username = intent.getStringExtra("username");  //Get username from hub
+        username2 = username;   //Store username in global
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -93,10 +108,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 i_ListView.putStringArrayListExtra("addressList", globalAddress);
                 i_ListView.putStringArrayListExtra("cityList", globalCity);
                 i_ListView.putStringArrayListExtra("stateList", globalState);
+                i_ListView.putStringArrayListExtra("spotsList", globalSpots);
+                i_ListView.putStringArrayListExtra("timeList", globalTime);
+                i_ListView.putStringArrayListExtra("rateList", globalRate);
                 startActivity(i_ListView);
             }
         });
 
+        //Set timer to run function every 10 seconds to check for new lots to be added to map
         new Timer().scheduleAtFixedRate(new TimerTask() {
 
             @Override
@@ -106,28 +125,36 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
-
-    public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state) {
-        LatLng latLng2;
-        MarkerOptions markerOptions2;
-        String[] plotPoint = new String[address.size() + 1];
-
+/*
+*
+* This method adds a marker at every address obtained from the database
+ */
+    public void addMarker(ArrayList<String> address, ArrayList<String> city, ArrayList<String> state, ArrayList<String> spots, ArrayList<String> time, ArrayList<String> rate) {
+        LatLng latLng2; //For tracking LatLng data from address
+        MarkerOptions markerOptions2;   //For displaying marker
+        String[] plotPoint = new String[address.size() + 1];    //Add 1 index for storing dummy address
+        String[] pointInfo = new String[address.size() + 1];
+        //Add every address, city, and state to array
         for (int i = 0; i < address.size(); i++) {
             plotPoint[i] = address.get(i) + " " + state.get(i) + " " + city.get(i);
+            pointInfo[i] = "Spots: " + spots.get(i) + " | Time: " + time.get(i) + " minutes | Rate: $"  + rate.get(i);
         }
 
-        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";
+        plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";    //dummy address
+        pointInfo[plotPoint.length -1] = "Spots: 20 | Time: 5 | Rate: $3";
 
+
+        //Adding marker for every address in array
         for (int j = 0; j < plotPoint.length; j++) {
             try {
-                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);
-                //Place marker for lot, change to for loop in future when >1 lot utilized
-                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());
+                lotMarker = geocoder.getFromLocationName(plotPoint[j], 1).get(0);   //Return one Address object for every address
+                latLng2 = new LatLng(lotMarker.getLatitude(), lotMarker.getLongitude());    //Get LatLng from address
                 markerOptions2 = new MarkerOptions();
                 markerOptions2.position(latLng2);
                 markerOptions2.title(plotPoint[j]);
+                markerOptions2.snippet(pointInfo[j]);
                 markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                mCurrLocationMarker = mMap.addMarker(markerOptions2);
+                mCurrLocationMarker = mMap.addMarker(markerOptions2);   //add marker
                 mCurrLocationMarker.showInfoWindow();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -149,6 +176,65 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         geocoder = new Geocoder(this);
 
+        //Overriding method to change size of info window
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;    //On return null, calls getInfoContents
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                Context context = getApplicationContext();
+
+                LinearLayout info = new LinearLayout(context);
+                info.setOrientation(LinearLayout.VERTICAL);
+
+                TextView title = new TextView(context);
+                title.setTextColor(Color.BLACK);
+                title.setGravity(Gravity.CENTER);
+                title.setTypeface(null, Typeface.BOLD);
+                String distanceTo = getDistance(marker.getPosition(), mCurrLocationMarker.getPosition());
+                title.setText(marker.getTitle() + "\n" + distanceTo + "\n" + "Click to purchase spot ");
+
+                TextView snippet = new TextView(context);
+                snippet.setTextColor(Color.GRAY);
+                snippet.setText(marker.getSnippet());
+
+                info.addView(title);
+                info.addView(snippet);
+
+                return info;
+            }
+
+        });
+
+        //Sending intent to Pay_Activity on window click
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String spotTimeRate = marker.getSnippet();  //Get formatted string
+                String[] parts = spotTimeRate.split("\\|");   //Split at "|" marker
+
+                String spotTemp = parts[0];                 //Get first part
+                String spot = spotTemp.substring(7, spotTemp.length());
+
+                String timeTemp = parts[1];                 //Get second part
+                String time = timeTemp.substring(7, timeTemp.length()-9);
+
+                String rateTemp = parts[2];                 //Get third part
+                String rate = rateTemp.substring(8, rateTemp.length());
+
+                final String username3 = username2;
+                Intent intent2 = new Intent(Map.this, Pay_activity.class);
+                intent2.putExtra("address", marker.getTitle());
+                intent2.putExtra("username", username3);
+                intent2.putExtra("spot", spot);
+                intent2.putExtra("time", time);
+                intent2.putExtra("rate", rate);
+                startActivity(intent2);
+            }
+        });
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -296,6 +382,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         final String address = "";
         String city = "";
         String state = "";
+        String spots = "";
+        String time = "";
+        String rate = "";
 
 
         // Response received from the server
@@ -318,11 +407,17 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         String addressBlock = jsonResponse.getString(1);
                         String stateBlock = jsonResponse.getString(2);
                         String cityBlock = jsonResponse.getString(3);
+                        String spotsBlock = jsonResponse.getString(4);
+                        String timeBlock = jsonResponse.getString(5);
+                        String rateBlock = jsonResponse.getString(6);
 
                         //creating arraylists to store these individual variables
                         ArrayList<String> addressList = new ArrayList<>();
                         ArrayList<String> cityList = new ArrayList<>();
                         ArrayList<String> stateList = new ArrayList<>();
+                        ArrayList<String> spotsList = new ArrayList<>();
+                        ArrayList<String> timeList = new ArrayList<>();
+                        ArrayList<String> rateList = new ArrayList<>();
 
                         //the head of these "blocks" are not needed so I split the strings
                         //then split the body so we now have an array with just the variables
@@ -333,6 +428,13 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         String[] stateBody = stateHead[1].split(",");
                         String[] cityHead = cityBlock.split(":");
                         String[] cityBody = cityHead[1].split(",");
+
+                        String[] spotsHead = spotsBlock.split(":");
+                        String[] spotsBody = spotsHead[1].split(",");
+                        String[] timeHead = timeBlock.split(":");
+                        String[] timeBody = timeHead[1].split(",");
+                        String[] rateHead = rateBlock.split(":");
+                        String[] rateBody = rateHead[1].split(",");
 
                         //we take these extra characters out and store them
                         //into our arraylists
@@ -346,9 +448,26 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                             stateBody[i] = stateBody[i].replace("[", "");
                             stateBody[i] = stateBody[i].replace("]", "");
                             stateBody[i] = stateBody[i].replaceAll("^\"|\"$", "");
+
+                            spotsBody[i] = spotsBody[i].replace("[", "");
+                            spotsBody[i] = spotsBody[i].replace("]", "");
+                            spotsBody[i] = spotsBody[i].replaceAll("^\"|\"$", "");
+
+                            timeBody[i] = timeBody[i].replace("[", "");
+                            timeBody[i] = timeBody[i].replace("]", "");
+                            timeBody[i] = timeBody[i].replaceAll("^\"|\"$", "");
+
+                            rateBody[i] = rateBody[i].replace("[", "");
+                            rateBody[i] = rateBody[i].replace("]", "");
+                            rateBody[i] = rateBody[i].replaceAll("^\"|\"$", "");
+
                             addressList.add(addressBody[i]);
                             cityList.add(cityBody[i]);
                             stateList.add(stateBody[i]);
+
+                            spotsList.add(spotsBody[i]);
+                            timeList.add(timeBody[i]);
+                            rateList.add(rateBody[i]);
                         }
 
                         //the last element in our arraylist doesn't have these
@@ -370,26 +489,58 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                         stateEnd = stateEnd.substring(0, stateEnd.length() - 2);
                         stateList.add(stateEnd);
 
+                        String spotsEnd = spotsList.get(spotsList.size() - 1);
+                        spotsList.remove(spotsList.size() - 1);
+                        spotsEnd = spotsEnd.substring(0, spotsEnd.length() - 2);
+                        spotsList.add(spotsEnd);
+
+                        String timeEnd = timeList.get(timeList.size() - 1);
+                        timeList.remove(timeList.size() - 1);
+                        timeEnd = timeEnd.substring(0, timeEnd.length() - 2);
+                        timeList.add(timeEnd);
+
+                        String rateEnd = rateList.get(rateList.size() - 1);
+                        rateList.remove(rateList.size() - 1);
+                        rateEnd = rateEnd.substring(0, rateEnd.length() - 2);
+                        rateList.add(rateEnd);
+
                         if (needsUpdate == false) {
                             //the arraylists are now all "clean" and are able to be plotted
-                            addMarker(addressList, cityList, stateList);
+                            addMarker(addressList, cityList, stateList, spotsList, timeList, rateList);
                             globalAddress = addressList;
                             globalCity = cityList;
                             globalState = stateList;
+
+                            globalSpots = spotsList;
+                            globalTime = timeList;
+                            globalRate = rateList;
+
                         } else {
                             if (addressList.size() > globalAddress.size()) {
                                 ArrayList<String> newAddressList = new ArrayList<>();
                                 ArrayList<String> newCityList = new ArrayList<>();
                                 ArrayList<String> newStateList = new ArrayList<>();
+
+                                ArrayList<String> newSpotsList = new ArrayList<>();
+                                ArrayList<String> newTimeList = new ArrayList<>();
+                                ArrayList<String> newRateList = new ArrayList<>();
                                 for (int i = globalAddress.size(); i < addressList.size(); i++) {
                                     newAddressList.add(addressList.get(i));
                                     newCityList.add(cityList.get(i));
                                     newStateList.add(stateList.get(i));
+
+                                    newSpotsList.add(spotsList.get(i));
+                                    newTimeList.add(timeList.get(i));
+                                    newRateList.add(rateList.get(i));
                                 }
-                                addMarker(newAddressList, newCityList, newStateList);
+                                addMarker(newAddressList, newCityList, newStateList, newSpotsList, newTimeList, newRateList);
                                 globalAddress = newAddressList;
                                 globalCity = newCityList;
                                 globalState = newStateList;
+
+                                globalSpots = newSpotsList;
+                                globalTime = newTimeList;
+                                globalRate = newRateList;
                             }
                         }
 
@@ -408,9 +559,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         };
 
         //sending a request to the server with address, city, state and responseListener
-        MapRequest mapRequest = new MapRequest(address, city, state, responseListener);
+        MapRequest mapRequest = new MapRequest(address, city, state, spots, time, rate, responseListener);
         RequestQueue queue = Volley.newRequestQueue(Map.this);
         queue.add(mapRequest);
+    }
+    public String getDistance(LatLng from, LatLng to){
+        try{
+            Location malLoc = new Location("");
+            malLoc.setLatitude(from.latitude);
+            malLoc.setLongitude(from.longitude);
+
+            Location userLoc = new Location("");
+            userLoc.setLatitude(to.latitude);
+            userLoc.setLongitude(to.longitude);
+
+            double distance = malLoc.distanceTo(userLoc) / 1000;
+            distance = distance * 0.62137;
+            return "You are " + String.format(Locale.getDefault(), "%.2f", distance) + " miles away from this lot";
+
+        } catch(Exception e){
+            return "Unknown distance";
+        }
     }
 
 }
