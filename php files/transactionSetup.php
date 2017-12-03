@@ -7,7 +7,7 @@
     }
 
     $username = $_POST["username"];
-	$address = $_POST["address"];
+	  $address = $_POST["address"];
 
     $statement = mysqli_prepare($con, "SELECT username FROM lots WHERE address = ?");
     mysqli_stmt_bind_param($statement, "s", $address);
