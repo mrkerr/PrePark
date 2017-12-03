@@ -26,7 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuySpot extends AppCompatActivity {
-   public ArrayList<String> gAddress = new ArrayList<>();
+    public ArrayList<String> gAddress = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,30 +37,34 @@ public class BuySpot extends AppCompatActivity {
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
 
-
         b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String zip = zipBS.getText().toString();
-                //final String licensePlate = lincenseplateBS.getText().toString();
-               // final String fromTime = fromBS.getText().toString();
-               // final String toTime = toBS.getText().toString();
                 //progress dialog
-                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
-                dialog.setTitle("Please wait");
-                dialog.setMessage("Finding the right options for you...");
-                dialog.show();
+//                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
+//                dialog.setTitle("Please wait");
+//                dialog.setMessage("Finding the right options for you...");
+//                dialog.show();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                      //  Toast.makeText(BuySpot.this, response, Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(BuySpot.this, response, Toast.LENGTH_SHORT).show();
                         try {
+                            //response is stored in an json array, usually it has been a json object
                             JSONArray jsonresponse = new JSONArray(response);
-                            JSONObject successIndex = new JSONObject(response);
+                            //because of json array, we need to cut it into json objects
+                            //here we are checking to see if the query was successful
+                            JSONObject successIndex = jsonresponse.getJSONObject(0);
+
+                            //storing the boolean in our own variable
                             boolean success = successIndex.getBoolean("success");
                             if (success) {
+
+                                //Toast.makeText(BuySpot.this, "we out here", Toast.LENGTH_SHORT).show();
+
                                 //getting string "blocks" from the json array
                                 //the next process is formatting the strings to get the values I want
                                 String addressBlock = jsonresponse.getString(1);
@@ -82,7 +87,10 @@ public class BuySpot extends AppCompatActivity {
                                     addressBody[i] = addressBody[i].replaceAll("^\"|\"$", "");
 
                                     addressList.add(addressBody[i]);
+
                                 }
+
+                                // Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
 
                                 //the last element in our arraylist doesn't have these
                                 //extra characters removed. There are extra characters
@@ -92,10 +100,16 @@ public class BuySpot extends AppCompatActivity {
                                 addressList.remove(addressList.size() - 1);
                                 addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
                                 addressList.add(addressEnd);
-                              //  Log.d("baz", addressList.toString());
+                                //  Log.d("baz", addressList.toString());
 
+                                //Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
                                 gAddress = addressList;
 
+                                Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
+                                //i_listZ.putExtra("username", username);
+                                i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
+                                startActivity(i_listZ);
+                                //Toast.makeText(BuySpot.this, gAddress.get(0), Toast.LENGTH_SHORT).show();
 //                                Intent intent = new Intent(BuySpot.this, Map.class); //merge with mitch for this class
 //                                BuySpot.this.startActivity(intent);
                             } else {
@@ -108,6 +122,7 @@ public class BuySpot extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 };
 
@@ -115,14 +130,8 @@ public class BuySpot extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(BuySpot.this);
                 queue.add(bsRequest);
 
-                Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
-                //i_listZ.putExtra("username", username);
-                i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
-                startActivity(i_listZ);
-
             }
+
         });
-
     }
-
 }
