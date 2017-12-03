@@ -2,30 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <declare-styleable android:name= "CTAppTheme">
-        <attr android:name = "primaryTextColor" android:format="color"/>
-        <attr android:name= "secondaryTextColor" android:format="color"/>
-        <attr android:name="dividerColor" android:format="color"/>
-        <attr android:name="backgroundCardColor" android:format="color"/>
-        <attr android:name="iconPlaceholder" android:format="integer"/>
-    </declare-styleable>
-    <!-- Light base activity theme -->
-    <style android:name="ActivityTheme.Primary.Base.Light" android:parent="Theme.AppCompat.NoActionBar">
-        <item android:name="primaryTextColor">#F4F4F6</item>
-        <item android:name="secondaryTextColor">#96F4F4F6</item>
-        <item android:name="backgroundCardColor">#FFFF</item>
-        <item android:name="dividerColor">#F2F2F3</item>
-        <item android:name="iconPlaceholder">@drawable/i_light_plholder</item>
-    </style>
+    <resources>
 
+        <!-- Base application theme. -->
+        <style android:name="AppTheme" android:parent="Theme.AppCompat.DayNight.DarkActionBar">
+            <!-- Customize your theme here. -->
+            <item android:name="colorPrimary">@color/colorPrimary</item>
+            <item android:name="colorPrimaryDark">@color/colorPrimaryDark</item>
+            <item android:name="colorAccent">@color/colorAccent</item>
+            <item android:name="android:textColorPrimary">@color/textColorPrimary</item>
+            <item android:name="android:textColorSecondary">@color/textColorSecondary</item>
+        </style>
 
-    <!-- Dark base activity theme -->
-    <style android:name="ActivityTheme.Primary.Base.Dark"    android:parent="Theme.AppCompat.NoActionBar">
-        <item android:name="primaryTextColor">#33343B</item>
-        <item android:name="secondaryTextColor">#8033343B</item>
-        <item android:name="backgroundCardColor">#28292e</item>
-        <item android:name="dividerColor">#F2F2F3</item>
-        <item android:name="iconPlaceholder">@drawable/i_dark_pholder</item>
-    </style>
+    </resources>
 
 </LinearLayout>
