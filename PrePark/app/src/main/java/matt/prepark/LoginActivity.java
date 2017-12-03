@@ -22,6 +22,9 @@ import org.w3c.dom.Text;
  */
 
 public class LoginActivity extends AppCompatActivity {
+    static{
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
