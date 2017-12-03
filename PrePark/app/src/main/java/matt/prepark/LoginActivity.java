@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
+        //Online/Offline Notification
         IntentFilter intentFilter = new IntentFilter(NetworkStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
