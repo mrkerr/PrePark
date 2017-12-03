@@ -35,6 +35,7 @@ public class ListOfZip extends ListActivity {
 
         adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
+        //On Click Stuff
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
