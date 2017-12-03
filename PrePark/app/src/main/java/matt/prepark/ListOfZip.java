@@ -37,12 +37,10 @@ public class ListOfZip extends ListActivity {
         getListView().setAdapter(adapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
-                if(postion ==0)
-                {
-                    Intent myintent = new Intent(view.getContext(),Map.class);
-                    startActivityForResult(myintent,0);
-                }
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intentlist = new Intent(getApplicationContext(), Map.class);
+                intentlist.putExtra("address",address.get(i));
+                startActivity(intentlist);
             }
         });
        //filter stuff
