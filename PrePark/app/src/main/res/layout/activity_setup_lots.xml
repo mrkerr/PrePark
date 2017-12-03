@@ -84,6 +84,8 @@
         android:id="@+id/button_submit_setuplots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
         android:layout_marginTop="400dp"
         android:text="submit" />
 </RelativeLayout>

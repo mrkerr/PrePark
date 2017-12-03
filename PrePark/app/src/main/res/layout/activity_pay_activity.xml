@@ -27,6 +27,8 @@
         android:layout_width="wrap_content"
         android:id="@+id/btn_pay"
         android:layout_height="wrap_content"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
         android:layout_gravity="center"
         android:layout_marginTop="190dp"
         android:text="@string/confirm_payement"/>

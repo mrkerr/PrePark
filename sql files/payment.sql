@@ -6,6 +6,10 @@ date date);
 
 insert into payment_history values ("Transaction: Price: 10.00 USD Location: Blaze Restaurant Ames IA Date: 10/05/17");
 
+SET SQL_SAFE_UPDATES = 0;
+
+delete from payment_history where buyer is null;
+
 select * from payment_history;
 
 delete from payment_history;

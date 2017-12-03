@@ -15,7 +15,7 @@
 
     if ($taken == 1) {
     //passing in an insert statement
-    $statement = mysqli_prepare($con, "UPDATE lots SET spots = spots - 1 WHERE address = ? and spots > 0");
+    $statement = mysqli_prepare($con, "UPDATE lots SET spots = spots - 1 WHERE address = ? and spots >= 0");
     //assigning the values with the ones given in android
     mysqli_stmt_bind_param($statement, "s", $address);
     //executing statement

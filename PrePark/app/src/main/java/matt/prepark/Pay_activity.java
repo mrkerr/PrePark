@@ -43,8 +43,6 @@ public class Pay_activity extends AppCompatActivity {
     private Context context;
 
 
-
-
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
@@ -59,7 +57,7 @@ public class Pay_activity extends AppCompatActivity {
      * @param data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //TODO decrease spot number
         if (requestCode == PAYPAL_REQUEST_CODE) {
 
             //If the result is OK i.e. user has not canceled the payment
@@ -107,13 +105,11 @@ public class Pay_activity extends AppCompatActivity {
         rate = nameIntent.getStringExtra("rate");
 
 
-
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
 
         TextView t = findViewById(R.id.t);
-
 
 
         Button button = findViewById(R.id.btn_pay);
@@ -122,8 +118,8 @@ public class Pay_activity extends AppCompatActivity {
 
         button.setOnClickListener(view -> getPayment());
 
-        String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address +"\n"
-                +" Spots: "+spots+"\n"+" Time: "+time ;
+        String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address + "\n"
+                + " Spots: " + spots + "\n" + " Time: " + time;
         t.setText(j);
     }
 
@@ -148,10 +144,41 @@ public class Pay_activity extends AppCompatActivity {
         //the request code will be used on the method onActivityResult
         startActivityForResult(intent, PAYPAL_REQUEST_CODE);
     }
+
+    public void updateSpots(String lower) {
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //creating a jsonResponse that will receive the php json
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success) {
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        SpotAmountRequest spotAmountRequest = new SpotAmountRequest(address, lower, response);
+        RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
+        queue.add(spotAmountRequest); //TODO
+    }
+
 }
 
 
-class Transaction extends AsyncTask{
+class Transaction extends AsyncTask {
 
     private String amount;
     private String loc;
@@ -160,14 +187,14 @@ class Transaction extends AsyncTask{
     private String lotOwner;
 
 
-
     Transaction(String amount, String city, String date, Context context) {
 
         this.amount = amount;
-        this.loc =city;
+        this.loc = city;
         this.Date = date;
         this.context = context;
     }
+
     @Override
     protected Object doInBackground(Object[] objects) {
 
@@ -214,8 +241,8 @@ class Transaction extends AsyncTask{
 
     }
 
-    private String Tostring(){
-        return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
+    private String Tostring() {
+        return "Transaction: " + "Price: " + this.amount + " USD" + "\n" + "Location: " + this.loc + "\n" + "Date: " + this.Date;
     }
 
 
@@ -229,7 +256,7 @@ class Transaction extends AsyncTask{
 
             params = new HashMap<>();
             params.put("buyer", Pay_activity.username);
-            params.put("seller",lotOwner);
+            params.put("seller", lotOwner);
             params.put("transaction", transaction);
             params.put("date", Transaction.Date);
 
@@ -247,7 +274,6 @@ class Transaction extends AsyncTask{
 class SellerRequest extends StringRequest {
     private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
     private Map<String, String> params;
-
 
 
     SellerRequest(String seller, Response.Listener<String> listener) {

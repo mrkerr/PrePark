@@ -24,6 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:text="Find Parking" />

@@ -57,6 +57,7 @@
         android:layout_gravity="center"
         android:id="@+id/share"
         android:text="@string/share"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/accent"
+        android:textColor="@color/icons"/>
 
 </LinearLayout>

@@ -48,6 +48,8 @@
         android:id="@+id/bRegister"
         android:layout_below="@+id/etEmail"
         android:layout_alignParentLeft="true"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/etEmail"
         android:layout_alignEnd="@+id/etEmail" />
