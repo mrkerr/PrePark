@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
-
+    private String ns = "";
     private void Notify(){
 
         NotificationManager notificationManager = (NotificationManager)
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
         Notification n  = new Notification.Builder(this)
-                .setContentText("Lot updated")
+                .setContentText(ns);
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
@@ -74,7 +74,8 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
 
-                Snackbar.make(findViewById(R.id.activity_login), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                ns = ("Network Status: " + networkStatus);
+                notify();
             }
         }, intentFilter);
 
