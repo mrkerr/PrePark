@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -209,15 +210,13 @@ public class transactionHistory extends AppCompatActivity {
         };
 
         if (timeLine == 2) {
-//            DateFormat dateformat = new SimpleDateFormat("MM"); //TODO
-//            dateformat.format("MM");
-            ReadRequest readRequest = new ReadRequest(username, "2", "2", responseListener);
+            ReadRequest readRequest = new ReadRequest(username, "12", "2", responseListener);
             RequestQueue queue = Volley.newRequestQueue(this);
             queue.add(readRequest);
         }
 
         if (timeLine == 3) {
-            ReadRequest readRequest = new ReadRequest(username, "1997", "3", responseListener);
+            ReadRequest readRequest = new ReadRequest(username, "2017", "3", responseListener);
             RequestQueue queue = Volley.newRequestQueue(this);
             queue.add(readRequest);
         }

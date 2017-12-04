@@ -25,3 +25,7 @@ insert into payment_history values ("Matt", "Ridwan", "lot 21", '1997-02-28');
 select seller, payment, date from payment_history where month(date) = 2;
 
 select * from payment_history where year(date) = 1997;
+
+insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 5 USD Location: 1305 Georgia Ave Ames Iowa Date: 2017-12-04", '2017-12-04');
+
+delete from payment_history where buyer = "mlawlor";
