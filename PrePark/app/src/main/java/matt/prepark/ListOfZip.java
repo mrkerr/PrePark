@@ -24,7 +24,7 @@ public class ListOfZip extends ListActivity {
 
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
-        SearchView searchView =(SearchView) findViewById(R.id.searchView1);
+        SearchView searchView;
       // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
@@ -34,9 +34,9 @@ public class ListOfZip extends ListActivity {
 //            list.add(address.get(i));
 //        }
 
-        adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
-        getListView().setAdapter(adapter);
-
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, address);
+        listView.setAdapter(adapter);
+        searchView=(SearchView) findViewById(R.id.searchView1);
         //On Click Stuff
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
