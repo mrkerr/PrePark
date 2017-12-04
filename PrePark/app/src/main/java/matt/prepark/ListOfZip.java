@@ -35,16 +35,6 @@ public class ListOfZip extends ListActivity {
 
         adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
-        //On Click Stuff
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intentlist = new Intent(getApplicationContext(), Map.class);
-                intentlist.putExtra("address",address.get(i));
-                startActivity(intentlist);
-            }
-        });
-       //filter stuff
         myfilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -53,7 +43,7 @@ public class ListOfZip extends ListActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            ListOfZip.this.adapter.getFilter().filter(charSequence);
+                ListOfZip.this.adapter.getFilter().filter(charSequence);
             }
 
             @Override
@@ -61,5 +51,18 @@ public class ListOfZip extends ListActivity {
 
             }
         });
+        //On Click Stuff
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intentlist = new Intent(getApplicationContext(), Map.class);
+                intentlist.putExtra("address",address.get(i));
+                startActivity(intentlist);
+
+
+            }
+        });
+       //filter stuff
+
     }
 }
