@@ -19,8 +19,9 @@ import android.content.Intent;package matt.prepark;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.android.volley.RequestQueue;
+import com.android.volley.RequestQueue;
         import com.android.volley.Response;
         import com.android.volley.toolbox.Volley;
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
        {
            ns = "You are offline";
            Notify();
+
        }
 
 
