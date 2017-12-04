@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-
+import android.widget.SearchView.OnQueryTextListener;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
         Notification n  = new Notification.Builder(this)
-                .setContentText(ns);
+                .setContentText(ns)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
