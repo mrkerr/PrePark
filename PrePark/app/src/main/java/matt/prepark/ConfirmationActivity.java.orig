@@ -39,8 +39,11 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     private String paymentAmount;
     private Button button;
+<<<<<<< HEAD
     private String globalAddress;
+=======
     private String day, loc;
+>>>>>>> ridwan2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

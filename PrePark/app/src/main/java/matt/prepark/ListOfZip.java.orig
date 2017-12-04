@@ -24,7 +24,11 @@ public class ListOfZip extends ListActivity {
 
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
+<<<<<<< HEAD
+        SearchView searchView =(SearchView) findViewById(R.id.searchView1);
+=======
         SearchView searchView;
+>>>>>>> ridwan2
         // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
@@ -36,7 +40,23 @@ public class ListOfZip extends ListActivity {
 
         adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
+<<<<<<< HEAD
+        //filter stuff
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+=======
         searchView=findViewById(R.id.searchView1);
+>>>>>>> ridwan2
         //On Click Stuff
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,7 +68,9 @@ public class ListOfZip extends ListActivity {
 
             }
         });
+<<<<<<< HEAD
 
+=======
         //filter stuff
        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -62,6 +84,7 @@ public class ListOfZip extends ListActivity {
                 return false;
             }
         });
+>>>>>>> ridwan2
 
     }
 }

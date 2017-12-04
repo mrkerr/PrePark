@@ -208,9 +208,12 @@ public class Pay_activity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
+=======
     @Override
     public Map<String, String> getParams() {
         return params;
     }
 }
 
+>>>>>>> ridwan2

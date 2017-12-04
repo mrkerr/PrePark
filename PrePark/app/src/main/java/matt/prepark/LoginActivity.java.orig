@@ -74,6 +74,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
+<<<<<<< HEAD
+
+
+                Snackbar.make(findViewById(R.id.activity_login), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+=======
+                System.out.println("NETWORK: "+networkStatus);
+                ns = ("Network Status: " + networkStatus);
+                notify();
+>>>>>>> ridwan2
             }
         }, intentFilter);
 
