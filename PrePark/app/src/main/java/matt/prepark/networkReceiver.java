@@ -3,6 +3,7 @@ package matt.prepark;
 /**
  * Created by jawad44 on 12/3/17.
  */
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,28 +13,30 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
-public class networkReceiver extends BroadcastReceiver{
+public class networkReceiver {
     public static final String NETWORK_AVAILABLE = "matt.prepark.NetworkAvailable";
     public static final String IS_NETWORK_AVAILABLE = "isNetworkAvailable";
+    Context context;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Intent networkStateIntent = new Intent(NETWORK_AVAILABLE);
-        networkStateIntent.putExtra(IS_NETWORK_AVAILABLE,  isConnectedToInternet(context));
-        LocalBroadcastManager.getInstance(context).sendBroadcast(networkStateIntent);
+   public networkReceiver(Context context)
+   {
+       this.context = context;
+   }
 
-    }
-    private boolean isConnectedToInternet(Context context) {
-        try {
-            if (context != null) {
-                ConnectivityManager cmanager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = cmanager.getActiveNetworkInfo();
-                return networkInfo != null && networkInfo.isConnected();
-            }
-            return false;
-        } catch (Exception e) {
-            Log.e(networkReceiver.class.getName(), e.getMessage());
-            return false;
-        }
-    }
+   public boolean isConnected(){
+       ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Service.CONNECTIVITY_SERVICE);
+
+       if (cm != null)
+       {
+           NetworkInfo nInfo = cm.getActiveNetworkInfo();
+           if(nInfo != null)
+           {
+               if(nInfo.getState() == NetworkInfo.State.CONNECTED)
+               {
+                   return true;
+               }
+           }
+       }
+       return false;
+   }
 }
