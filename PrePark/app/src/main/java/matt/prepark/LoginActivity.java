@@ -1,5 +1,9 @@
 package matt.prepark;
-package matt.prepark;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;package matt.prepark;
 
         import android.app.AlertDialog;
         import android.content.BroadcastReceiver;
@@ -35,6 +39,22 @@ public class LoginActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
 
+    private void Notify(){
+
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n  = new Notification.Builder(this)
+                .setContentText("Lot updated")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0,n);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
