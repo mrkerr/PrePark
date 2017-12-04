@@ -32,6 +32,7 @@ public class BuySpot extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_spot);
+        final String username = intent.getStringExtra("username");
 
         final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
@@ -106,7 +107,7 @@ public class BuySpot extends AppCompatActivity {
                                 gAddress = addressList;
 
                                 Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
-                                //i_listZ.putExtra("username", username);
+                                i_listZ.putExtra("username", username);
                                 i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
                                 startActivity(i_listZ);
                                 //Toast.makeText(BuySpot.this, gAddress.get(0), Toast.LENGTH_SHORT).show();
