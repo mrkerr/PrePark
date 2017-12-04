@@ -264,7 +264,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
                 final String username3 = username2;
                 Intent intent2 = new Intent(Map.this, Pay_activity.class);
-                intent2.putExtra("address", marker.getTitle());
+                String fixedAddres = marker.getTitle().replace("Ames Iowa", "");
+                intent2.putExtra("address", fixedAddres);
                 intent2.putExtra("username", username3);
                 intent2.putExtra("spot", spot);
                 intent2.putExtra("time", time);

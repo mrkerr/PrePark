@@ -12,25 +12,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Countdown extends Activity {
-    public static int globaltime;
+    public static String time;
+    public static String address;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown);
         Intent confIntent = getIntent();
-        globaltime = Integer.parseInt(confIntent.getStringExtra("time"));
-        Toast.makeText(this, globaltime, Toast.LENGTH_SHORT).show();
+        time = confIntent.getStringExtra("time");
+        address = confIntent.getStringExtra("address");
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         TextView textView= findViewById(R.id.t1);
-                        int timeLeft = intent.getIntExtra("timeSent", 0);
+                        String timeLeftString = intent.getStringExtra("timeSent");
+                        int timeLeft = Integer.parseInt(timeLeftString);
                         if(timeLeft>0) {
                             textView.setText("You have " + timeLeft + " minutes left");
                         }
                         else{
                             textView.setText("Y'all outta time, see ya again soon!");
+                            killIt();
                         }
                     }
                 }, new IntentFilter(CountdownService.ACTION_LOCATION_BROADCAST)
@@ -52,6 +55,9 @@ public class Countdown extends Activity {
 
     }
 
+    public void killIt(){
+        stopService(new Intent(this, CountdownService.class));
+    }
 
 
     }

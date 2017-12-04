@@ -53,6 +53,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         final String time = intent.getStringExtra("time");
         globalAddress = address;
 
+        final Button bCheckTime = (Button) findViewById(R.id.checkTime);
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,9 +99,21 @@ public class ConfirmationActivity extends AppCompatActivity {
         }
 
         updateSpots("1"); //TODO
-        Intent i_countdown = new Intent(ConfirmationActivity.this, Countdown.class);
-        i_countdown.putExtra("time", time);
-        startActivity(i_countdown);
+
+        bCheckTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i_countdown = new Intent(ConfirmationActivity.this, Countdown.class);
+                i_countdown.putExtra("time", time);
+                i_countdown.putExtra("address", address);
+                startActivity(i_countdown);
+            }
+        });
+
+//        Intent i_countdown = new Intent(ConfirmationActivity.this, Countdown.class);
+//        i_countdown.putExtra("time", time);
+//        i_countdown.putExtra("address", address);
+//        startActivity(i_countdown);
 
     }
 

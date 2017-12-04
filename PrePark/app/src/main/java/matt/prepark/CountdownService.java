@@ -1,5 +1,6 @@
 package matt.prepark;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,18 +13,28 @@ import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class CountdownService extends Service{
-    public static int toSend = 0;
+    public static int toSend=0;
+   public int time;
     public static final String
             ACTION_LOCATION_BROADCAST = CountdownService.class.getName() + "LocationBroadcast";
+    public final String timeFromCD = Countdown.time;
+    public final String address = Countdown.address;
 
     @Override
     public void onCreate() {
     super.onCreate();
-        int time = Countdown.globaltime;
+        time = Integer.parseInt(timeFromCD);
         time = time*60000;
-        new CountDownTimer(time, 60000) {
+        new CountDownTimer(time, 5000) {
             public void onTick(long millisUntilFinished) {
                 int timeLeftInt = (int) Math.ceil((double) millisUntilFinished / 60000);    //Whole number of minutes left, ceiling
                 sendBroadcastMessage(timeLeftInt);
@@ -38,10 +49,39 @@ public class CountdownService extends Service{
                 sendBroadcastMessage(0);
                 Notify("done");
 
+                Response.Listener<String> response = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //creating a jsonResponse that will receive the php json
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+
+                            if (success) {
+
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CountdownService.this);
+                                builder.setMessage("Login Failed")
+                                        .setNegativeButton("Retry", null)
+                                        .create()
+                                        .show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                SpotAmountRequest spotAmountRequest = new SpotAmountRequest(address, "0", response);
+                RequestQueue queue = Volley.newRequestQueue(CountdownService.this);
+                queue.add(spotAmountRequest);
+
             }
         }.start();
 
     }
+
 
     private void sendBroadcastMessage(int timeSent) {
             Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
