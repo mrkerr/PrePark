@@ -11,4 +11,5 @@
     <string name="past_week">Past Week</string>
     <string name="past_month">Past Month</string>
     <string name="past_year">Past Year</string>
+    <string name="title_activity_view_transactions">view_transactions</string>
 </resources>

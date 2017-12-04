@@ -118,6 +118,7 @@ public class Pay_activity extends AppCompatActivity {
 
         button.setOnClickListener(view -> getPayment());
 
+<<<<<<< HEAD
         String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address + "\n"
                 + " Spots: " + spots + "\n" + " Time: " + time;
         t.setText(j);
@@ -267,22 +268,53 @@ class Transaction extends AsyncTask {
             return params;
         }
     }
+=======
+        String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address +"\n"
+                +" Spots: "+spots+"\n"+" Time: "+time ;
+        t.setText(j);
+    }
 
+    private void getPayment() {
+
+        String paymentAmount = rate;
+
+        //Creating a paypalpayment
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        //Puting paypal payment to the intent
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
 }
+
+
+>>>>>>> ridwan2
+
 
 
 class SellerRequest extends StringRequest {
     private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
     private Map<String, String> params;
-
+    private String address;
 
     SellerRequest(String seller, Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
 
+        address = Pay_activity.address.replace("Ames Iowa", "");
+
         params = new HashMap<>();
         params.put("username", seller);
-        params.put("address", Pay_activity.address);
-
+        params.put("address", address);
 
     }
 

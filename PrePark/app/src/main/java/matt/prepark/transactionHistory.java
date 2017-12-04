@@ -41,36 +41,31 @@ import java.util.TimeZone;
 public class transactionHistory extends AppCompatActivity {
     public static ArrayList<String> arr;
     public static String string;
+    private TextView textView;
+    private ListView listView;
+    private String empty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
 
-        String empty = "NO TRANSACTION HAS BEEN RECORDED";
+        empty = "NO TRANSACTION HAS BEEN RECORDED";
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
 
         arr = new ArrayList<>();
 
-        TextView textView = findViewById(R.id.trans);
-        ListView listView = findViewById(R.id.listview);
         Button b = findViewById(R.id.bt1);
         Button c = findViewById(R.id.bt2);
         Button d = findViewById(R.id.bt3);
-
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getHistory(username, );
-//            }
-//        });
 
         c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getHistory(username, 2);
+                arr.clear();
             }
         });
 
@@ -94,9 +89,15 @@ public class transactionHistory extends AppCompatActivity {
 
         } else
             textView.setText(empty);
+                getHistory(username, 3);
+                arr.clear();
+            }
+        });
+
 
     }
 
+<<<<<<< HEAD
 
     public void getHistory(String username, int timeLine) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {

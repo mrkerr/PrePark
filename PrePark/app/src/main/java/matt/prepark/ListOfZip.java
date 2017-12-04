@@ -10,12 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfZip extends ListActivity {
     private ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +30,7 @@ public class ListOfZip extends ListActivity {
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
         EditText myfilter = (EditText) findViewById(R.id.searchFilter);
+
       // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");

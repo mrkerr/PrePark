@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ import static matt.prepark.networkReceiver.IS_NETWORK_AVAILABLE;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    static{
+    static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
     @Override
@@ -41,16 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
         //Online/Offline Notification
-        IntentFilter intentFilter = new IntentFilter(NetworkStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
-                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
-
-                Snackbar.make(findViewById(R.id.activity_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
-            }
-        }, intentFilter);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override

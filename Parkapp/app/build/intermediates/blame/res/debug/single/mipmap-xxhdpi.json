@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\lot.png",
+        "source": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\src\\main\\res\\mipmap-xxhdpi\\lot.png"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher_round.png",
+        "source": "U:\\Desktop\\309_proj\\SB_B_2_ProjectName\\Parkapp\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    }
+]

@@ -144,8 +144,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         plotPoint[plotPoint.length - 1] = "Iowa State University Ames Iowa";    //dummy address
         pointInfo[plotPoint.length -1] = "Spots: 20 | Time: 5 | Rate: $3";
-
-
         //Adding marker for every address in array
         for (int j = 0; j < plotPoint.length; j++) {
             try {
