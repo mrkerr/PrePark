@@ -58,6 +58,7 @@ public class ListOfZip extends ListActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 adapter.getFilter().filter(s);
+                return false;
             }
         });
 
