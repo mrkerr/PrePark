@@ -55,10 +55,10 @@
             android:name=".Countdown"
             android:label="@string/title_activity_countdown"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
+            <service
             android:name=".CountdownService"
             android:label="@string/title_activity_countdown_service"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
