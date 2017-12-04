@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
+
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/address"-->
+    <!--android:hint="Address"-->
+    <!--android:inputType="textPostalAddress"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginTop="12dp" />-->
+
+    <EditText
+        android:id="@+id/address_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="12dp"
+        android:hint="Address"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/city_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:hint="City"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/statesetuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:hint="State"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/zip_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:hint="Zip"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/num_spots_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:hint="Spots"
+        android:inputType="number" />
+
+
+
+    <EditText
+        android:id="@+id/time_maxtime_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:hint="Max Time"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/rate_setuplots"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:hint="Rate"
+        android:inputType="number" />
+
+
+
+    <Button
+        android:id="@+id/button_submit_setuplots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accent"
+        android:textColor="@color/icons"
+        android:layout_marginTop="400dp"
+        android:text="submit" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/primary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_navigation_main" />
+</RelativeLayout>

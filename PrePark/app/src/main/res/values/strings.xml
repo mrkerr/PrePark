@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PrePark</string>
+    <string name="title_activity_map">Map</string>
+    <string name="congratulation_your_payement_was_succesful">Congratulation your Payement was succesful</string>
+    <string name="share">Share</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="confirm_payement">Confirm Payement</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="congratulations_your_payement_was_succesful">Congratulations Your Payement was Succesful</string>
+    <string name="action_setting">action setting</string>
+    <string name="past_week">Past Week</string>
+    <string name="past_month">Past Month</string>
+    <string name="past_year">Past Year</string>
+    <string name="title_activity_view_transactions">view_transactions</string>
+    <string name="title_activity_countdown">Countdown</string>
+    <string name="title_activity_countdown_service">CountdownService</string>
+</resources>
