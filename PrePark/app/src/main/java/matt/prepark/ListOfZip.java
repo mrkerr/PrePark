@@ -3,8 +3,11 @@ package matt.prepark;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +36,11 @@ public class ListOfZip extends ListActivity {
 
       // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
+
+
  //       Log.d("jawad", address.toString());
 //        for(int i=0; i<address.size();i++)
 //        {
@@ -68,5 +75,6 @@ public class ListOfZip extends ListActivity {
 
             }
         });
+
     }
 }

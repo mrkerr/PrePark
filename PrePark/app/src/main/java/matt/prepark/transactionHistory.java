@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -54,12 +57,41 @@ public class transactionHistory extends AppCompatActivity {
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
+        String email = intent.getStringExtra("email");
 
         arr = new ArrayList<>();
 
         Button b = findViewById(R.id.bt1);
         Button c = findViewById(R.id.bt2);
         Button d = findViewById(R.id.bt3);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(transactionHistory.this, matt.prepark.Map.class);
+                        mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
+                        transactionHistory.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(transactionHistory.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(transactionHistory.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        transactionHistory.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
+            }
+        });
 
         c.setOnClickListener(new View.OnClickListener() {
             @Override

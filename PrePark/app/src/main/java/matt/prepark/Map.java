@@ -11,11 +11,14 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -86,6 +89,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
 
         Intent intent = getIntent();   //Get intent from hub
         final String username = intent.getStringExtra("username");  //Get username from hub
+        final String email = intent.getStringExtra("email");
         username2 = username;   //Store username in global
         final String address = intent.getStringExtra("address");
 
@@ -123,6 +127,35 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void run() { getAddress(true); }
             } , 0, 10000);
+
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(Map.this, Map.class);
+                        mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
+                        Map.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(Map.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(Map.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        Map.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
+            }
+        });
 
     }
 

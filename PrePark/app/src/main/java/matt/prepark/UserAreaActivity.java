@@ -63,11 +63,13 @@ public class UserAreaActivity extends AppCompatActivity {
                     case R.id.map:
                         Intent mapIntent = new Intent(UserAreaActivity.this, Map.class);
                         mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
                         UserAreaActivity.this.startActivity(mapIntent);
                         break;
                     case R.id.profile:
                         Intent i_userprofile = new Intent(UserAreaActivity.this, userProfile.class);
                         i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
                         startActivity(i_userprofile);
                         break;
                     case R.id.home:
@@ -80,14 +82,6 @@ public class UserAreaActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-
-
-
-
-
-
 
     }
 }

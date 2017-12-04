@@ -3,9 +3,12 @@ package matt.prepark;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,6 +39,37 @@ public class BuySpot extends AppCompatActivity {
         final Button b_findParkingBS = (Button) findViewById(R.id.FindParkingBS);
 
         final EditText zipBS = (EditText) findViewById(R.id.address_BS);
+        Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(BuySpot.this, Map.class);
+                        mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
+                        BuySpot.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(BuySpot.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(BuySpot.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        BuySpot.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
+            }
+        });
 
         b_findParkingBS.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -34,6 +34,7 @@ public class userProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i_setuplots = new Intent(userProfile.this, setupLots.class);
                 i_setuplots.putExtra("username", username);
+                i_setuplots.putExtra("email", email);
                 startActivity(i_setuplots);
             }
         });
@@ -42,6 +43,7 @@ public class userProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i_mylots = new Intent(userProfile.this, myLots.class);
                 i_mylots.putExtra("username", username);
+                i_mylots.putExtra("email", email);
                 startActivity(i_mylots);
             }
         });
@@ -50,6 +52,7 @@ public class userProfile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent transactionIntent = new Intent(userProfile.this, transactionHistory.class);
                 transactionIntent.putExtra("username", username);
+                transactionIntent.putExtra("email", email);
                 userProfile.this.startActivity(transactionIntent);
 		}
 	});
@@ -57,6 +60,8 @@ public class userProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i_buyspot = new Intent(userProfile.this, BuySpot.class);
+                i_buyspot.putExtra("username", username);
+                i_buyspot.putExtra("email", email);
                 startActivity(i_buyspot);
             }
         });
@@ -69,6 +74,7 @@ public class userProfile extends AppCompatActivity {
                     case R.id.map:
                         Intent mapIntent = new Intent(userProfile.this, Map.class);
                         mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
                         userProfile.this.startActivity(mapIntent);
                         break;
                     case R.id.profile:
