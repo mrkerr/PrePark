@@ -32,7 +32,7 @@ public class networkReceiver extends BroadcastReceiver{
             }
             return false;
         } catch (Exception e) {
-            Log.e(NetworkStateChangeReceiver.class.getName(), e.getMessage());
+            Log.e(networkReceiver.class.getName(), e.getMessage());
             return false;
         }
     }
