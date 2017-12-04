@@ -138,7 +138,7 @@ public class transactionHistory extends AppCompatActivity {
                     //because of json array, we need to cut it into json objects
                     //here we are checking to see if the query was successful
                     JSONObject successIndex = jsonResponse.getJSONObject(0);
-
+                    Toast.makeText(transactionHistory.this, response, Toast.LENGTH_SHORT).show();
                     //storing the boolean in our own variable
                     boolean success = successIndex.getBoolean("success");
                     if (success) {

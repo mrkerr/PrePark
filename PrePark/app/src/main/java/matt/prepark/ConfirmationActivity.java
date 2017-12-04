@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Map;
 
 /**
  * Created by rafaniyi on 10/7/2017.
@@ -212,6 +213,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
 
+
     public void response() {
             String transaction = "Transaction: " + "Price: " + Pay_activity.rate + " USD"  + " Location: " + loc;
             Transaction.TransactionRequest transactionRequest = new Transaction.TransactionRequest(transaction);
@@ -289,6 +291,28 @@ class Transaction extends AsyncTask {
         }
     }
 
+
+    class Seller extends StringRequest {
+        private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/SellerPost.php";
+        private java.util.Map<String, String> params;
+        private String address;
+
+
+        Seller(String seller, Response.Listener<String> listener) {
+            super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+
+            params = new HashMap<>();
+            params.put("seller", lotOwner);
+        }
+
+        @Override
+        public Map<String, String> getParams() {
+            return params;
+        }
+    }
+
 }
+
+
 
 

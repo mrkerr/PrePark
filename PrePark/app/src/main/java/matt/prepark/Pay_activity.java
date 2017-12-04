@@ -202,15 +202,11 @@ public class Pay_activity extends AppCompatActivity {
 
         }
 
+
         @Override
         public Map<String, String> getParams() {
             return params;
         }
-    }
-
-    @Override
-    public Map<String, String> getParams() {
-        return params;
-    }
 }
+
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-import static matt.prepark.networkReceiver.IS_NETWORK_AVAILABLE;
 
 /**
  * Created by mattlawlor on 9/21/17.
@@ -37,25 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
+    networkReceiver nR ;
     private String ns = "";
-    private void Notify() {
 
-        NotificationManager notificationManager = (NotificationManager)
-                getSystemService(NOTIFICATION_SERVICE);
-
-        Intent intent = new Intent(this, Map.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-
-        Notification n = new Notification.Builder(this)
-                .setContentText(ns)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pIntent)
-                .setAutoCancel(true)
-                .build();
-
-        notificationManager.notify(0, n);
-    }
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -65,17 +50,19 @@ public class LoginActivity extends AppCompatActivity {
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
-        //Online/Offline Notification
+        nR = new networkReceiver(this);
 
         //Online/Offline Notification
-        IntentFilter intentFilter = new IntentFilter(networkReceiver.NETWORK_AVAILABLE );
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
-                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
-            }
-        }, intentFilter);
+        if (nR.isConnected()){
+            Toast.makeText(this, "Online", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this, "You are not connected", Toast.LENGTH_LONG).show();
+
+        }
+
+
 
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {

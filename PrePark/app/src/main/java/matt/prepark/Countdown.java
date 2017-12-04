@@ -21,32 +21,17 @@ public class Countdown extends Activity {
         Intent confIntent = getIntent();
         time = confIntent.getStringExtra("time");
         address = confIntent.getStringExtra("address");
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        TextView textView= findViewById(R.id.t1);
-                        String timeLeftString = intent.getStringExtra("timeSent");
-                        int timeLeft = Integer.parseInt(timeLeftString);
-                        if(timeLeft>0) {
-                            textView.setText("You have " + timeLeft + " minutes left");
-                        }
-                        else{
-                            textView.setText("Y'all outta time, see ya again soon!");
-                            killIt();
-                        }
-                    }
-                }, new IntentFilter(CountdownService.ACTION_LOCATION_BROADCAST)
-        );
         Intent toService = new Intent(this, CountdownService.class);
         startService(toService);
+        TextView tv = findViewById(R.id.t1);
+        tv.setText("You time of " + time + " minutes has begun");
 
     }
     @Override
     protected void onResume() {
         super.onResume();
-        TextView textView= findViewById(R.id.t1);
-        textView.setText("You have " + CountdownService.toSend + " minutes left");
+        TextView tv = findViewById(R.id.t1);
+        tv.setText("You time of " + time + " minutes has begun");
     }
 
     @Override
@@ -55,12 +40,14 @@ public class Countdown extends Activity {
 
     }
 
-    public void killIt(){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         stopService(new Intent(this, CountdownService.class));
     }
 
 
-    }
+}
 
 
 

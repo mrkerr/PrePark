@@ -37,8 +37,6 @@ public class CountdownService extends Service{
         new CountDownTimer(time, 5000) {
             public void onTick(long millisUntilFinished) {
                 int timeLeftInt = (int) Math.ceil((double) millisUntilFinished / 60000);    //Whole number of minutes left, ceiling
-                sendBroadcastMessage(timeLeftInt);
-                toSend = timeLeftInt;
                 if(timeLeftInt == 5){
                     Notify("Not Done");
                 }
@@ -46,7 +44,6 @@ public class CountdownService extends Service{
             }
 
             public void onFinish() {
-                sendBroadcastMessage(0);
                 Notify("done");
 
                 Response.Listener<String> response = new Response.Listener<String>() {
@@ -82,13 +79,6 @@ public class CountdownService extends Service{
 
     }
 
-
-    private void sendBroadcastMessage(int timeSent) {
-            Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
-            intent.putExtra("timeSent", timeSent);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
-    }
 
 
 

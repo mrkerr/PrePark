@@ -76,10 +76,10 @@ public class BuySpot extends AppCompatActivity {
             public void onClick(View v) {
                 final String zip = zipBS.getText().toString();
                 //progress dialog
-//                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
-//                dialog.setTitle("Please wait");
-//                dialog.setMessage("Finding the right options for you...");
-//                dialog.show();
+                ProgressDialog dialog = new ProgressDialog(BuySpot.this);
+                dialog.setTitle("Please wait");
+                dialog.setMessage("Finding the right options for you...");
+                dialog.show();
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {

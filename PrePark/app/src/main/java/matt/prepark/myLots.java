@@ -94,10 +94,10 @@ public class myLots extends AppCompatActivity {
                 final String time = nextAvail.getText().toString();
 
 
-//                ProgressDialog dialog = new ProgressDialog(myLots.this);
-//                dialog.setMessage("Updating...");
-//                dialog.show();
-//                Notify();
+                ProgressDialog dialog = new ProgressDialog(myLots.this);
+                dialog.setMessage("Updating...");
+                dialog.show();
+                Notify();
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

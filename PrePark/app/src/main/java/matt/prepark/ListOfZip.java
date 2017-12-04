@@ -28,6 +28,7 @@ public class ListOfZip extends ListActivity {
         // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
+        final String username = intent.getStringExtra("username");
         //       Log.d("jawad", address.toString());
 //        for(int i=0; i<address.size();i++)
 //        {
@@ -43,6 +44,7 @@ public class ListOfZip extends ListActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intentlist = new Intent(getApplicationContext(), Map.class);
                 intentlist.putExtra("address",address.get(i));
+                intentlist.putExtra("username", username);
                 startActivity(intentlist);
 
 
