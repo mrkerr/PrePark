@@ -105,7 +105,9 @@ public class myLots extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                Intent intent = new Intent(myLots.this, userProfile.class); //merge with mitch for this class
+                                Intent intent = new Intent(myLots.this, userProfile.class);
+                                intent.putExtra("username", username);
+                                intent.putExtra("email", email);
                                 myLots.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(myLots.this);

@@ -120,6 +120,7 @@ public class setupLots extends AppCompatActivity {
                             if (success) {
                                 Intent intent = new Intent(setupLots.this, Map.class); //merge with mitch for this class
                                 intent.putExtra("username", username);
+                                intent.putExtra("email", email);
                                 setupLots.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(setupLots.this);

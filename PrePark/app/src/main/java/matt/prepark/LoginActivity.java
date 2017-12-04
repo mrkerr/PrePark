@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
 
-                System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwww");
 
                 Snackbar.make(findViewById(R.id.activity_login), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }

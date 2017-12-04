@@ -138,6 +138,8 @@ public class BuySpot extends AppCompatActivity {
                                 gAddress = addressList;
 
                                 Intent i_listZ = new Intent(BuySpot.this, ListOfZip.class);
+                                i_listZ.putExtra("username", username);
+                                i_listZ.putExtra("email", email);
                                 //i_listZ.putExtra("username", username);
                                 i_listZ.putStringArrayListExtra("addressList", gAddress);    //TODO
                                 startActivity(i_listZ);
