@@ -77,7 +77,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
     ArrayList<String> globalSpots = new ArrayList<>();
     ArrayList<String> globalTime = new ArrayList<>();
     ArrayList<String> globalRate = new ArrayList<>();
-
+    String globalEmail;
 
 
     @Override
@@ -92,6 +92,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         final String email = intent.getStringExtra("email");
         username2 = username;   //Store username in global
         final String address = intent.getStringExtra("address");
+        globalEmail = email;
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -111,6 +112,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
             public void onClick(View view) {
                 Intent i_ListView = new Intent(Map.this, ListOfLots.class);
                 i_ListView.putExtra("username", username);
+                i_ListView.putExtra("email", email);
                 i_ListView.putStringArrayListExtra("addressList", globalAddress);
                 i_ListView.putStringArrayListExtra("cityList", globalCity);
                 i_ListView.putStringArrayListExtra("stateList", globalState);
@@ -265,6 +267,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 intent2.putExtra("spot", spot);
                 intent2.putExtra("time", time);
                 intent2.putExtra("rate", rate);
+                intent2.putExtra("email", globalEmail);
                 startActivity(intent2);
             }
         });

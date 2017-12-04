@@ -38,6 +38,7 @@ public class ListOfLots extends AppCompatActivity {
         ArrayList<String> timeList = MapIntent.getStringArrayListExtra("timeList");
         ArrayList<String> rateList = MapIntent.getStringArrayListExtra("rateList");
         final String username = MapIntent.getStringExtra("username");
+        final String email = MapIntent.getStringExtra("email");
 
      ;
 
@@ -54,6 +55,7 @@ public class ListOfLots extends AppCompatActivity {
                 intent.putExtra("detailTime", timeList.get(i));
                 intent.putExtra("detailRate", rateList.get(i));
                 intent.putExtra("username", username);
+                intent.putExtra("email", email);
                 startActivity(intent);
             }
         });

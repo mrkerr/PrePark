@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,6 +45,36 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         //Getting Intent
         Intent intent = getIntent();
+        final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(ConfirmationActivity.this, Map.class);
+                        mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
+                        ConfirmationActivity.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(ConfirmationActivity.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(ConfirmationActivity.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        ConfirmationActivity.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
+            }
+        });
 
         //System.out.println("I GOT: "+intent.getStringExtra("PaymentDetails"));
 

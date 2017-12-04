@@ -29,6 +29,7 @@ public class ListHelper extends AppCompatActivity {
         String spot = intent.getStringExtra("detailSpot");
         String time = intent.getStringExtra("detailTime");
         final String username = intent.getStringExtra("username");
+        final String email = intent.getStringExtra("email");
 
         TextView tv = findViewById(R.id.textView3);
         tv.setText(val);
@@ -41,6 +42,7 @@ public class ListHelper extends AppCompatActivity {
             i_purchaseScreen.putExtra("spot", spot);
             i_purchaseScreen.putExtra("time", time);
             i_purchaseScreen.putExtra("rate", rate);
+            i_purchaseScreen.putExtra("email", email);
             startActivity(i_purchaseScreen);
 
       });

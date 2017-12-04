@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,6 +106,35 @@ public class Pay_activity extends AppCompatActivity {
         spots = nameIntent.getStringExtra("spot");
         time = nameIntent.getStringExtra("time");
         rate = nameIntent.getStringExtra("rate");
+        final String email = nameIntent.getStringExtra("email");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        Intent mapIntent = new Intent(Pay_activity.this, matt.prepark.Map.class);
+                        mapIntent.putExtra("username", username);
+                        mapIntent.putExtra("email", email);
+                        Pay_activity.this.startActivity(mapIntent);
+                        break;
+                    case R.id.profile:
+                        Intent i_userprofile = new Intent(Pay_activity.this, userProfile.class);
+                        i_userprofile.putExtra("username", username);
+                        i_userprofile.putExtra("email", email);
+                        startActivity(i_userprofile);
+                        break;
+                    case R.id.home:
+                        Intent homeIntent = new Intent(Pay_activity.this, UserAreaActivity.class);
+                        homeIntent.putExtra("username", username);
+                        homeIntent.putExtra("email", email);
+                        Pay_activity.this.startActivity(homeIntent);
+                        break;
+                }
+                return true;
+            }
+        });
 
 
         Intent intent = new Intent(this, PayPalService.class);
