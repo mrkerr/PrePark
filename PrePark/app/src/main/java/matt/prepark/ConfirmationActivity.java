@@ -50,6 +50,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         final String username = intent.getStringExtra("username");
         final String email = intent.getStringExtra("email");
         final String address = intent.getStringExtra("address");
+        final String time = intent.getStringExtra("time");
         globalAddress = address;
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -96,6 +97,9 @@ public class ConfirmationActivity extends AppCompatActivity {
         }
 
         updateSpots("1"); //TODO
+        Intent i_countdown = new Intent(ConfirmationActivity.this, Countdown.class);
+        i_countdown.putExtra("time", time);
+        startActivity(i_countdown);
 
     }
 

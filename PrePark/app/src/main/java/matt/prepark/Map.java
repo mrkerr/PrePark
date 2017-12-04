@@ -85,6 +85,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         final Button listView = (Button) findViewById(R.id.button1);    //Represents List View button
+        //final Button countdown = (Button) findViewById(R.id.button8);
 
 
         Intent intent = getIntent();   //Get intent from hub
@@ -122,6 +123,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
                 startActivity(i_ListView);
             }
         });
+
 
         //Set timer to run function every 10 seconds to check for new lots to be added to map
         new Timer().scheduleAtFixedRate(new TimerTask() {

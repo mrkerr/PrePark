@@ -82,7 +82,8 @@ public class Pay_activity extends AppCompatActivity {
                                 .putExtra("PaymentAmount", 1)
                                 .putExtra("username", username)
                                 .putExtra("email", globalEmail)
-                                .putExtra("address", address));
+                                .putExtra("address", address)
+                                .putExtra("time", time));
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
