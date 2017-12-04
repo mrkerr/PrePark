@@ -87,6 +87,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback,
         Intent intent = getIntent();   //Get intent from hub
         final String username = intent.getStringExtra("username");  //Get username from hub
         username2 = username;   //Store username in global
+        final String address = intent.getStringExtra("address");
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();

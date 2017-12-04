@@ -90,7 +90,6 @@ public class BuySpot extends AppCompatActivity {
 
                                 }
 
-                               // Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
 
                                 //the last element in our arraylist doesn't have these
                                 //extra characters removed. There are extra characters
@@ -100,7 +99,6 @@ public class BuySpot extends AppCompatActivity {
                                 addressList.remove(addressList.size() - 1);
                                 addressEnd = addressEnd.substring(0, addressEnd.length() - 2);
                                 addressList.add(addressEnd);
-                                //  Log.d("baz", addressList.toString());
 
                                 //Toast.makeText(BuySpot.this, addressList.get(0), Toast.LENGTH_SHORT).show();
                                 gAddress = addressList;
