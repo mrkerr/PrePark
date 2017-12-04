@@ -176,3 +176,4 @@ class SellerRequest extends StringRequest {
         return params;
     }
 }
+

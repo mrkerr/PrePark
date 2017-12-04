@@ -6,8 +6,17 @@
     android:layout_height="match_parent"
     tools:context="matt.prepark.ListOfAddresses">
 
+    <SearchView
+        android:id="@+id/searchView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search.."
+        >
+    </SearchView>
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content"></ListView>
 </RelativeLayout>

@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +35,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     private String paymentAmount;
     private Button button;
+    private String day, loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +77,15 @@ public class ConfirmationActivity extends AppCompatActivity {
         textViewStatus.setText(jsonDetails.getString("state"));
         textViewAmount.setText(paymentAmount.concat(" USD"));
 
-        String Date =  dateFormat.format(date);
-
-        System.out.println("DETAILS: "+jsonDetails.toString());
+        String Date = dateFormat.format(date);
+        day = Date;
+        loc = jsonDetails.getString("state");
 
 
         new Transaction(Pay_activity.rate,jsonDetails.getString("state"),Date,getApplicationContext()).execute();
+
+        response();
+
 
     }
 
@@ -119,7 +124,13 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
 
-
+    public void response() {
+            String transaction = "Transaction: " + "Price: " + Pay_activity.rate + " USD"  + " Location: " + loc;
+            Transaction.TransactionRequest transactionRequest = new Transaction.TransactionRequest(transaction);
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            queue.add(transactionRequest);
+            System.out.println(transaction);
+    }
 }
 
 class Transaction extends AsyncTask {
@@ -128,8 +139,7 @@ class Transaction extends AsyncTask {
     private String loc;
     public static String Date;
     private Context context;
-    private String lotOwner;
-
+    public static String lotOwner;
 
 
     Transaction(String amount, String city, String date, Context context) {
@@ -161,63 +171,36 @@ class Transaction extends AsyncTask {
         RequestQueue q = Volley.newRequestQueue(this.context);
         q.add(sellerRequest);
 
-        post();
+
 
         return null;
 
     }
 
-    private String Tostring(){
-        System.out.println("INFORMATION "+this.amount);
-        return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
-
-    }
-
-    private void post(){
-        System.out.println("we out here");
-        Response.Listener<String> responseListener = response -> {
-
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    System.out.println("POST :hurray!");
-                } else {
-                    System.out.println("POST :Sorry!");
-                }
-            } catch (JSONException e) {
-              e.printStackTrace();
-            }
-        };
-
-        String transaction = Tostring();
-        TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.add(transactionRequest);
-    }
-
-
-    private class TransactionRequest extends StringRequest {
+    static class TransactionRequest extends StringRequest {
         private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
         private java.util.Map<String, String> params;
 
 
-        TransactionRequest(String transaction, Response.Listener<String> listener) {
-            super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
+        TransactionRequest(String transaction) {
+            super(Request.Method.POST, TRANSACTION_REQUEST_URL, null, null);
 
             params = new HashMap<>();
             params.put("buyer", Pay_activity.username);
             params.put("seller",lotOwner);
             params.put("transaction", transaction);
             params.put("date", Transaction.Date);
-
+            System.out.println("Request is fine 1!");
         }
+
 
         @Override
         public java.util.Map<String, String> getParams() {
+            System.out.println( ":Request is fine 2!");
             return params;
         }
     }
 
 }
+
 

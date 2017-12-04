@@ -1,11 +1,15 @@
 package matt.prepark;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +37,25 @@ public class LoginActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
+    private String ns = "";
+    private void Notify() {
 
-    @Override
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, Map.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+
+        Notification n = new Notification.Builder(this)
+                .setContentText(ns)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
+
+        notificationManager.notify(0, n);
+    }
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -52,10 +73,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
-
-                System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwww");
-
-                Snackbar.make(findViewById(R.id.activity_login), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                System.out.println("NETWORK: "+networkStatus);
+                ns = ("Network Status: " + networkStatus);
+                notify();
             }
         }, intentFilter);
 
