@@ -39,13 +39,14 @@ public class transactionHistory extends AppCompatActivity {
     public static String string;
     private TextView textView;
     private ListView listView;
+    private String empty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
 
-        String empty = "NO TRANSACTION HAS BEEN RECORDED";
+        empty = "NO TRANSACTION HAS BEEN RECORDED";
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
@@ -56,17 +57,11 @@ public class transactionHistory extends AppCompatActivity {
         Button c = findViewById(R.id.bt2);
         Button d = findViewById(R.id.bt3);
 
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getHistory(username, );
-//            }
-//        });
-
         c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getHistory(username, 2);
+                arr.clear();
             }
         });
 
@@ -74,6 +69,7 @@ public class transactionHistory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getHistory(username, 3);
+                arr.clear();
             }
         });
 
@@ -152,13 +148,19 @@ public class transactionHistory extends AppCompatActivity {
                         dateEnd = dateEnd.substring(0, dateEnd.length() - 2);
                         dateList.add(dateEnd);
 
-                         arr = dateList;
+                         arr.add(usernameList.get(0)+"\n"+transactionList.get(0)+"\n"+dateList.get(0));
 
-                        textView = findViewById(R.id.trans);
-                        listView = findViewById(R.id.listview);
+                        if(arr.size() > 0) {
+                            textView = findViewById(R.id.trans);
+                            listView = findViewById(R.id.listview);
 
-                        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arr);
-                        listView.setAdapter(arrayAdapter);
+                            ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arr);
+                            listView.setAdapter(arrayAdapter);
+                        }
+
+                        else {
+                            textView.setText(empty);
+                        }
 
                     }
 

@@ -151,112 +151,23 @@ public class Pay_activity extends AppCompatActivity {
 }
 
 
-class Transaction extends AsyncTask{
 
-    private String amount;
-    private String loc;
-    public static String Date;
-    private Context context;
-    private String lotOwner;
-
-
-
-    Transaction(String amount, String city, String date, Context context) {
-
-        this.amount = amount;
-        this.loc =city;
-        this.Date = date;
-        this.context = context;
-    }
-    @Override
-    protected Object doInBackground(Object[] objects) {
-
-        String seller = "";
-        Response.Listener<String> ResponseListener = response -> {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    System.out.println("hurray!");
-                    lotOwner = jsonResponse.getString("username");
-                } else {
-                    System.out.println("Sorry!");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-
-        SellerRequest sellerRequest = new SellerRequest(seller, ResponseListener);
-        RequestQueue q = Volley.newRequestQueue(this.context);
-        q.add(sellerRequest);
-
-
-        Response.Listener<String> responseListener = response -> {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    System.out.println("hurray!");
-                } else {
-                    System.out.println("Sorry!");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-
-        String transaction = Tostring();
-        TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.add(transactionRequest);
-        return null;
-
-    }
-
-    private String Tostring(){
-        return "Transaction: "+"Price: "+this.amount+" USD"+"\n"+"Location: "+this.loc+"\n"+"Date: "+this.Date;
-    }
-
-
-    private class TransactionRequest extends StringRequest {
-        private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
-        private Map<String, String> params;
-
-
-        TransactionRequest(String transaction, Response.Listener<String> listener) {
-            super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
-
-            params = new HashMap<>();
-            params.put("buyer", Pay_activity.username);
-            params.put("seller",lotOwner);
-            params.put("transaction", transaction);
-            params.put("date", Transaction.Date);
-
-        }
-
-        @Override
-        public Map<String, String> getParams() {
-            return params;
-        }
-    }
-
-}
 
 
 class SellerRequest extends StringRequest {
     private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
     private Map<String, String> params;
-
+    private String address;
 
 
     SellerRequest(String seller, Response.Listener<String> listener) {
         super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
 
+        address = Pay_activity.address.replace("Ames Iowa", "");
+
         params = new HashMap<>();
         params.put("username", seller);
-        params.put("address", Pay_activity.address);
-
+        params.put("address", address);
 
     }
 
