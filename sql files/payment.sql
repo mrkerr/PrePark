@@ -26,6 +26,12 @@ select seller, payment, date from payment_history where month(date) = 2;
 
 select * from payment_history where year(date) = 1997;
 
-insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 5 USD Location: 1305 Georgia Ave Ames Iowa Date: 2017-12-04", '2017-12-04');
+insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 5 USD Location: 1305 Georgia Ave Ames Iowa", '2017-12-04');
+
+insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 6 USD Location: 4800 Mortensen Ames Iowa", '2017-12-01');
+
+insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 5 USD Location: 2504 Lincoln Way Ames Iowa", '2017-05-26');
+
+insert into payment_history values ("mlawlor", "mrkerr", "Transaction: Price: 5 USD Location: 1700 Center Drive Ames Iowa", '2017-09-29');
 
 delete from payment_history where buyer = "mlawlor";

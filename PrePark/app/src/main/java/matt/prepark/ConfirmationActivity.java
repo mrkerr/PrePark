@@ -1,5 +1,6 @@
 package matt.prepark;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -37,6 +38,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     private String paymentAmount;
     private Button button;
+    private String globalAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String username = intent.getStringExtra("username");
         final String email = intent.getStringExtra("email");
+        final String address = intent.getStringExtra("address");
+        globalAddress = address;
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -90,6 +94,39 @@ public class ConfirmationActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        updateSpots("1"); //TODO
+
+    }
+
+    public void updateSpots(String lower) {
+        Response.Listener<String> response = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //creating a jsonResponse that will receive the php json
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success) {
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmationActivity.this);
+                        builder.setMessage("Login Failed")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        SpotAmountRequest spotAmountRequest = new SpotAmountRequest(globalAddress, lower, response);
+        RequestQueue queue = Volley.newRequestQueue(ConfirmationActivity.this);
+        queue.add(spotAmountRequest); //TODO
     }
 
     private void showDetails(JSONObject jsonDetails) throws JSONException {

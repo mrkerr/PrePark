@@ -3,28 +3,20 @@ package matt.prepark;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfZip extends ListActivity {
     private ArrayAdapter<String> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,16 +24,11 @@ public class ListOfZip extends ListActivity {
 
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
-        EditText myfilter = (EditText) findViewById(R.id.searchFilter);
-
-      // String[] abc = {"jawad", "matt", "mitch"};
+        SearchView searchView =(SearchView) findViewById(R.id.searchView1);
+        // String[] abc = {"jawad", "matt", "mitch"};
         Intent intent = getIntent();
-        final String username = intent.getStringExtra("username");
-        final String email = intent.getStringExtra("email");
         ArrayList<String> address = intent.getStringArrayListExtra("addressList");
-
-
- //       Log.d("jawad", address.toString());
+        //       Log.d("jawad", address.toString());
 //        for(int i=0; i<address.size();i++)
 //        {
 //            list.add(address.get(i));
@@ -49,6 +36,19 @@ public class ListOfZip extends ListActivity {
 
         adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_1, address);
         getListView().setAdapter(adapter);
+        //filter stuff
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
         //On Click Stuff
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,25 +56,11 @@ public class ListOfZip extends ListActivity {
                 Intent intentlist = new Intent(getApplicationContext(), Map.class);
                 intentlist.putExtra("address",address.get(i));
                 startActivity(intentlist);
-            }
-        });
-       //filter stuff
-        myfilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            ListOfZip.this.adapter.getFilter().filter(charSequence);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
 
             }
         });
+
 
     }
 }

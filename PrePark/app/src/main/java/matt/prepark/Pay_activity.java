@@ -40,6 +40,7 @@ public class Pay_activity extends AppCompatActivity {
     public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config;
     public static String username, address, spots, time, rate;
+    String globalEmail;
 
 
     private Button button;
@@ -60,7 +61,7 @@ public class Pay_activity extends AppCompatActivity {
      * @param data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //TODO decrease spot number
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PAYPAL_REQUEST_CODE) {
 
             //If the result is OK i.e. user has not canceled the payment
@@ -78,7 +79,10 @@ public class Pay_activity extends AppCompatActivity {
                         //Starting a new activity for the payment details and also putting the payment details with intent
                         startActivity(new Intent(this, ConfirmationActivity.class)
                                 .putExtra("PaymentDetails", paymentDetails)
-                                .putExtra("PaymentAmount", 1));
+                                .putExtra("PaymentAmount", 1)
+                                .putExtra("username", username)
+                                .putExtra("email", globalEmail)
+                                .putExtra("address", address));
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -107,6 +111,7 @@ public class Pay_activity extends AppCompatActivity {
         time = nameIntent.getStringExtra("time");
         rate = nameIntent.getStringExtra("rate");
         final String email = nameIntent.getStringExtra("email");
+        globalEmail = email;
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -177,36 +182,6 @@ public class Pay_activity extends AppCompatActivity {
         startActivityForResult(intent, PAYPAL_REQUEST_CODE);
     }
 
-
-    public void updateSpots(String lower) {
-        Response.Listener<String> response = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    //creating a jsonResponse that will receive the php json
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-
-                    if (success) {
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Pay_activity.this);
-                        builder.setMessage("Login Failed")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        SpotAmountRequest spotAmountRequest = new SpotAmountRequest(address, lower, response);
-        RequestQueue queue = Volley.newRequestQueue(Pay_activity.this);
-        queue.add(spotAmountRequest); //TODO
-    }
 
 }
 
