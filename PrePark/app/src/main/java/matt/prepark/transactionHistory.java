@@ -87,17 +87,13 @@ public class transactionHistory extends AppCompatActivity {
                 }
             });
 
-        } else
-            textView.setText(empty);
+        } else {
+            //textView.setText(empty);
                 getHistory(username, 3);
                 arr.clear();
             }
-        });
-
-
     }
 
-<<<<<<< HEAD
 
     public void getHistory(String username, int timeLine) {
         Response.Listener<String> responseListener = new Response.Listener<String>() {

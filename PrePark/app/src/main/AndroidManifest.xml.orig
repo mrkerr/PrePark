@@ -56,6 +56,12 @@
             </intent-filter>
         </receiver>
 
+<<<<<<< HEAD
     </application>
+=======
+
+    </application>
+
+>>>>>>> ridwan2
 
 </manifest>

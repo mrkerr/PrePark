@@ -93,7 +93,7 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         Notification n  = new Notification.Builder(this)
                 .setContentTitle("Thank you!")
-                .setContentText("Your payment of "+paymentAmount+" has been received")
+                .setContentText("Your payment of $"+paymentAmount+" has been received")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
@@ -174,8 +174,9 @@ class Transaction extends AsyncTask {
     }
 
     private void post(){
+        System.out.println("we out here");
         Response.Listener<String> responseListener = response -> {
-            System.out.println("we out here");
+
             try {
                 JSONObject jsonResponse = new JSONObject(response);
                 boolean success = jsonResponse.getBoolean("success");
@@ -185,8 +186,7 @@ class Transaction extends AsyncTask {
                     System.out.println("POST :Sorry!");
                 }
             } catch (JSONException e) {
-
-              //  e.printStackTrace();
+              e.printStackTrace();
             }
         };
 

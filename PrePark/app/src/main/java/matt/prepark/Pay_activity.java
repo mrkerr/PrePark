@@ -118,7 +118,6 @@ public class Pay_activity extends AppCompatActivity {
 
         button.setOnClickListener(view -> getPayment());
 
-<<<<<<< HEAD
         String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address + "\n"
                 + " Spots: " + spots + "\n" + " Time: " + time;
         t.setText(j);
@@ -145,6 +144,7 @@ public class Pay_activity extends AppCompatActivity {
         //the request code will be used on the method onActivityResult
         startActivityForResult(intent, PAYPAL_REQUEST_CODE);
     }
+
 
     public void updateSpots(String lower) {
         Response.Listener<String> response = new Response.Listener<String>() {
@@ -178,88 +178,19 @@ public class Pay_activity extends AppCompatActivity {
 
 }
 
-
-class Transaction extends AsyncTask {
-
-    private String amount;
-    private String loc;
-    public static String Date;
-    private Context context;
-    private String lotOwner;
-
-
-    Transaction(String amount, String city, String date, Context context) {
-
-        this.amount = amount;
-        this.loc = city;
-        this.Date = date;
-        this.context = context;
-    }
-
-    @Override
-    protected Object doInBackground(Object[] objects) {
-
-        String seller = "";
-        Response.Listener<String> ResponseListener = response -> {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    System.out.println("hurray!");
-                    lotOwner = jsonResponse.getString("username");
-                } else {
-                    System.out.println("Sorry!");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-
-        SellerRequest sellerRequest = new SellerRequest(seller, ResponseListener);
-        RequestQueue q = Volley.newRequestQueue(this.context);
-        q.add(sellerRequest);
-
-
-        Response.Listener<String> responseListener = response -> {
-            try {
-                JSONObject jsonResponse = new JSONObject(response);
-                boolean success = jsonResponse.getBoolean("success");
-                if (success) {
-                    System.out.println("hurray!");
-                } else {
-                    System.out.println("Sorry!");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        };
-
-        String transaction = Tostring();
-        TransactionRequest transactionRequest = new TransactionRequest(transaction, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.add(transactionRequest);
-        return null;
-
-    }
-
-    private String Tostring() {
-        return "Transaction: " + "Price: " + this.amount + " USD" + "\n" + "Location: " + this.loc + "\n" + "Date: " + this.Date;
-    }
-
-
-    private class TransactionRequest extends StringRequest {
-        private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transaction.php";
+    class SellerRequest extends StringRequest {
+        private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
         private Map<String, String> params;
+        private String address;
 
-
-        TransactionRequest(String transaction, Response.Listener<String> listener) {
+        SellerRequest(String seller, Response.Listener<String> listener) {
             super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
 
+            address = Pay_activity.address.replace("Ames Iowa", "");
+
             params = new HashMap<>();
-            params.put("buyer", Pay_activity.username);
-            params.put("seller", lotOwner);
-            params.put("transaction", transaction);
-            params.put("date", Transaction.Date);
+            params.put("username", seller);
+            params.put("address", address);
 
         }
 
@@ -268,58 +199,4 @@ class Transaction extends AsyncTask {
             return params;
         }
     }
-=======
-        String j = "PRICE: " + rate + "\n" + "Address: " + Pay_activity.address +"\n"
-                +" Spots: "+spots+"\n"+" Time: "+time ;
-        t.setText(j);
-    }
 
-    private void getPayment() {
-
-        String paymentAmount = rate;
-
-        //Creating a paypalpayment
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
-                PayPalPayment.PAYMENT_INTENT_SALE);
-
-        //Creating Paypal Payment activity intent
-        Intent intent = new Intent(this, PaymentActivity.class);
-
-        //putting the paypal configuration to the intent
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-
-        //Puting paypal payment to the intent
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
-
-        //Starting the intent activity for result
-        //the request code will be used on the method onActivityResult
-        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
-    }
-}
-
-
->>>>>>> ridwan2
-
-
-
-class SellerRequest extends StringRequest {
-    private static final String TRANSACTION_REQUEST_URL = "http://proj-309-sb-b-2.cs.iastate.edu/transactionSetup.php";
-    private Map<String, String> params;
-    private String address;
-
-    SellerRequest(String seller, Response.Listener<String> listener) {
-        super(Request.Method.POST, TRANSACTION_REQUEST_URL, listener, null);
-
-        address = Pay_activity.address.replace("Ames Iowa", "");
-
-        params = new HashMap<>();
-        params.put("username", seller);
-        params.put("address", address);
-
-    }
-
-    @Override
-    public Map<String, String> getParams() {
-        return params;
-    }
-}
