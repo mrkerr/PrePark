@@ -38,8 +38,9 @@ public class LoginActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
+    networkReceiver nR ;
     private String ns = "";
-    private void Notify(){
+    private void Notify() {
 
         NotificationManager notificationManager = (NotificationManager)
                 getSystemService(NOTIFICATION_SERVICE);
@@ -47,37 +48,35 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Map.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
-        Notification n  = new Notification.Builder(this)
+        Notification n = new Notification.Builder(this)
                 .setContentText(ns)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true)
                 .build();
 
-        notificationManager.notify(0,n);
+        notificationManager.notify(0, n);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        nR = new networkReceiver(this);
         final EditText etUsername = (EditText) findViewById(R.id.etUsername);
         final EditText etPassword = (EditText) findViewById(R.id.etPassword);
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
 
-        //Online/Offline Notification
-        IntentFilter intentFilter = new IntentFilter(networkReceiver.NETWORK_AVAILABLE );
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
-                String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
-
-                ns = ("Network Status: " + networkStatus);
-                notify();
-            }
-        }, intentFilter);
+       if (nR.isConnected()){
+           ns = "Online";
+           Notify();
+       }
+       else
+       {
+           ns = "You are offline";
+           Notify();
+       }
 
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {

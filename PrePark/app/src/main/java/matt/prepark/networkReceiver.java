@@ -14,8 +14,7 @@ import android.util.Log;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 public class networkReceiver {
-    public static final String NETWORK_AVAILABLE = "matt.prepark.NetworkAvailable";
-    public static final String IS_NETWORK_AVAILABLE = "isNetworkAvailable";
+
     Context context;
 
    public networkReceiver(Context context)
