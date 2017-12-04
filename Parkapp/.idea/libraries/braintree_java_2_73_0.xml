@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="braintree-java-2.73.0">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/braintree-java-2.73.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
