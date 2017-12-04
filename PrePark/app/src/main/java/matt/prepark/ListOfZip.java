@@ -38,7 +38,7 @@ public class ListOfZip extends ListActivity {
         listView.setAdapter(adapter);
         searchView=(SearchView) findViewById(R.id.searchView1);
         //On Click Stuff
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intentlist = new Intent(getApplicationContext(), Map.class);
