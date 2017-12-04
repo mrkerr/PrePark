@@ -1,35 +1,40 @@
 package matt.prepark;
+package matt.prepark;
 
-import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+        import android.app.AlertDialog;
+        import android.content.BroadcastReceiver;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.content.IntentFilter;
+        import android.os.Bundle;
+        import android.support.design.widget.Snackbar;
+        import android.support.v4.content.LocalBroadcastManager;
+        import android.support.v7.app.AppCompatActivity;
+        import android.support.v7.app.AppCompatDelegate;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
+        import com.android.volley.RequestQueue;
+        import com.android.volley.Response;
+        import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+        import org.json.JSONException;
+        import org.json.JSONObject;
+        import org.w3c.dom.Text;
 
-import static matt.prepark.networkReceiver.IS_NETWORK_AVAILABLE;
+        import static matt.prepark.networkReceiver.IS_NETWORK_AVAILABLE;
 
 /**
  * Created by mattlawlor on 9/21/17.
  */
 
 public class LoginActivity extends AppCompatActivity {
-    static{
+    static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +45,21 @@ public class LoginActivity extends AppCompatActivity {
         final TextView tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
         final TextView tvForgot = (TextView) findViewById(R.id.tvForgot);
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
+
         //Online/Offline Notification
-        IntentFilter intentFilter = new IntentFilter(NetworkStateChangeReceiver.NETWORK_AVAILABLE_ACTION);
+        IntentFilter intentFilter = new IntentFilter(networkReceiver.NETWORK_AVAILABLE );
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 boolean isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "connected" : "disconnected";
 
-                Snackbar.make(findViewById(R.id.activity_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwww");
+
+                Snackbar.make(findViewById(R.id.activity_login), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }
         }, intentFilter);
+
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
