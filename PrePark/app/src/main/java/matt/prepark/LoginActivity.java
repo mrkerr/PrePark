@@ -41,23 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     networkReceiver nR ;
     private String ns = "";
-    private void Notify() {
 
-        NotificationManager notificationManager = (NotificationManager)
-                getSystemService(NOTIFICATION_SERVICE);
-
-        Intent intent = new Intent(this, Map.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-
-        Notification n = new Notification.Builder(this)
-                .setContentText(ns)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(pIntent)
-                .setAutoCancel(true)
-                .build();
-
-        notificationManager.notify(0, n);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +54,11 @@ public class LoginActivity extends AppCompatActivity {
         final Button bLogin = (Button) findViewById(R.id.bSignIn);
 
        if (nR.isConnected()){
-           ns = "Online";
-           Notify();
+           Toast.makeText(this, "Online", Toast.LENGTH_SHORT).show();
        }
        else
        {
-           ns = "You are offline";
-           Notify();
+           Toast.makeText(this, "Offline", Toast.LENGTH_SHORT).show();
 
        }
 
