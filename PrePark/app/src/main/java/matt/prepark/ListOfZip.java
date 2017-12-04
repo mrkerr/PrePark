@@ -20,7 +20,7 @@ public class ListOfZip extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_addresses);
+        setContentView(R.layout.activity_list_of_zip);
 
         ListView listView = findViewById(R.id.listview);
         List list = new ArrayList();
@@ -35,10 +35,10 @@ public class ListOfZip extends ListActivity {
 //        }
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, address);
-        listView.setAdapter(adapter);
+        getListView().setAdapter(adapter);
         searchView=(SearchView) findViewById(R.id.searchView1);
         //On Click Stuff
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intentlist = new Intent(getApplicationContext(), Map.class);
